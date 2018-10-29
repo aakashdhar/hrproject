@@ -15,3 +15,6 @@ This project runs off of **laravel 5.6.33** so following the convention of basic
 
 ### Setting up virtual host
 For a quick look through please visit this link [Setting up virtual host](https://ourcodeworld.com/articles/read/584/how-to-configure-a-virtual-host-for-a-laravel-project-in-xampp-for-windows)
+
+### Setting up Admin LTE
+For a quick look through please visit this link [Setting up Admin LTE ](https://github.com/jeroennoten/Laravel-AdminLTE#1-installation)
