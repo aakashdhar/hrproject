@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models\Admins;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class Admin extends Model
 {
     use Notifiable;
 
@@ -21,9 +21,4 @@ class User extends Authenticatable
     protected $hidden = [
         'user_password', 'remember_token', 'user_password_raw'
     ];
-
-    public function getAuthPassword()
-    {
-        return $this->user_password;
-    }
 }

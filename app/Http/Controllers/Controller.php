@@ -6,6 +6,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 
 class Controller extends BaseController
 {
@@ -13,6 +14,11 @@ class Controller extends BaseController
 
     protected $data = [];
     protected $title = '';
+
+    public function __construct()
+    {
+        $this->data['title'] = $this->title;
+    }
 
     public function getTitle()
     {
@@ -26,15 +32,18 @@ class Controller extends BaseController
     }
 
     protected function getData($key = null) {
+        $auth = Auth::user();
         if(!empty($key)) {
             return $this->data[$key];
         }
+        $this->data['auth'] = $auth;
         return $this->data;
     }
 
     protected function setData($data) {
         $this->data = $data;
     }
+
     protected function addData($key, $value) {
         $this->data[$key] = $value;
     }

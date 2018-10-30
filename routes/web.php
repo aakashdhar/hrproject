@@ -11,3 +11,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/admin/dashboard', 'HomeController@index')->name('home');
+
+
+Route::middleware('auth')->group(function() {
+    Route::prefix('/admin')->group(function() {
+        require_once ('routes/routes_admin_users.php');
+    });
+});
+
+
