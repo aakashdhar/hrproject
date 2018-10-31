@@ -3,18 +3,25 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Managers\UserManager;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class AdminController extends Controller
 {
-    public function __construct()
+    private $manager;
+
+    public function __construct(UserManager $manager)
     {
         parent::__construct();
         $this->setTitle('Admins');
+        $this->manager = $manager;
     }
 
     public function index(Request $request)
     {
+        $admins = User::with(['type'])->where('user_type_id', '=', 1)->get();
+        $this->addData('admins', $admins);
         return $this->getView('admins.index');
     }
 
@@ -25,7 +32,10 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
-        //
+        dd($request->all());
+        UserManager::validateAdmin($request->all());
+        $this->manager->postNewAdmin($request);
+        return redirect()->back();
     }
 
     public function show($id)
@@ -40,11 +50,11 @@ class AdminController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        dd($request->all(), $id);
     }
 
     public function destroy($id)
     {
-        //
+        dd($id);
     }
 }
