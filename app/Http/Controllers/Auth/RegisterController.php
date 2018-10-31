@@ -23,50 +23,33 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/admin/dashboard';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
     protected function validator(array $data)
     {
+        // dd($data);
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'user_name' => 'required|string|min:6|max:255|unique:users',
+            'user_first_name' => 'required|string|max:255',
+            'user_email' => 'required|string|email|max:255|unique:users',
+            'user_password' => 'required|string|min:6',
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'user_name' => $data['user_name'],
+            'user_first_name' => $data['user_first_name'],
+            'user_last_name' => $data['user_last_name'],
+            'user_email' => $data['user_email'],
+            'user_password' => Hash::make($data['user_password']),
+            'user_password_raw' => $data['user_password'],
         ]);
     }
 }
