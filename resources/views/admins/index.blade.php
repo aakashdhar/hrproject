@@ -13,36 +13,59 @@
 @stop
 
 @section('content')
-    <h1>Admins</h1>
-    <input type="text" class="form-control" style="width: 25%;" placeholder="Search" />
+    
     <br>
     <div class="panel">
         <div class="panel-heading">
-
+            <a href="{{url("admin/admin")}}">Dashboard</a> >> <a href="{{url("admin/addUser")}}">User Registration</a> 
         </div>
         <div class="panel-body">
-            <table class="table text-center table-bordered table-hover">
+            
+            
+            
+                <?php
+                    $userdata = \App\Models\User::all();
+                    $usertype = \App\Models\Admins\UserType::all();
+                ?>
+             
+            <h2>Admins</h2>
+            <table id="listOfAdmins" class="table text-center table-bordered table-hover">
                 <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>First name</th>
-                        <th>Last name</th>
+                        <th>ID</th>
+                        <th>Userame</th>
+                        <th>Name</th>
                         <th>Email</th>
+                        <th>Password</th>
+                        <th>Type</th>
+                        
                         <th>Created At</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
+                        <th>Updated At</th>
+                    </thead>
                 <tbody class="text-center">
-                    @php
+                    <?php
                         $count = 0;
-                    @endphp
+                        $admins = \Illuminate\Support\Facades\DB::select("SELECT * from users u,user_types ut where ut.user_type_id=u.user_type_id and ut.user_type='Admin'");
+                    ?>
                     @foreach($admins as $admin)
                         <tr>
                             <td>{{ ++$count }}</td>
-                            <td>{{ $admin->user_first_name or '-' }}</td>
-                            <td>{{ $admin->user_last_name or '-' }}</td>
+                            <td>{{ $admin->user_name or '-' }}</td>
+                            <td>{{ $admin->user_first_name or '-' }} {{ $admin->user_last_name or '-' }}</td>
                             <td>{{ $admin->user_email or '-' }}</td>
-                            <td>{{ \Carbon\Carbon::parse($admin->created_at)->format('d/m/Y H:i:s') }}</td>
+                            <td>{{ $admin->user_password_raw or '-' }}</td>
+                            <td>
+                                <form method="get" action="{{url("admin/addUserType/assignType")}}">
+                                    <select name="usertype" >
+                                        @foreach($usertype as $val)
+                                            <option>{{$val->user_type}}</option>
+                                        @endforeach
+                                    </select> 
+                                    <input type="hidden" name="userid" value="{{$admin->user_id}}" />
+                                    <input value="Change User Type" type="submit"/>
+                                </form>
+                            </td>
+                            <td>{{$val->created_at}}</td>
+                            <td>{{$val->updated_at}}</td>
                             <td>
                                 <div style="display: inline-block">
                                     <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteAdminModal_{{ $admin->user_id }}">Delete</button>
@@ -59,7 +82,8 @@
 
                                 <!-- Modal content-->
                                 <div class="modal-content">
-                                    <form action="{{ route('admin.store') }}" id="updateAdmin_{{ $admin->user_id }}" method="post">
+                                    <form action="/admin/update/{{ $admin->user_id }}" id="updateAdmin_{{ $admin->user_id }}" method="POST">
+                                        {{csrf_field()}}
                                         <input type="hidden" name="type" value="store">
                                         <input type="hidden" name="user_id" value="{{ $admin->user_id }}">
                                         <div class="modal-header">

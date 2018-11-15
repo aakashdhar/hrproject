@@ -122,7 +122,7 @@ return [
         ],
         [
             'text' => 'Employees',
-            'url'  => 'das',
+            'url'  => 'employees',
             'icon' => 'user',
         ],
         'LEAVE MANAGEMENT',
