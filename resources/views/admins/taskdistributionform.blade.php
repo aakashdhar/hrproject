@@ -20,71 +20,37 @@
             <a href="{{url("admin/admin")}}">Dashboard</a> >> <a href="{{url("admin/addUser")}}">User Registration</a> >> <a href="{{url("admin/task")}}">Task Distribution</a>
         </div>
         <div class="panel-body">
-            <h2>Registration Form</h2>
-            <form method="post" action="{{url("admin/addUser/registerUser")}}">
+            <form action="{{url("admin/task/assignTask")}}" method="post">
+                <?php
+                $data = \App\Models\User::all();
+                ?>
                 {{ csrf_field() }}
-                <table  id="registrationForm">
-
+                <table id="usertask">
+                    <caption>Assign Task to User</caption>
                     <tr>
-                        <td>Enter Username :</td>
-                        <td><input name="username" id="username" type="text" required/>
-                            <p class="username"></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Enter First Name :</td>
-                        <td><input name="userfirstname" id="userfirstname" type="text" required/>
-                            <p class="userfirstname"></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Enter Last Name :</td>
-                        <td><input name="userlastname" id="userlastname" type="text" required/>
-                            <p class="userlastname"></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <?php
-                            $usertype = \App\Models\Admins\UserType::all()->where("user_type","!=","Admin");
-                        ?>
-                        <td>Choose Type :</td>
+                        <td>Choose User :</td>
                         <td>
-                            <select name="usertype" >
-                                        @foreach($usertype as $val)
-                                            <option>{{$val->user_type}}</option>
-                                        @endforeach
-                                    </select>
-                            <p class="lastname"></p>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td>Enter Contact Number :</td>
-                        <td><input id="usercontactno" name="usercontactno" type="text" required/>
-                            <p class="usercontactno"></p>
+                            <select name="userwithid">
+                                 @foreach($data as $val)
+                                 <option>
+                                     {{$val->user_id}},{{$val->user_first_name}} {{$val->user_last_name}}
+                                 </option>
+                                 @endforeach
+                            </select>
                         </td>
                     </tr>
                     <tr>
-                        <td>Enter Residential Address :</td>
-                        <td><textarea name="useraddress" cols="20" rows="3" id="useraddress"></textarea>
-                            <p class="useraddress"></p>
+                        <td>
+                            Give task here :
+                        </td>
+                        <td>
+                            <textarea name="task" rows="4" cols="20" placeholder="State taks here..." name="taskname"></textarea>
                         </td>
                     </tr>
                     <tr>
-                        <td>Enter Email :</td>
-                        <td><input id="useremail" name="useremail" type="email" required/>
-                            <p class="email"></p>
+                        <td colspan="2">
+                            <input type="submit" class="button" value="Assign" name="assigntask">
                         </td>
-                    </tr>
-                    <tr>
-                        <td>Enter Password :</td>
-                        <td><input name="userpassword" type="text" required/>
-                            <p></p>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td colspan="2"><input type="submit" class="button" id="register" name="add" value="Add" /></td>
                     </tr>
                 </table>
             </form>

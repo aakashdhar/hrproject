@@ -85,6 +85,7 @@
 
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
+                    
                     @each('adminlte::partials.menu-item', $adminlte->menu(), 'item')
                 </ul>
                 <!-- /.sidebar-menu -->

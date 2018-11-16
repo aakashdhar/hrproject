@@ -3,16 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/config/broadcasting.php</file>
+            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/resources/views/welcome.blade.php</file>
+            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/resources/views/vendor/adminlte/partials/menu-item-top-nav.blade.php</file>
             <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/resources/views/admins/index.blade.php</file>
+            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/config/mail.php</file>
             <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/resources/views/vendor/adminlte/page.blade.php</file>
-            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/resources/views/admins/userregistrationform.blade.php</file>
+            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/config/adminlte.php</file>
+            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/config/logging.php</file>
+            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/app/Http/Controllers/HomeController.php</file>
             <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/resources/views/vendor/adminlte/partials/menu-item.blade.php</file>
             <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/routes/web.php</file>
-            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/app/Http/Controllers/admin/AdminController.php</file>
-            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/app/Http/Managers/UserManager.php</file>
-            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/resources/views/vendor/adminlte/master.blade.php</file>
-            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/resources/views/layouts/app.blade.php</file>
-            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/readme.md</file>
+            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/config/app.php</file>
+            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/config/cache.php</file>
+            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/config/view.php</file>
+            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/config/session.php</file>
+            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/config/auth.php</file>
+            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/config/services.php</file>
+            <file>file:/C:/Users/Siimteq/Documents/GitHub/hrproject/resources/views/home.blade.php</file>
         </group>
     </open-files>
 </project-private>
