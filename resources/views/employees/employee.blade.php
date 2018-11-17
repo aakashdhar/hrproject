@@ -4,18 +4,19 @@
 
 @section('content_header')
     <div class="row">
-        <div class="col-md-3"></div>
-        
+        <div class="col-md-3">
+            
+        </div>
+            
     </div>
-
 @stop
-
 @section('content')
     
     <br>
     <div class="panel">
         <div class="panel-heading">
-            <a href="{{url("admin/admin")}}">Dashboard</a> >> <a href="{{url("admin/addUser")}}">User Registration</a> 
+            <a href="{{url("admin/addUser")}}">User Registration</a> >> <a href="{{url("admin/task")}}">Task Distribution</a> >> <a href="{{url("admin/leave")}}">Leave Applications</a>
+        <br/>          
         </div>
         <?php 
         $count = 1;
@@ -62,6 +63,7 @@
                                 </div>
                             </td>
                     </tr>
+                    
                     
             <!-- Update model  -->
                         <div id="updateAdminModal_{{ $val->user_id }}" class="modal fade" role="dialog">

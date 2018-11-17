@@ -20,41 +20,62 @@
             <a href="{{url("admin/addUser")}}">User Registration</a> >> <a href="{{url("admin/task")}}">Task Distribution</a> >> <a href="{{url("admin/leave")}}">Leave Applications</a>
         </div>
         <div class="panel-body">
-            <h2>Assign Task to User</h2>
-            <form action="{{url("admin/task/assignTask")}}" method="post">
+            <h2>Applications</h2>
+        <div class="panel-body">
+                <table id="applications" class="table text-center table-bordered table-hover">
+                
                 <?php
-                $data = \App\Models\User::all();
+                                        
+                    $data = DB::table('user_holiday')
+                    ->join('users', 'user_holiday.user_id', '=', 'users.user_id')
+                    ->select('user_holiday.*')
+                    ->get();
+                    $count = 1; 
                 ?>
-                {{ csrf_field() }}
-                <table id="usertask">
+                <tr>
+                    <th>No.</th>
+                    <th>User ID</th>
+                    <th>start date</th>
+                    <th>end date</th>
                     
-                    <tr>
-                        <td>Choose User :</td>
-                        <td>
-                            <select name="userwithid">
-                                 @foreach($data as $val)
-                                 <option>
-                                     {{$val->user_id}},{{$val->user_first_name}} {{$val->user_last_name}}
-                                 </option>
-                                 @endforeach
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Give task here :
-                        </td>
-                        <td>
-                            <textarea name="task" rows="4" cols="20" placeholder="State taks here..." name="taskname"></textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <input type="submit" class="button" value="Assign" name="assigntask">
-                        </td>
-                    </tr>
-                </table>
-            </form>
+                    <th>subject</th>
+                    <th>reason</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                @if(empty($data))
+                   <tr><td>NO Applications yet</td></tr>
+                @else  
+                @foreach($data as $val)
+                <tr>
+                    <td>{{$count++}}</td>
+                    <td>{{$val->user_id}}</td>
+                    <td>{{$val->user_holiday_from}}</td>
+                    <td>{{$val->user_holiday_to}}</td>
+                    <td>{{$val->user_holiday_subject}}</td>
+                    <td>{{$val->user_holiday_reason}}</td>
+                    <td>{{$val->user_holiday_approval_status}}</td>
+                    <td>
+                        <form action="{{url('admin/leave/accept')}}?holidayid={{$val->user_holiday_id}}&id={{$val->user_id}}&start_date={{$val->user_holiday_from}}&end_date={{$val->user_holiday_to}}" method="POST">
+                             {{ csrf_field() }}
+                             <input type="hidden" name="answer" value="accept">
+                             <input type="submit" class="button" value="Accept">
+                         </form>
+                    </td>
+                    <td>
+                        <form action="{{url('admin/leave/reject')}}?holidayid={{$val->user_holiday_id}}&id={{$val->user_id}}&start_date={{$val->user_holiday_from}}&end_date={{$val->user_holiday_to}}" method="POST">
+                             {{ csrf_field() }}
+                             <input type="hidden" name="answer" value="reject">
+                             <input type="submit" class="button" class="button" value="Reject">
+                         </form>
+                    </td>
+                </tr>
+                @endforeach
+                @endif
+            </table>
+            </div>
+
+        </div>
         </div>
     </div>
 

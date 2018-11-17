@@ -1,6 +1,5 @@
 @if (is_array($item))
-    <li class="{{ $item['top_nav_class'] }}">
-        
+    <li class="{{ $item['top_nav_class'] }}">    
         @if (isset($item['submenu']))
             <ul class="dropdown-menu" role="menu">
                 @foreach($item['submenu'] as $subitem)

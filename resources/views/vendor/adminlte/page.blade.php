@@ -15,7 +15,7 @@
 
 @section('body')
     <div class="wrapper">
-
+        
         <!-- Main Header -->
         <header class="main-header">
             @if(config('adminlte.layout') == 'top-nav')
@@ -33,6 +33,7 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                         <ul class="nav navbar-nav">
+                           
                             @each('adminlte::partials.menu-item-top-nav', $adminlte->menu(), 'item')
                         </ul>
                     </div>
@@ -84,9 +85,9 @@
             <section class="sidebar">
 
                 <!-- Sidebar Menu -->
-                <ul class="sidebar-menu" data-widget="tree">
-                    
+                <ul class="sidebar-menu" data-widget="tree">              
                     @each('adminlte::partials.menu-item', $adminlte->menu(), 'item')
+                    @endeach
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>

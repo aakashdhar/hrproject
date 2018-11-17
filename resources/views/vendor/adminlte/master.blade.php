@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <?php
+        $loggeduser = \Auth::user();
+        
+        $usertype = Illuminate\Support\Facades\DB::select("select user_type_id from user_types where user_type!='Admin'");
+    ?>
+   
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@yield('title_prefix', config('adminlte.title_prefix', ''))
@@ -45,6 +51,7 @@
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+
 
 @if(config('adminlte.plugins.select2'))
     <!-- Select2 -->
