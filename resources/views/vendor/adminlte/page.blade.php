@@ -14,6 +14,44 @@
 ][config('adminlte.layout')] : '') . (config('adminlte.collapse_sidebar') ? ' sidebar-collapse ' : ''))
 
 @section('body')
+<?php
+        $loggeduser = \Auth::user();        
+        $usertypes = Illuminate\Support\Facades\DB::select("select user_type_id from user_types where user_type!='Admin'");
+?>
+
+
+
+@foreach($usertypes as $usertype)
+    @if($usertype->user_type_id == $loggeduser->user_type_id)
+        {{
+            Illuminate\Support\Facades\Config::set([
+                                                    'adminlte.menu' => [
+                                                        'USERS',
+                                                        [
+                                                            'text' => 'Employees',
+                                                            'url'  => 'employees',
+                                                            'icon' => 'user',
+                                                        ],
+                                                        'LEAVE MANAGEMENT',
+                                                        [
+                                                            'text'    => 'LEAVE MANAGEMENT',
+                                                            'url'    => 'employees/leave',
+                                                            'icon'    => 'share',
+                                                        ],
+                                                        'Task',
+                                                            [
+                                                                'text'        => 'Task Management',
+                                                                'url'         => 'employees/task',
+                                                                'icon'        => 'tasks',
+                                                            ],
+                                                    ]
+                                                ])
+        }}
+    @endif
+@endforeach
+
+
+
     <div class="wrapper">
         
         <!-- Main Header -->

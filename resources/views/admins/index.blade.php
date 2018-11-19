@@ -17,7 +17,6 @@
     <br>
     <div class="panel">
         <div class="panel-heading">
-            <a href="{{url("admin/addUser")}}">User Registration</a> >> <a href="{{url("admin/task")}}">Task Distribution</a>
         </div>
         <div class="panel-body">
             

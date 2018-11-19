@@ -1,3 +1,4 @@
+
 @extends('adminlte::page')
 
 @section('title', 'Admins')
@@ -15,10 +16,9 @@
     <br>
     <div class="panel">
         <div class="panel-heading">
-            <a href="{{url("admin/addUser")}}">User Registration</a> >> <a href="{{url("admin/task")}}">Task Distribution</a> >> <a href="{{url("admin/leave")}}">Leave Applications</a>
         </div>
         <div class="panel-body">
-            <h2></h2>
+            <h2>Leave Application Form</h2>
             <form enctype="multipart/form-data" class="form" method="post" action="{{url("employees/leave/apply")}}">
                 {{ csrf_field() }}
                 <table>

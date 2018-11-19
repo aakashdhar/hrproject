@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php
-        $loggeduser = \Auth::user();
-        
-        $usertype = Illuminate\Support\Facades\DB::select("select user_type_id from user_types where user_type!='Admin'");
-    ?>
+    
    
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -45,7 +41,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition @yield('body_class')">
-
+    
 @yield('body')
 
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>

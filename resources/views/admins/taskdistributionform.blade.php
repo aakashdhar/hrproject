@@ -17,7 +17,6 @@
     <br>
     <div class="panel">
         <div class="panel-heading">
-            <a href="{{url("admin/addUser")}}">User Registration</a> >> <a href="{{url("admin/task")}}">Task Distribution</a> >> <a href="{{url("admin/leave")}}">Leave Applications</a>
         </div>
         <div class="panel-body">
             <h2>Assign Task to User</h2>
@@ -26,12 +25,12 @@
                 $data = \App\Models\User::all();
                 ?>
                 {{ csrf_field() }}
-                <table id="usertask">
+                <table id="usertask" class="table table-borderless table-stripedl">
                     
                     <tr>
                         <td>Choose User :</td>
                         <td>
-                            <select name="userwithid">
+                            <select name="userwithid" class="form-control">
                                  @foreach($data as $val)
                                  <option>
                                      {{$val->user_id}},{{$val->user_first_name}} {{$val->user_last_name}}
@@ -45,7 +44,7 @@
                             Give task here :
                         </td>
                         <td>
-                            <textarea name="task" rows="4" cols="20" placeholder="State taks here..." name="taskname"></textarea>
+                            <textarea name="task" rows="4" cols="20" class="form-control" placeholder="State taks here..." name="taskname"></textarea>
                         </td>
                     </tr>
                     <tr>

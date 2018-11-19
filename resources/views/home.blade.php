@@ -1,10 +1,6 @@
-
 @extends('adminlte::page')
 
 @section('title', 'AdminLTE')
-<?php
-dd(config('adminlte.menu')[3]["url"],"#")
-?>d
 
 @section('content_header')
     <h1>Dashboard</h1>

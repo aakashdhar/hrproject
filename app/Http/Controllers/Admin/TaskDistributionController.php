@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class TaskDistributionController extends Controller
 {
-    public function showPage()
+    public function showPage_admin()
     {
         return view("admins.taskdistributionform");
     }
     public function assignTask(Request $request)
     {
+        
         $temp = $request->get("userwithid");
         $temp = explode(",", $temp);
         $id = $temp[0];
@@ -21,14 +22,17 @@ class TaskDistributionController extends Controller
         $data = array(
             "user_id" => $id,
             "task" => $task,
-            "start_date" => null,
-            "start_time" => null,
-            "end_time" => null,
-            "end_date" => null,
-            "statusByUser" => null,
-            "statusByAdmin" => null,
+            "start_datetime" => null,
+            "pause_datetime" => null,
+            "end_datetime" => null,
+            "task_status_user" => null,
+            "task_status_admin" => null,
         );
         DB::table("user_tasks")->insert($data); 
         return redirect()->back();  
+    }
+    public function showPage_user()
+    {
+        return view("employees.employeetask");
     }
 }

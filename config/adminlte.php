@@ -92,6 +92,12 @@ return [
             'url'         => 'home',
             'icon'        => 'home',
         ],
+        'Task',
+        [
+            'text'        => 'Task Management',
+            'url'         => 'admin/task',
+            'icon'        => 'tasks',
+        ],
         'USERS',
         [
             'text' => 'Admins',
@@ -100,7 +106,7 @@ return [
         ],
         [
             'text' => 'Employees',
-            'url'  => 'employees',
+            'url'  => 'admin/employees',
             'icon' => 'user',
         ],
         'LEAVE MANAGEMENT',

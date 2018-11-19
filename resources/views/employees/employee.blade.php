@@ -1,3 +1,4 @@
+
 @extends('adminlte::page')
 
 @section('title', 'Admins')
@@ -15,7 +16,6 @@
     <br>
     <div class="panel">
         <div class="panel-heading">
-            <a href="{{url("admin/addUser")}}">User Registration</a> >> <a href="{{url("admin/task")}}">Task Distribution</a> >> <a href="{{url("admin/leave")}}">Leave Applications</a>
         <br/>          
         </div>
         <?php 
@@ -23,7 +23,7 @@
         $userdata = \Illuminate\Support\Facades\DB::select("SELECT * from users u,user_types ut where ut.user_type_id=u.user_type_id and ut.user_type!='Admin'") 
         ?>
         <div class="panel-body">
-            <h2>Employess</h2>
+            <h2>Employees</h2>
             <table class="table text-center table-bordered table-hover">
                 <thead>
                     <th>NO.</th>
