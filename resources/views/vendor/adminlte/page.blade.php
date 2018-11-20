@@ -26,12 +26,7 @@
         {{
             Illuminate\Support\Facades\Config::set([
                                                     'adminlte.menu' => [
-                                                        'USERS',
-                                                        [
-                                                            'text' => 'Employees',
-                                                            'url'  => 'employees',
-                                                            'icon' => 'user',
-                                                        ],
+                                                        
                                                         'LEAVE MANAGEMENT',
                                                         [
                                                             'text'    => 'LEAVE MANAGEMENT',
