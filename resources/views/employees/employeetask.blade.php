@@ -1,17 +1,16 @@
-
-@extends('adminlte::page')
+      @extends('adminlte::page')
 
 @section('title', 'Admins')
 
 @section('content_header')
     <div class="row">
-        
+
    </div>
 
 @stop
 
 @section('content')
-    <!--timer-->
+     
     <br>
     <div class="panel">
               

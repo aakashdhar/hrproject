@@ -3,6 +3,7 @@
 @section('adminlte_css')
     <link rel="stylesheet"
           href="{{ asset('vendor/adminlte/dist/css/skins/skin-' . config('adminlte.skin', 'blue') . '.min.css')}} ">
+    
     @stack('css')
     @yield('css')
 @stop
@@ -14,6 +15,7 @@
 ][config('adminlte.layout')] : '') . (config('adminlte.collapse_sidebar') ? ' sidebar-collapse ' : ''))
 
 @section('body')
+
 <?php
         $loggeduser = \Auth::user();        
         $usertypes = Illuminate\Support\Facades\DB::select("select user_type_id from user_types where user_type!='Admin'");
