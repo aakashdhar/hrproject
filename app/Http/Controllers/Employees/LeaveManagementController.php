@@ -14,6 +14,10 @@ class LeaveManagementController extends Controller
     {
         return view("employees.employeeleave");
     }
+    
+    /*
+        user apllies for leave
+     *      */
     public function apply(Request $request)
     {
         $start_date = $request->get("start_date");
@@ -59,6 +63,10 @@ class LeaveManagementController extends Controller
     {
         return view("admins.acceptleave");
     }
+    
+    /*
+        admin gives responce back to employee via email about his leave app
+     *      */
     public function respond(Request $request)
     {
         $check = $request->get("answer");

@@ -9,6 +9,9 @@ use App\Models\User;
 
 class UserTypeController extends Controller
 {
+    /*
+        adding new types of user like employee
+     *      */
     public function addUserType(Request $request)
     {
 //        dd($request->all());
@@ -25,6 +28,10 @@ class UserTypeController extends Controller
         $usertype->save();
         return redirect()->back();
     }
+    
+    /*
+        assigning type to registered user
+     *      */
     public function assignUserType(Request $request)
     {
        $usertype = $request->get("usertype");

@@ -31,6 +31,9 @@ Route::get("admin/employees","Employees\EmployeesController@showPage");
 Route::post("employees/sendmail","Admin\MailController@sendmail");
 
 Route::get("employees/task","Admin\TaskDistributionController@showPage_user");
+Route::post("employees/task/start","Admin\TaskDistributionController@taskStatus");
+Route::post("employees/task/pause","Admin\TaskDistributionController@taskStatus");
+Route::post("employees/task/stop","Admin\TaskDistributionController@taskStatus");
 
 Route::get("employees/leave","Employees\LeaveManagementController@showPage");
 Route::post("employees/leave/apply","Employees\LeaveManagementController@apply");

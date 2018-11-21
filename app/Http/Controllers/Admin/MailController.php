@@ -8,6 +8,12 @@ use App\Models\User;
 
 class MailController extends Controller
 {
+    /*
+     * This function is for sending mail
+     * Recieves : $request as parameter 
+     * 
+     * 
+     */
     public function sendMail(Request $request)
     {
         $data = User::all()->where("user_id","=",$request->get("userid"))->first();

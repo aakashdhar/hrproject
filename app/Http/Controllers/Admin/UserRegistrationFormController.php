@@ -10,10 +10,17 @@ use Illuminate\Support\Facades\Hash;
 
 class UserRegistrationFormController extends Controller
 {
+    /*
+    just to show page
+     *      */
     public function showPage()
     {
         return view("admins.userregistrationform");
     }
+    
+    /*
+        adding new user
+     *      */
     public function addUser(Request $request)
     {
         

@@ -18,9 +18,6 @@
         $loggeduser = \Auth::user();        
         $usertypes = Illuminate\Support\Facades\DB::select("select user_type_id from user_types where user_type!='Admin'");
 ?>
-
-
-
 @foreach($usertypes as $usertype)
     @if($usertype->user_type_id == $loggeduser->user_type_id)
         {{
