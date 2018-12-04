@@ -1,18 +1,4 @@
-/**
- * Basic structure: TC_Class is the public class that is returned upon being called
- * 
- * So, if you do
- *      var tc = $(".timer").TimeCircles();
- *      
- * tc will contain an instance of the public TimeCircles class. It is important to
- * note that TimeCircles is not chained in the conventional way, check the
- * documentation for more info on how TimeCircles can be chained.
- * 
- * After being called/created, the public TimerCircles class will then- for each element
- * within it's collection, either fetch or create an instance of the private class.
- * Each function called upon the public class will be forwarded to each instance
- * of the private classes within the relevant element collection
- **/
+
 (function($) {
 
     var useWindow = window;
@@ -955,6 +941,7 @@
     };
 
     $.fn.TimeCircles = function(options) {
+        
         return new TC_Class(this, options);
     };
 }(jQuery));

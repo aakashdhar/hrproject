@@ -1,16 +1,8 @@
 @extends('adminlte::page')
 
-@section('title', 'Admins')
+@section('title', 'Tasks')
 
-@section('content_header')
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-9">
-            <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#newAdminModal">Add new</button>
-        </div>
-    </div>
 
-@stop
 
 @section('content')
     
@@ -20,12 +12,13 @@
         </div>
         <div class="panel-body">
             <h2>Assign Task to User</h2>
-            <form action="{{url("admin/task/assignTask")}}" method="post">
+            <form action="{{url("tasks/assignTask")}}" method="post">
                 <?php
-                $data = \App\Models\User::all();
+                $data = \Illuminate\Support\Facades\DB::table("users")->where("user_type","!=","Admin")->join("user_types","user_types.user_type_id","users.user_type_id")->select("users.user_id","users.user_first_name","users.user_last_name")->get();
+                //dd($data);
                 ?>
                 {{ csrf_field() }}
-                <table id="usertask" class="table table-borderless table-stripedl">
+                <table id="usertask" class="table tab-content table-hover table-responsive">
                     
                     <tr>
                         <td>Choose User :</td>
@@ -44,12 +37,12 @@
                             Give task here :
                         </td>
                         <td>
-                            <textarea name="task" rows="4" cols="20" class="form-control" placeholder="State taks here..." name="taskname"></textarea>
+                            <textarea name="task" rows="4" cols="20" class="form-control" name="taskname"></textarea>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input type="submit" class="button" value="Assign" name="assigntask">
+                            <input type="submit" class="btn btn-primary" value="Assign" name="assigntask">
                         </td>
                     </tr>
                 </table>
@@ -116,3 +109,6 @@
         </div>
     </div>
 @stop
+<script>
+    
+</script>

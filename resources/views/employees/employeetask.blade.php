@@ -1,16 +1,21 @@
-      @extends('adminlte::page')
+@extends('adminlte::page')
 
-@section('title', 'Admins')
+@section('title', 'Tasks')
 
 @section('content_header')
-    <div class="row">
-
-   </div>
 
 @stop
-
+<!-- start of fetch cookie value -->
+<input type="hidden" id="dateCookie" value="{{Cookie::get('date')}}" name="cookie" />
+<input type="hidden" id="timeCookie" value="{{Cookie::get('time')}}" name="cookie" />
+<!--end-->
 @section('content')
-     
+     <div class="container">
+            <?php date_default_timezone_set("Asia/Kolkata"); ?>
+            <h2>Time spent</h2>
+            <div id="DateCountdown" data-date='<?php if(!empty(Cookie::get('olddate'))) {print Cookie::get('olddate')." ".Cookie::get('oldtime');} else {print date('Y-m-d H:i:s');} ?>' style="width: 500px; height: 125px; padding: 0px; box-sizing: border-box; background-color: #E0E8EF">
+            </div>
+        </div>
     <br>
     <div class="panel">
               
@@ -39,11 +44,11 @@
                 <td>{{$count++}}</td>
                 <td>{{$val->task}}</td>
                 <td>{{$val->start_date}} {{$val->start_time}}</td>
-                <td>@if($val->statusByUser == "pause"){{$val->end_date}} {{$val->end_time}}@endif</td>
-                <td>@if($val->statusByUser == "stop"){{$val->end_date}} {{$val->end_time}}@endif</td>
+                <td>@if($val->statusByUser == "pause"){{$val->end_date}} {{$val->end_time}}@else {{'-'}} @endif</td>
+                <td>@if($val->statusByUser == "stop"){{$val->end_date}} {{$val->end_time}}@else {{'-'}} @endif</td>
                 <td>{{$val->statusByUser or "-"}}</td>
-                <td><form method="post" action="{{url("employees/task/start")}}?userid={{$data->user_id}}&taskid={{$val->task_id}}">{{csrf_field()}}<input type="submit" name="start" value="Start"></form></td>
-                <td><form method="post" action="{{url("employees/task/pause")}}?userid={{$data->user_id}}&taskid={{$val->task_id}}">{{csrf_field()}}<input type="submit" name="pause" value="Pause"></form></td>
+                <td><form method="post" action="{{url("employees/task/start")}}?userid={{$data->user_id}}&taskid={{$val->task_id}}">{{csrf_field()}}<input type="submit" name="start" class="startTimer" value="Start"></form></td>
+                <td><form method="post" action="{{url("employees/task/pause")}}?userid={{$data->user_id}}&taskid={{$val->task_id}}">{{csrf_field()}}<input type="submit" name="pause" class="stopTimer" value="Pause"></form></td>
                 <td><form method="post" action="{{url("employees/task/stop")}}?userid={{$data->user_id}}&taskid={{$val->task_id}}">{{csrf_field()}}<input type="submit" name="stop" value="Stop"></form></td>
                          
                 </td>

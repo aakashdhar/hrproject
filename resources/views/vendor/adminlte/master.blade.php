@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html>
-<head>
-    
-   
+<head>  
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@yield('title_prefix', config('adminlte.title_prefix', ''))
-@yield('title', config('adminlte.title', 'AdminLTE 2'))
-@yield('title_postfix', config('adminlte.title_postfix', ''))</title>
+    @yield('title', config('adminlte.title', 'AdminLTE 2'))
+    @yield('title_postfix', config('adminlte.title_postfix', ''))</title>
     
     
     <!-- Tell the browser to be responsive to screen width -->
@@ -19,7 +17,10 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/Ionicons/css/ionicons.min.css') }}">
     
+    <!-- stop watch starts here -->
+    <link href="{{asset('time/TimeCircles.css')}}" rel="stylesheet" type="text/css">
     
+    <!-- stop watch ends here -->
     
     
     @if(config('adminlte.plugins.select2'))
@@ -48,12 +49,71 @@
 <body class="hold-transition @yield('body_class')">
     
 @yield('body')
-
+<!-- start of fetch cookie value -->
+<input type="hidden" id="dateCookie" value="{{Cookie::get('date')}}" name="cookie" />
+<input type="hidden" id="timeCookie" value="{{Cookie::get('time')}}" name="cookie" />
+<!--end-->
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-
-
+<!--start of Stop watch JS-->
+<script src="{{ asset('time/TimeCircles.js')}}"></script>
+ <script>
+     
+            
+            
+            
+            var date;
+            var time;
+            var datetime;
+            var digitsOfDate;
+            var digitsofHours;
+            var digitsofMinutes;
+            var d = new Date();
+            var cookieDate = $('#dateCookie').val();
+            var cookieTime = $('#timeCookie').val();
+            
+             
+             
+    
+            @if(\Session::has('pause'))
+                
+                $("#DateCountdown").TimeCircles({start: false});               
+                 @php
+              \Session::forget('pause');
+              @endphp
+            
+            @else    
+                $("#DateCountdown").TimeCircles();
+            @endif
+            if(d.getDate()<10)
+                digitsOfDate = "0"+d.getDate();
+            if(d.getHours()<10)
+                digitsofHours = "0"+d.getHours();
+            if(d.getMinutes()<10)
+                digitsofMinutes = "0"+d.getMinutes();
+                
+            $(".startTimer").click(function() {
+                if(cookieDate != null)
+                {
+                    date = cookieDate;
+                    time = cookieTime;
+                }
+                else
+                {
+                    date = d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate();
+                    time = d.getHours()+":"+d.getMinutes();
+                }
+                     
+                datetime = date + ' ' + time + ':00';
+               
+                $("#DateCountdown").TimeCircles().start();
+            });
+            $(".stopTimer").click(function() {
+                $("#DateCountdown").TimeCircles().stop();
+            });
+ </script>      
+<!--end of Stop watch JS-->
 @if(config('adminlte.plugins.select2'))
     <!-- Select2 -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>

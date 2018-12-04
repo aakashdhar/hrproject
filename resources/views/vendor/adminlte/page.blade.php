@@ -25,7 +25,12 @@
         {{
             Illuminate\Support\Facades\Config::set([
                                                     'adminlte.menu' => [
-                                                        
+                                                        'GENERAL',
+                                                        [
+                                                            'text'        => 'Dashboard',
+                                                            'url'         => 'home',
+                                                            'icon'        => 'home',
+                                                        ],
                                                         'LEAVE MANAGEMENT',
                                                         [
                                                             'text'    => 'LEAVE MANAGEMENT',
@@ -119,6 +124,7 @@
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">              
                     @each('adminlte::partials.menu-item', $adminlte->menu(), 'item')
+                    
                     @endeach
                 </ul>
                 <!-- /.sidebar-menu -->

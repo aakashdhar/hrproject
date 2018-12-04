@@ -18,15 +18,15 @@ Route::get('admin/addUserType/assignType', 'Admin\UserTypeController@assignUserT
 Route::get("admin/addUser","Admin\UserRegistrationFormController@showPage");
 Route::post("admin/addUser/registerUser","Admin\UserRegistrationFormController@addUser");
 
-Route::get("admin/task","Admin\TaskDistributionController@showPage_admin");
-Route::post("admin/task/assignTask","Admin\TaskDistributionController@assignTask");
+Route::get("tasks","Admin\TaskDistributionController@showPage_admin");
+Route::post("tasks/assignTask","Admin\TaskDistributionController@assignTask");
 
 Route::get("admin/leave","Employees\LeaveManagementController@showPage_admin");
 Route::post("admin/leave/accept","Employees\LeaveManagementController@respond");
 Route::post("admin/leave/reject","Employees\LeaveManagementController@respond");
 
 
-Route::get("admin/employees","Employees\EmployeesController@showPage");
+Route::get("employees","Employees\EmployeesController@showPage");
 
 Route::post("employees/sendmail","Admin\MailController@sendmail");
 

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Admins')
+@section('title', 'Leaves')
 
 @section('content_header')
     <div class="row">
