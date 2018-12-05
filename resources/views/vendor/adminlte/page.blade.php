@@ -20,8 +20,10 @@
         $loggeduser = \Auth::user();        
         $usertypes = Illuminate\Support\Facades\DB::select("select user_type_id from user_types where user_type!='Admin'");
 ?>
+<!--changing adminlte.php for users to restrict them-->
 @foreach($usertypes as $usertype)
     @if($usertype->user_type_id == $loggeduser->user_type_id)
+    
         {{
             Illuminate\Support\Facades\Config::set([
                                                     'adminlte.menu' => [

@@ -69,14 +69,14 @@
             var cookieDate = $('#dateCookie').val();
             var cookieTime = $('#timeCookie').val();
     
-            
+            $("#DateCountdown").TimeCircles().start();
             if(d.getDate()<10)
                 digitsOfDate = "0"+d.getDate();
             if(d.getHours()<10)
                 digitsofHours = "0"+d.getHours();
             if(d.getMinutes()<10)
                 digitsofMinutes = "0"+d.getMinutes();
-                
+            <!--start watch-->    
             $(".startTimer").click(function() {
                 if(cookieDate != null)
                 {
@@ -93,6 +93,8 @@
                
                 $("#DateCountdown").TimeCircles().start();
             });
+            <!--stop or pause watch--> 
+            
             $(".stopTimer,.pauseTimer").click(function() {
                 $("#DateCountdown").TimeCircles().stop();
             });

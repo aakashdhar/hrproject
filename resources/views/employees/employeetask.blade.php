@@ -38,7 +38,7 @@
                 $task = Illuminate\Support\Facades\DB::select("select * from user_tasks where user_id=$data->user_id");
                 $count = 1;
                 ?>
-                
+            <!--start action buttons-->    
             @foreach($task as $val)
             <tr>
                 <td>{{$count++}}</td>
@@ -63,7 +63,8 @@
                 @else
                 <td><form method="post" action="{{url("employees/task/stop")}}?userid={{$data->user_id}}&taskid={{$val->task_id}}">{{csrf_field()}}<input type="submit" name="stop" class="stopTimer {{$val->task_id}}" value="Stop" disabled="disabled"></form></td>
                 @endif
-                @endif         
+                @endif       
+                <!--end of action buttons-->
                 </td>
                 <td>{{$val->status_admin or "-"}}</td>   
                 </tr>

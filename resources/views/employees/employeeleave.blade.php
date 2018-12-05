@@ -18,6 +18,7 @@
         </div>
         <div class="panel-body">
             <h2>Leave Application Form</h2>
+            
             <form enctype="multipart/form-data" class="form" method="post" action="{{url("employees/leave/apply")}}">
                 {{ csrf_field() }}
                 <table>
