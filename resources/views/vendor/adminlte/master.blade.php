@@ -58,11 +58,7 @@
 <script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!--start of Stop watch JS-->
 <script src="{{ asset('time/TimeCircles.js')}}"></script>
- <script>
-     
-            
-            
-            
+ <script>       
             var date;
             var time;
             var datetime;
@@ -72,20 +68,8 @@
             var d = new Date();
             var cookieDate = $('#dateCookie').val();
             var cookieTime = $('#timeCookie').val();
-            
-             
-             
     
-            @if(\Session::has('pause'))
-                
-                $("#DateCountdown").TimeCircles({start: false});               
-                 @php
-              \Session::forget('pause');
-              @endphp
             
-            @else    
-                $("#DateCountdown").TimeCircles();
-            @endif
             if(d.getDate()<10)
                 digitsOfDate = "0"+d.getDate();
             if(d.getHours()<10)
@@ -109,7 +93,7 @@
                
                 $("#DateCountdown").TimeCircles().start();
             });
-            $(".stopTimer").click(function() {
+            $(".stopTimer,.pauseTimer").click(function() {
                 $("#DateCountdown").TimeCircles().stop();
             });
  </script>      

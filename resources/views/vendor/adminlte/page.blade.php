@@ -33,11 +33,11 @@
                                                         ],
                                                         'LEAVE MANAGEMENT',
                                                         [
-                                                            'text'    => 'LEAVE MANAGEMENT',
+                                                            'text'    => 'Leave Management',
                                                             'url'    => 'employees/leave',
                                                             'icon'    => 'share',
                                                         ],
-                                                        'Task',
+                                                        'TASK',
                                                             [
                                                                 'text'        => 'Task Management',
                                                                 'url'         => 'employees/task',

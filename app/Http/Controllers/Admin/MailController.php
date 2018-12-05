@@ -8,12 +8,8 @@ use App\Models\User;
 
 class MailController extends Controller
 {
-    /*
-     * This function is for sending mail
-     * Recieves : $request as parameter 
-     * 
-     * 
-     */
+    //this function is for sending password in mail to user, ID&Password of sender is hardcoded in .env file
+    
     public function sendMail(Request $request)
     {
         $data = User::all()->where("user_id","=",$request->get("userid"))->first();
@@ -24,7 +20,6 @@ class MailController extends Controller
             $massage->to($data->user_email)->subject("Siimteq Password");
             $massage->from("vajakishan92@gmail.com","Kishan Vaja");
             });
-
         return redirect()->back();
     }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Managers\UserManager;
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Admins\Admin;
 use App\Models\Constants\UserType;
 use Illuminate\Support\Facades\Hash;

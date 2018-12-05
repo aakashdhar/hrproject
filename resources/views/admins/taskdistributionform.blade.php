@@ -15,10 +15,10 @@
             <form action="{{url("tasks/assignTask")}}" method="post">
                 <?php
                 $data = \Illuminate\Support\Facades\DB::table("users")->where("user_type","!=","Admin")->join("user_types","user_types.user_type_id","users.user_type_id")->select("users.user_id","users.user_first_name","users.user_last_name")->get();
-                //dd($data);
+                
                 ?>
                 {{ csrf_field() }}
-                <table id="usertask" class="table tab-content table-hover table-responsive">
+                <table id="usertask" class="table tab-content table-responsive">
                     
                     <tr>
                         <td>Choose User :</td>
@@ -47,6 +47,56 @@
                     </tr>
                 </table>
             </form>
+        </div>
+        
+        <div class="panel-body">
+            <h2>List of Users with Tasks</h2>
+            <?php
+                $data = Illuminate\Support\Facades\DB::table("user_tasks")
+                        ->join("users","users.user_id","user_tasks.user_id")
+                        ->select("user_tasks.*","users.user_id","users.user_first_name","users.user_last_name")
+                        ->get();
+                $user = \Auth::user();
+                    ?>
+            
+                <table class="table tab-content table-responsive">
+                    <thead><th>User ID</th>
+                    <th>Name</th>
+                    <th>Task</th>
+                    <th>Start Date & Time</th>
+                    <th>End Date & Time</th>
+                    <th>Status By User</th>
+                    <th colspan="2">Status By Admin</th>
+                    </thead>
+                    <tbody>
+                    @foreach($data as $val)
+                    <tr>
+                        <td>{{$val->user_id}}</td>
+                        <td>{{$val->user_first_name}} {{$val->user_last_name}}</td>
+                        <td>{{$val->task}}</td>
+                        <td>{{$val->start_date}} {{$val->start_time}}</td>
+                        <td>{{$val->end_date}} {{$val->end_time}}</td>
+                        <td>{{$val->status_user}}</td>
+                        <td>
+                            <form method="post" action="tasks/statusByAdmin?taskid={{$val->task_id}}&userid={{$user->user_id}}">
+                                {{csrf_field()}}
+                                <input type="hidden" name="status" value="reassign" />
+                                <input type="submit" name="adminanswer" value="Reassign"  class="btn button"/>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="post" action="tasks/statusByAdmin?taskid={{$val->task_id}}&userid={{$user->user_id}}">
+                                {{csrf_field()}}                                
+                                <input type="hidden" name="status" value="done" />
+                                <input type="submit" name="adminanswer" value="Complete"  class="btn btn-primary"/>
+                            </form>
+                        </td>
+                        
+                    </tr>
+                    </tbody>
+                    @endforeach
+                </table>
+            
         </div>
     </div>
 

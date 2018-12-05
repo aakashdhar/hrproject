@@ -10,14 +10,13 @@ use Illuminate\Support\Facades\DB;
 
 class LeaveManagementController extends Controller
 {
-    public function showPage(Request $request)
+    // this function is just to show view to user
+    public function showPage_user(Request $request)
     {
         return view("employees.employeeleave");
     }
-    
-    /*
-        user apllies for leave
-     *      */
+   
+    //this function is for applying leave to admin and it send mail notification as well
     public function apply(Request $request)
     {
         $start_date = $request->get("start_date");
@@ -32,19 +31,19 @@ class LeaveManagementController extends Controller
         
         $data = User::all()->where("user_id",'=',\Auth::user()->user_id)->first();
        
-            $from_content="User";
-            $to_content="User";
-            $body="Please consider my Leave :<br>"
-                    . "ID : $data->user_id"
-                    . "Name : $data->user_first_name $data->user_last_name"
-                    . "Start Date : $start_date<br>"
-                    . "End Date   : $end_date<br>"        
-                    . "Subject    : $subject<br>"
-                    . "reason    : $reason";
-            Mail::send('employees.email',["from_content"=>$from_content,"to_content"=>$to_content,'body'=>$body],function($massage) use($data){
-            $massage->to("vajakishan92@gmail.com","To Kishan Vaja")->subject("Leave Application");
-            $massage->from($data->user_email,$data->user_first_name." ".$data->user_last_name);
-            });
+        $from_content="User";
+        $to_content="User";
+        $body="Please consider my Leave :<br>"
+                . "ID : $data->user_id"
+                . "Name : $data->user_first_name $data->user_last_name"
+                . "Start Date : $start_date<br>"
+                . "End Date   : $end_date<br>"        
+                . "Subject    : $subject<br>"
+                . "reason    : $reason";
+        Mail::send('employees.email',["from_content"=>$from_content,"to_content"=>$to_content,'body'=>$body],function($massage) use($data){
+        $massage->to("vajakishan92@gmail.com","To Kishan Vaja")->subject("Leave Application");
+        $massage->from($data->user_email,$data->user_first_name." ".$data->user_last_name);
+        });
         
         
         $dataholiday = array(
@@ -59,14 +58,13 @@ class LeaveManagementController extends Controller
         return redirect()->back();
     }
     
+    //this function is just to show view to admin
     public function showPage_admin(Request $request)
     {
         return view("admins.acceptleave");
     }
     
-    /*
-        admin gives responce back to employee via email about his leave app
-     *      */
+    // admin gives responce back to employee via email about his leave app
     public function respond(Request $request)
     {
         $check = $request->get("answer");

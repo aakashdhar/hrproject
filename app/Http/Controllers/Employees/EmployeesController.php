@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Hash;
 
 class EmployeesController extends Controller
 {
+    //this function is just to show view
     public function showPage()
     {
         return view("employees.employee");
     }
+    //function is for updating employee 
     public function updateEmployee($id,Request $request) {
         $user = User::find($id);
         
@@ -29,6 +31,8 @@ class EmployeesController extends Controller
         $res = $user->save();
         return redirect()->back();
     }
+    
+    //this function is for delete employee
     public function deleteEmployee($id,Request $request) {
         
         $user = User::find($id);

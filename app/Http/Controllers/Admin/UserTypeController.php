@@ -9,12 +9,9 @@ use App\Models\User;
 
 class UserTypeController extends Controller
 {
-    /*
-        adding new types of user like employee
-     *      */
+    //this function is for adding type of user
     public function addUserType(Request $request)
     {
-//        dd($request->all());
         $this->validate($request, [
             'usertype' => 'required',
             'userstatus' => 'required'
@@ -29,16 +26,12 @@ class UserTypeController extends Controller
         return redirect()->back();
     }
     
-    /*
-        assigning type to registered user
-     *      */
+    //this function is for assigning type to user
     public function assignUserType(Request $request)
     {
-       $usertype = $request->get("usertype");
-       
+       $usertype = $request->get("usertype");   
        $usertypes = UserType::select("user_type_id")->where("user_type","=","$usertype")->first();
-       $user = \Auth::user();                            
-      
+       $user = \Auth::user();                                  
        $user_update = User::find($request->get("userid"));
        $user_update->user_type_id = $usertypes->user_type_id;
        $user_update->save();

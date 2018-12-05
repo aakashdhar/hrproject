@@ -21,16 +21,16 @@
         <div class="panel-body">
             <h2>Applications</h2>
         <div class="panel-body">
-                <table id="applications" class="table text-center table-bordered table-hover">
-                
-                <?php
-                                        
-                    $data = DB::table('user_holiday')
-                    ->join('users', 'user_holiday.user_id', '=', 'users.user_id')
-                    ->select('user_holiday.*')
-                    ->get();
-                    $count = 1; 
-                ?>
+            <table id="applications" class="table text-center table-bordered table-hover">
+            <!--start pgfetching user's holiday details with personal details-->
+                <?php                       
+                $data = DB::table('user_holiday')
+                ->join('users', 'user_holiday.user_id', '=', 'users.user_id')
+                ->select('user_holiday.*')
+                ->get();
+                $count = 1; 
+            ?>
+            <!--end-->
                 <tr>
                     <th>No.</th>
                     <th>User ID</th>
@@ -45,6 +45,7 @@
                 @if(empty($data))
                    <tr><td>NO Applications yet</td></tr>
                 @else  
+                <!--start of loop retrieving the data -->
                 @foreach($data as $val)
                 <tr>
                     <td>{{$count++}}</td>
@@ -70,6 +71,7 @@
                     </td>
                 </tr>
                 @endforeach
+                <!--end of loop-->
                 @endif
             </table>
             </div>

@@ -10,7 +10,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/admin/dashboard', 'HomeController@index')->name('home'); 
+Route::get('home', 'HomeController@index'); 
 
 Route::get('admin/addUserType', 'Admin\UserTypeController@addUserType');
 Route::get('admin/addUserType/assignType', 'Admin\UserTypeController@assignUserType');
@@ -20,6 +20,7 @@ Route::post("admin/addUser/registerUser","Admin\UserRegistrationFormController@a
 
 Route::get("tasks","Admin\TaskDistributionController@showPage_admin");
 Route::post("tasks/assignTask","Admin\TaskDistributionController@assignTask");
+Route::post("tasks/statusByAdmin","Admin\TaskDistributionController@taskStatusByAdmin");
 
 Route::get("admin/leave","Employees\LeaveManagementController@showPage_admin");
 Route::post("admin/leave/accept","Employees\LeaveManagementController@respond");
@@ -35,7 +36,7 @@ Route::post("employees/task/start","Admin\TaskDistributionController@taskStatus"
 Route::post("employees/task/pause","Admin\TaskDistributionController@taskStatus");
 Route::post("employees/task/stop","Admin\TaskDistributionController@taskStatus");
 
-Route::get("employees/leave","Employees\LeaveManagementController@showPage");
+Route::get("employees/leave","Employees\LeaveManagementController@showPage_user");
 Route::post("employees/leave/apply","Employees\LeaveManagementController@apply");
 
 
