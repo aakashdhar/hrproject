@@ -37,7 +37,7 @@
                             Give task here :
                         </td>
                         <td>
-                            <textarea name="task" rows="4" cols="20" class="form-control" name="taskname"></textarea>
+                            <textarea name="task" rows="4" cols="20" class="form-control" name="taskname" required></textarea>
                         </td>
                     </tr>
                     <tr>
