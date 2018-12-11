@@ -65,8 +65,8 @@ class TaskDistributionController extends Controller
 
             return redirect()
                         ->back()
-                        ->withCookie(cookie()->forever("date",$start_date))
-                        ->withCookie(cookie()->forever("time", $start_time));
+                        ->withCookie(cookie("date",$start_date))
+                        ->withCookie(cookie("time",$start_time));
                         
         }
         else
@@ -85,13 +85,13 @@ class TaskDistributionController extends Controller
                 
                 DB::update("update user_tasks set status_user='pause',end_date='$start_date',end_time='$start_time' where task_id=$taskid && user_id=$userid");
                 
-                \Session::put('pause','pause');
+                
                 return redirect()
                         ->back()
-                        ->withCookie(cookie()->forever("date",$start_date))
-                        ->withCookie(cookie()->forever("time", $start_time))
-                        ->withCookie(cookie()->forever("olddate",$olddate))
-                        ->withCookie(cookie()->forever("oldtime", $oldtime));
+                        ->withCookie(cookie("date",$start_date))
+                        ->withCookie(cookie("time",$start_time))
+                        ->withCookie(cookie("olddate",$olddate))
+                        ->withCookie(cookie("oldtime", $oldtime));
                 
             }
             if($request->get("stop") == ("Stop"))
@@ -103,14 +103,14 @@ class TaskDistributionController extends Controller
                     $olddate = null;
                     $oldtime = null;
                 }
-                \Session::put('stop','stop');
+                
                 DB::update("update user_tasks set status_user='stop',end_date='$start_date',end_time='$start_time' where task_id=$taskid && user_id=$userid");
                 return redirect()
                         ->back()
-                        ->withCookie(cookie()->forever("date",$start_date))
-                        ->withCookie(cookie()->forever("time", $start_time))
-                        ->withCookie(cookie()->forever("olddate",$olddate))
-                        ->withCookie(cookie()->forever("oldtime", $oldtime));
+                        ->withCookie(cookie("date",$start_date))
+                        ->withCookie(cookie("time", $start_time))
+                        ->withCookie(cookie("olddate",$olddate))
+                        ->withCookie(cookie("oldtime", $oldtime));
             }
         }
     }
@@ -118,14 +118,16 @@ class TaskDistributionController extends Controller
     //admin sets status, reassign or comeplete
     public function taskStatusByAdmin(Request $request)
     {
+        
         $user_id = $request->get("userid");
         $task_id = $request->get("taskid");        
         $adminanswer = $request->get("adminanswer");
+        
         if($adminanswer == "Reassign")
         {
-//            DB::update("update user_tasks set status_admin='reassign',status_user='start' where user_id=$user_id and task_id=$task_id");
             
-            DB::table('user_tasks')->where('user_id','=',$user_id)->where('task_id','=',$task_id)->update(['status_admin'=>'reassign','status_user'=>'start']);
+            //DB::update("update user_tasks set status_admin='reassign',status_user=null where user_id=$user_id and task_id=$task_id");
+            DB::table('user_tasks')->where('user_id','=',$user_id)->where('task_id','=',$task_id)->update(['status_admin'=>'reassign','status_user'=>null]);
         }
         if($adminanswer == "Complete")
         {

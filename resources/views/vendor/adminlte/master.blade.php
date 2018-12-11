@@ -69,7 +69,7 @@
             var cookieDate = $('#dateCookie').val();
             var cookieTime = $('#timeCookie').val();
     
-            $("#DateCountdown").TimeCircles().start();
+            $("#DateCountdown").TimeCircles();
             if(d.getDate()<10)
                 digitsOfDate = "0"+d.getDate();
             if(d.getHours()<10)
@@ -78,20 +78,16 @@
                 digitsofMinutes = "0"+d.getMinutes();
             <!--start watch-->    
             $(".startTimer").click(function() {
-                if(cookieDate != null)
-                {
-                    date = cookieDate;
-                    time = cookieTime;
-                }
-                else
-                {
+                
                     date = d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate();
                     time = d.getHours()+":"+d.getMinutes();
-                }
+                    
                      
                 datetime = date + ' ' + time + ':00';
                
                 $("#DateCountdown").TimeCircles().start();
+                document.cookie = name+'=date; content=; path=/';
+                document.cookie = name+'=time; content=; path=/';
             });
             <!--stop or pause watch--> 
             

@@ -53,10 +53,12 @@
             <h2>List of Users with Tasks</h2>
             <?php
                 $data = Illuminate\Support\Facades\DB::table("user_tasks")
+                        ->where("users.user_type_id","!=",1)
                         ->join("users","users.user_id","user_tasks.user_id")
                         ->select("user_tasks.*","users.user_id","users.user_first_name","users.user_last_name")
                         ->get();
                 $user = \Auth::user();
+                
                     ?>
             
                 <table class="table tab-content table-responsive">
@@ -71,6 +73,7 @@
                     <tbody>
                     @foreach($data as $val)
                     <tr>
+                        
                         <td>{{$val->user_id}}</td>
                         <td>{{$val->user_first_name}} {{$val->user_last_name}}</td>
                         <td>{{$val->task}}</td>
@@ -78,14 +81,14 @@
                         <td>{{$val->end_date}} {{$val->end_time}}</td>
                         <td>{{$val->status_user}}</td>
                         <td>
-                            <form method="post" action="tasks/statusByAdmin?taskid={{$val->task_id}}&userid={{$user->user_id}}">
+                            <form method="post" action="tasks/statusByAdmin?taskid={{$val->task_id}}&userid={{$val->user_id}}">
                                 {{csrf_field()}}
                                 <input type="hidden" name="status" value="reassign" />
                                 <input type="submit" name="adminanswer" value="Reassign"  class="btn button"/>
                             </form>
                         </td>
                         <td>
-                            <form method="post" action="tasks/statusByAdmin?taskid={{$val->task_id}}&userid={{$user->user_id}}">
+                            <form method="post" action="tasks/statusByAdmin?taskid={{$val->task_id}}&userid={{$val->user_id}}">
                                 {{csrf_field()}}                                
                                 <input type="hidden" name="status" value="done" />
                                 <input type="submit" name="adminanswer" value="Complete"  class="btn btn-primary"/>
