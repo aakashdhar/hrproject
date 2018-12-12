@@ -15,11 +15,15 @@ class MailController extends Controller
         $data = User::all()->where("user_id","=",$request->get("userid"))->first();
             $from_content="admin";
             $to_content="admin";
-            $body="Your Password is :".$data->user_password_raw;
+            $body = "Your Username & Password for SiimteqHR are below :<br/>";
+            $body = "Username :".$data->user_name."<br/>";
+            $body=$body."Password :".$data->user_password_raw;
             Mail::send('employees.email',["from_content"=>$from_content,"to_content"=>$to_content,'body'=>$body],function($massage) use($data){
-            $massage->to($data->user_email)->subject("Siimteq Password");
+            $massage->to($data->user_email)
+            ->subject("SiimteqHR Password");
             $massage->from("vajakishan92@gmail.com","Kishan Vaja");
             });
+            
         return redirect()->back();
     }
 }

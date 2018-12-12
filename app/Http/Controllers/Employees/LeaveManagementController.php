@@ -30,12 +30,12 @@ class LeaveManagementController extends Controller
             $request->file("file")->store("upload");
         
         $data = User::all()->where("user_id",'=',\Auth::user()->user_id)->first();
-       
+        
         $from_content="User";
         $to_content="User";
         $body="Please consider my Leave :<br>"
-                . "ID : $data->user_id"
-                . "Name : $data->user_first_name $data->user_last_name"
+                . "ID : $data->user_id<br>"
+                . "Name : $data->user_first_name $data->user_last_name<br>"
                 . "Start Date : $start_date<br>"
                 . "End Date   : $end_date<br>"        
                 . "Subject    : $subject<br>"
@@ -50,7 +50,8 @@ class LeaveManagementController extends Controller
             "user_id" => $data->user_id,
             "user_holiday_from" => $start_date,
             "user_holiday_to" => $end_date,
-            "user_holiday_doc"=> "C:\Users\Siimteq\Documents\GitHub\hrproject\storage\app\upload",
+            "user_holiday_docname"=>$request->file("file")->hashName(),
+            "user_holiday_doc"=> "C:/Users/Hp/Documents/GitHub/hrproject/storage/app/upload",
             "user_holiday_subject" => $subject,
             "user_holiday_reason" => $reason
         );      

@@ -1,15 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Users')
+@section('title', 'Admins')
 
 @section('content_header')
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-9">
-            <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#newAdminModal">Add new</button>
-        </div>
-    </div>
-
+    
 @stop
 
 @section('content')

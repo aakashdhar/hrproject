@@ -92,9 +92,9 @@ return [
             'url'         => 'home',
             'icon'        => 'home',
         ],
-        'Task',
+        'TASKS MANAGEMENT',
         [
-            'text'        => 'Task Management',
+            'text'        => 'Tasks',
             'url'         => 'tasks',
             'icon'        => 'tasks',
         ],
@@ -111,42 +111,43 @@ return [
         ],
         'LEAVE MANAGEMENT',
         [
-            'text'    => 'Multilevel',
-            'icon'    => 'share',
-            'submenu' => [
-                [
-                    'text' => 'Level One',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'Level One',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Level Two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'Level Two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'Level One',
-                    'url'  => '#',
-                ],
-            ],
+            'text'    => 'Leave Applications',
+            'icon'    => 'sign-out',//'share',
+            'url'     =>  'leaves'
+            // 'submenu' => [
+            //     [
+            //         'text' => 'Level One',
+            //         'url'  => '#',
+            //     ],
+            //     [
+            //         'text'    => 'Level One',
+            //         'url'     => '#',
+            //         'submenu' => [
+            //             [
+            //                 'text' => 'Level Two',
+            //                 'url'  => '#',
+            //             ],
+            //             [
+            //                 'text'    => 'Level Two',
+            //                 'url'     => '#',
+            //                 'submenu' => [
+            //                     [
+            //                         'text' => 'Level Three',
+            //                         'url'  => '#',
+            //                     ],
+            //                     [
+            //                         'text' => 'Level Three',
+            //                         'url'  => '#',
+            //                     ],
+            //                 ],
+            //             ],
+            //         ],
+            //     ],
+            //     [
+            //         'text' => 'Level One',
+            //         'url'  => '#',
+            //     ],
+            // ],
         ],
         'ATTENDANCE MANAGEMENT',
         [

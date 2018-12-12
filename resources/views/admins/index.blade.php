@@ -60,7 +60,7 @@
                                         @endforeach
                                     </select> 
                                     <input type="hidden" name="userid" value="{{$admin->user_id}}" />
-                                    <input value="Change User Type" type="submit"/>
+                                    <input value="Change User Type" class="btn btn-default" type="submit"/>
                                 </form>
                             </td>
                             <td>{{$val->created_at}}</td>
@@ -93,7 +93,7 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <label for="user_name">User name</label>
-                                                    <input type="text" name="user_name" id="user_name" value="{{ $admin->user_name }}" class="form-control" placeholder="First name" required>
+                                                    <input type="text" name="user_name" id="user_name" value="{{ $admin->user_name }}" class="form-control" placeholder="User name" required>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="user_first_name">First name</label>

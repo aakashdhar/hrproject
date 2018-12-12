@@ -3,12 +3,7 @@
 @section('title', 'Employees')
 
 @section('content_header')
-    <div class="row">
-        <div class="col-md-3">
-            
-        </div>
-            
-    </div>
+    
 @stop
 @section('content')
     
@@ -50,7 +45,7 @@
                             <form action="{{url('employees/sendmail')}}" method="post">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="userid" value="{{$val->user_id}}">
-                                <input type="submit" value="Send password">
+                                <input type="submit" class="btn" value="Send password">
                             </form>
                         </td>
                         <td>
@@ -60,7 +55,7 @@
                                 <div style="display: inline-block">
                                     <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#updateAdminModal_{{ $val->user_id }}">Update</button>
                                 </div>
-                            </td>
+                        </td>
                     </tr>
                     
                     

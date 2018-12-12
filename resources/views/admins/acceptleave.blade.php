@@ -3,12 +3,7 @@
 @section('title', 'Leaves')
 
 @section('content_header')
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-9">
-            <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#newAdminModal">Add new</button>
-        </div>
-    </div>
+    
 
 @stop
 
@@ -28,6 +23,7 @@
                 ->join('users', 'user_holiday.user_id', '=', 'users.user_id')
                 ->select('user_holiday.*')
                 ->get();
+                
                 $count = 1; 
             ?>
             <!--end-->
@@ -39,6 +35,7 @@
                     
                     <th>subject</th>
                     <th>reason</th>
+                    <th>Medical Document</th>
                     <th>Status</th>
                     <th></th>
                 </tr>
@@ -53,20 +50,21 @@
                     <td>{{$val->user_holiday_from}}</td>
                     <td>{{$val->user_holiday_to}}</td>
                     <td>{{$val->user_holiday_subject}}</td>
-                    <td>{{$val->user_holiday_reason}}</td>
+                    <td>{{ $val->user_holiday_reason }}</td>
+                    <td><img src="{{ $val->user_holiday_doc }}/{{ $val->user_holiday_docname }}" /></td> 
                     <td>{{$val->user_holiday_approval_status}}</td>
                     <td>
                         <form action="{{url('admin/leave/accept')}}?holidayid={{$val->user_holiday_id}}&id={{$val->user_id}}&start_date={{$val->user_holiday_from}}&end_date={{$val->user_holiday_to}}" method="POST">
                              {{ csrf_field() }}
                              <input type="hidden" name="answer" value="accept">
-                             <input type="submit" class="button" value="Accept">
+                             <input type="submit" class="btn btn-primary" value="Accept">
                          </form>
                     </td>
                     <td>
                         <form action="{{url('admin/leave/reject')}}?holidayid={{$val->user_holiday_id}}&id={{$val->user_id}}&start_date={{$val->user_holiday_from}}&end_date={{$val->user_holiday_to}}" method="POST">
                              {{ csrf_field() }}
                              <input type="hidden" name="answer" value="reject">
-                             <input type="submit" class="button" class="button" value="Reject">
+                             <input type="submit" class="btn button" class="button" value="Reject">
                          </form>
                     </td>
                 </tr>

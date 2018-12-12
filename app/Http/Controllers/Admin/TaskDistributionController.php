@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Session;
 
 class TaskDistributionController extends Controller
 {
@@ -51,66 +52,98 @@ class TaskDistributionController extends Controller
     //when stop it stops with system date
     public function taskStatus(Request $request)
     {
-        date_default_timezone_set("Asia/Kolkata");
         $taskid = $request->get("taskid");
         $userid = $request->get("userid");
-            $start_date = date("Y-m-d");
-            $start_time = date('H:i:s');
+        date_default_timezone_set("Asia/Kolkata");
+        $start_date = null;
+        $start_time = null;
+        
+        
+        
         
         if($request->get("start") == ("Start"))
         {
-            DB::update("update user_tasks set status_user='start',start_date='$start_date',start_time='$start_time' where task_id=$taskid && user_id=$userid");
-            DB::update("update user_tasks set status_user='pause',end_date='$start_date',end_time='$start_time' where task_id!=$taskid && user_id=$userid");
+                
+            $data = DB::select('select start_date,start_time from user_tasks where user_id='.$userid.' and task_id='.$taskid);
+            
+            if(empty($data[0]->start_date))
+            {
+                
+                $start_date = date("Y-m-d");
+                $start_time = date('H:i:s');
+            }
+            else{
+               
+                $start_date = $data[0]->start_date;
+                $start_time = $data[0]->start_time;
+            }   
+            
            
-
-            return redirect()
-                        ->back()
-                        ->withCookie(cookie("date",$start_date))
-                        ->withCookie(cookie("time",$start_time));
+            DB::update("update user_tasks set status_user='start',start_date='$start_date',start_time='$start_time' where task_id=$taskid and user_id=$userid");
+            //other task will be setted to pause
+            DB::update("update user_tasks set status_user='pause',end_date='$start_date',end_time='$start_time' where task_id!=$taskid and user_id=$userid and status_user!='stop'");
+            Session::forget("usertaskdata");
+            Session::push('usertaskdata', ['userid'=>$userid,'taskid'=>$taskid,'date'=>$start_date,'time'=>$start_time]);
+            return redirect()->back();
                         
         }
         else
         {
             if($request->get("pause") == ("Pause"))
             {
+                
                 $olddate = null;
                 $oldtime = null;
-                
-                if(!empty(Cookie::get("date")))
+                $start_date = date("Y-m-d");
+                $start_time = date('H:i:s');
+                if(!empty(Session::get("usertaskdata")))
                 {
-                    $olddate = Cookie::get("date");
-                    $oldtime = Cookie::get("time");
+                    $data = Session::get("usertaskdata");
+                    if($data[0]["taskid"]==$taskid)
+                    {
+                        $olddate = $data[0]["date"];
+                        $oldtime = $data[0]["time"];
+                    }
                     
                 }
                 
                 DB::update("update user_tasks set status_user='pause',end_date='$start_date',end_time='$start_time' where task_id=$taskid && user_id=$userid");
-                
-                
+                Session::forget("usertaskdata");
+                Session::push('usertaskdata', ['userid'=>$userid,'taskid'=>$taskid,'date'=>$olddate,'time'=>$oldtime]);
+               
                 return redirect()
-                        ->back()
-                        ->withCookie(cookie("date",$start_date))
-                        ->withCookie(cookie("time",$start_time))
-                        ->withCookie(cookie("olddate",$olddate))
-                        ->withCookie(cookie("oldtime", $oldtime));
+                        ->back();
+                        // ->withCookie(cookie("date",$start_date))
+                        // ->withCookie(cookie("time",$start_time))
+                        // ->withCookie(cookie("olddate",$olddate))
+                        // ->withCookie(cookie("oldtime", $oldtime));
                 
             }
             if($request->get("stop") == ("Stop"))
             {
                 $olddate = null;
                 $oldtime = null;
-                if(!empty(Cookie::get("date")))
+                $start_date = date("Y-m-d");
+                $start_time = date('H:i:s');
+                if(!empty(Session::get("usertaskdata")))
                 {
-                    $olddate = null;
-                    $oldtime = null;
+                    $data = Session::get("usertaskdata");
+                    if($data[0]["taskid"]==$taskid)
+                    {
+                        $olddate = $data[0]["date"];
+                        $oldtime = $data[0]["time"];                  
+                    }
+                    
                 }
-                
+                Session::forget("usertaskdata");
+                Session::push('usertaskdata', ['userid'=>$userid,'taskid'=>$taskid,'date'=>$olddate,'time'=>$oldtime]);
                 DB::update("update user_tasks set status_user='stop',end_date='$start_date',end_time='$start_time' where task_id=$taskid && user_id=$userid");
                 return redirect()
-                        ->back()
-                        ->withCookie(cookie("date",$start_date))
-                        ->withCookie(cookie("time", $start_time))
-                        ->withCookie(cookie("olddate",$olddate))
-                        ->withCookie(cookie("oldtime", $oldtime));
+                        ->back();
+                        // ->withCookie(cookie("date",$start_date))
+                        // ->withCookie(cookie("time", $start_time))
+                        // ->withCookie(cookie("olddate",$olddate))
+                        // ->withCookie(cookie("oldtime", $oldtime));
             }
         }
     }

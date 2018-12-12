@@ -22,10 +22,9 @@ Route::get("tasks","Admin\TaskDistributionController@showPage_admin");
 Route::post("tasks/assignTask","Admin\TaskDistributionController@assignTask");
 Route::post("tasks/statusByAdmin","Admin\TaskDistributionController@taskStatusByAdmin");
 
-Route::get("admin/leave","Employees\LeaveManagementController@showPage_admin");
+Route::get("leaves","Employees\LeaveManagementController@showPage_admin");
 Route::post("admin/leave/accept","Employees\LeaveManagementController@respond");
 Route::post("admin/leave/reject","Employees\LeaveManagementController@respond");
-
 
 Route::get("employees","Employees\EmployeesController@showPage");
 

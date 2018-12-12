@@ -47,15 +47,18 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition @yield('body_class')">
-    
 @yield('body')
-<!-- start of fetch cookie value -->
-<input type="hidden" id="dateCookie" value="{{Cookie::get('date')}}" name="cookie" />
-<input type="hidden" id="timeCookie" value="{{Cookie::get('time')}}" name="cookie" />
-<!--end-->
+
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<?php
+    $data = null;
+    if(!empty(Session::get("usertaskdata")))
+    {
+        $data = Session::get("usertaskdata");
+    }
+?>
 <!--start of Stop watch JS-->
 <script src="{{ asset('time/TimeCircles.js')}}"></script>
  <script>       
@@ -66,9 +69,13 @@
             var digitsofHours;
             var digitsofMinutes;
             var d = new Date();
-            var cookieDate = $('#dateCookie').val();
-            var cookieTime = $('#timeCookie').val();
-    
+            @if(!empty($data))
+            var cookieDate =  "<?=$data[0]['date']?>";
+            @endif
+            @if(!empty($data))
+            var cookieTime =  "<?=$data[0]['time']?>";
+            @endif
+            
             $("#DateCountdown").TimeCircles();
             if(d.getDate()<10)
                 digitsOfDate = "0"+d.getDate();
@@ -78,16 +85,24 @@
                 digitsofMinutes = "0"+d.getMinutes();
             <!--start watch-->    
             $(".startTimer").click(function() {
-                
+                if(cookieDate!="")
+                {
+                    date = cookieDate;
+                    time = cookieTime;
+                    
+                }
+                else
+                {
                     date = d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate();
                     time = d.getHours()+":"+d.getMinutes();
+                }
                     
-                     
+                    
+
                 datetime = date + ' ' + time + ':00';
-               
+                
                 $("#DateCountdown").TimeCircles().start();
-                document.cookie = name+'=date; content=; path=/';
-                document.cookie = name+'=time; content=; path=/';
+                
             });
             <!--stop or pause watch--> 
             

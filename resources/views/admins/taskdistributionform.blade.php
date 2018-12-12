@@ -1,8 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Tasks')
+@section('title', 'Admins')
 
-
+@section('content_header')
+    
+    @stop
 
 @section('content')
     
@@ -66,7 +68,7 @@
                     <th>Name</th>
                     <th>Task</th>
                     <th>Start Date & Time</th>
-                    <th>End Date & Time</th>
+                    <th>Pause/Stop Date & Time</th>
                     <th>Status By User</th>
                     <th colspan="2">Status By Admin</th>
                     </thead>
