@@ -17,11 +17,17 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/Ionicons/css/ionicons.min.css') }}">
     
+    <!--toast css-->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+
+
     <!-- stop watch starts here -->
     <link href="{{asset('time/TimeCircles.css')}}" rel="stylesheet" type="text/css">
-    
     <!-- stop watch ends here -->
     
+    <!--start of validateTaskBeforeAssignment.js-->
+        <script src="{{ asset("task/validateTaskBeforeAssignment.js") }}"></script>
+    <!--end of validateTaskBeforeAssignment.js-->
     
     @if(config('adminlte.plugins.select2'))
         <!-- Select2 -->
@@ -52,6 +58,11 @@
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+
+<!--toast js-->
+<script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+{!! Toastr::message() !!}
+
 <?php
     $data = null;
     if(!empty(Session::get("usertaskdata")))
@@ -109,8 +120,44 @@
             $(".stopTimer,.pauseTimer").click(function() {
                 $("#DateCountdown").TimeCircles().stop();
             });
- </script>      
+ </script>     
+
 <!--end of Stop watch JS-->
+ <!--start message box
+ {{-- <script src="{{ asset("massage_box/jquery.bs.msgbox.js") }}"></script> --}}
+ <script>
+    $(document).ready(function(event){
+        $( "#assign" ).click(function() {
+        var task = $("#task").val();
+        if(task!='')
+        {
+            $('body').bsMsgBox({
+                title: "Task",
+                text: "Task is assigned",
+                icon: 'ok'
+            });
+        }
+        });
+    });
+    
+</script>
+ 
+ <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36251023-1']);
+    _gaq.push(['_setDomainName', 'jqueryscript.net']);
+    _gaq.push(['_trackPageview']);
+  
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  
+  </script>-->
+ <!--end message box--> 
+
 @if(config('adminlte.plugins.select2'))
     <!-- Select2 -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>

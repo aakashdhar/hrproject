@@ -3,10 +3,7 @@
 @section('title', 'Leaves')
 
 @section('content_header')
-    <div class="row">
-        <div class="col-md-3"></div>
-        
-    </div>
+    
 
 @stop
 
@@ -29,6 +26,9 @@
                         </td>
                         <td>
                             <input id="startdate" type="date" name="start_date" required/>
+                            @if ($errors->has('email'))
+
+                            @endif
                             <p class="startdate"></p>
                         </td>
                     </tr>

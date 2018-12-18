@@ -14,7 +14,7 @@
         </div>
         <div class="panel-body">
             <h2>Assign Task to User</h2>
-            <form action="{{url("tasks/assignTask")}}" method="post">
+            <form action="{{url("tasks/assignTask")}}" id="taskform" method="post">
                 <?php
                 $data = \Illuminate\Support\Facades\DB::table("users")->where("user_type","!=","Admin")->join("user_types","user_types.user_type_id","users.user_type_id")->select("users.user_id","users.user_first_name","users.user_last_name")->get();
                 
@@ -39,12 +39,12 @@
                             Give task here :
                         </td>
                         <td>
-                            <textarea name="task" rows="4" cols="20" class="form-control" name="taskname" required></textarea>
+                            <textarea name="task" rows="4" cols="20" class="form-control" id="task" required></textarea>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input type="submit" class="btn btn-primary" value="Assign" name="assigntask">
+                            <button type="submit" class="btn btn-primary" name="assigntask">Assign</button>
                         </td>
                     </tr>
                 </table>
@@ -54,10 +54,10 @@
         <div class="panel-body">
             <h2>List of Users with Tasks</h2>
             <?php
-                $data = Illuminate\Support\Facades\DB::table("user_tasks")
+                $data = Illuminate\Support\Facades\DB::table("tasks")
                         ->where("users.user_type_id","!=",1)
-                        ->join("users","users.user_id","user_tasks.user_id")
-                        ->select("user_tasks.*","users.user_id","users.user_first_name","users.user_last_name")
+                        ->join("users","users.user_id","tasks.user_id")
+                        ->select("tasks.*","users.user_id","users.user_first_name","users.user_last_name")
                         ->get();
                 $user = \Auth::user();
                 
@@ -79,9 +79,9 @@
                         <td>{{$val->user_id}}</td>
                         <td>{{$val->user_first_name}} {{$val->user_last_name}}</td>
                         <td>{{$val->task}}</td>
-                        <td>{{$val->start_date}} {{$val->start_time}}</td>
-                        <td>{{$val->end_date}} {{$val->end_time}}</td>
-                        <td>{{$val->status_user}}</td>
+                        <td>{{$val->start_datetime}}</td>
+                        <td>{{$val->end_datetime}}</td>
+                        <td></td>
                         <td>
                             <form method="post" action="tasks/statusByAdmin?taskid={{$val->task_id}}&userid={{$val->user_id}}">
                                 {{csrf_field()}}
@@ -96,7 +96,14 @@
                                 <input type="submit" name="adminanswer" value="Complete"  class="btn btn-primary"/>
                             </form>
                         </td>
-                        
+                        <td>
+                            <form method="post" action="tasks/delete-task">
+                                    {{csrf_field()}}                                
+                                    <input type="hidden" name="taskid" value="{{ $val->task_id }}" />
+                                    <button type="submit" name="adminanswer" class="btn"><i class="fa fa-trash"></i></button>
+
+                            </form>
+                        </td>
                     </tr>
                     </tbody>
                     @endforeach
