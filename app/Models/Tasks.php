@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\TaskTimeline;
 
 class Tasks extends Model
 {
@@ -31,7 +32,9 @@ class Tasks extends Model
     {
         return $this->hasOne(User::class, 'user_id', 'task_assigned_to');
     }
-
+    public function timeline() {
+        return $this->hasMany(TaskTimeline::class, 'task_id', 'task_id');
+    }
     public function user()
     {
 

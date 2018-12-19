@@ -3,7 +3,7 @@
 @section('adminlte_css')
     <link rel="stylesheet"
           href="{{ asset('vendor/adminlte/dist/css/skins/skin-' . config('adminlte.skin', 'blue') . '.min.css')}} ">
-    
+
     @stack('css')
     @yield('css')
 @stop
@@ -17,13 +17,13 @@
 @section('body')
 
 <?php
-        $loggeduser = \Auth::user();        
+        $loggeduser = \Auth::user();
         $usertypes = Illuminate\Support\Facades\DB::select("select user_type_id from user_types where user_type!='Admin'");
 ?>
 <!--changing adminlte.php for users to restrict them-->
 @foreach($usertypes as $usertype)
     @if($usertype->user_type_id == $loggeduser->user_type_id)
-    
+
         {{
             Illuminate\Support\Facades\Config::set([
                                                     'adminlte.menu' => [
@@ -54,7 +54,7 @@
 
 
     <div class="wrapper">
-        
+
         <!-- Main Header -->
         <header class="main-header">
             @if(config('adminlte.layout') == 'top-nav')
@@ -72,7 +72,7 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                         <ul class="nav navbar-nav">
-                           
+
                             @each('adminlte::partials.menu-item-top-nav', $adminlte->menu(), 'item')
                         </ul>
                     </div>
@@ -124,10 +124,8 @@
             <section class="sidebar">
 
                 <!-- Sidebar Menu -->
-                <ul class="sidebar-menu" data-widget="tree">              
+                <ul class="sidebar-menu" data-widget="tree">
                     @each('adminlte::partials.menu-item', $adminlte->menu(), 'item')
-                    
-                    @endeach
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>

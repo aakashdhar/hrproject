@@ -185,6 +185,12 @@ class TaskDistributionController extends Controller
         //this function is just to show view to user
         public function showPage_user()
         {
-            return view("employees.employeetask");
+            $tasks = Tasks::with(['timeline'])
+                    ->Where('task_assigned_to', '=', Auth::id())
+                    ->get();
+            $auth = $this->getData()['auth'];
+            $this->addData('tasks', $tasks);
+            $this->addData('auth', $auth);
+            return $this->getView('employees.employeetask');
         }
     }
