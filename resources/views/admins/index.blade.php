@@ -174,7 +174,7 @@
 
             <!-- Modal content-->
             <div class="modal-content">
-                <form action="{{ route('admin.updateEmployee') }}" method="post">
+                <form action="{{ route('admin.store') }}" method="post">
                     {{ csrf_field() }}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
