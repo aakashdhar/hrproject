@@ -23,22 +23,38 @@ class TaskDistributionController extends Controller
     //it recevies user name with his id just to distinguish in case of same name
     public function assignTask(Request $request)
     {
+        
         $user = Auth::user();
         $res = false;
         $temp = $request->get("userwithid");
         $temp = explode(",", $temp);
         $id = $temp[0];
-        $task = $request->get("task");
+        
+        
         $tasktitle = $request->get("taskTitle");
         if(!empty($task)) {
             $data = array(
                 "user_id" => $id,
                 "task_title" => $tasktitle,
-                "task_description" => trim($task),
-                "task_created_by" => $user->user_id
+                "task_description" => $task,
+                "task_created_by" => $user->user_id,
+                "task_assigned_to" => $id
             );
+            
             $res = Tasks::create($data); 
         }
+        else {
+            $data = array(
+                "user_id" => $id,
+                "task_title" => $tasktitle,
+                "task_description" => null,
+                "task_created_by" => $user->user_id,
+                "task_assigned_to" => $id
+            );
+            
+            $res = Tasks::create($data);
+        }
+        
         if($res) {
             Toastr::success('Task is assigned successfully');
         } else {

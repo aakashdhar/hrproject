@@ -45,7 +45,7 @@
                             Give task here :
                         </td>
                         <td>
-                            <textarea name="task" rows="4" cols="20" class="form-control" id="task" required></textarea>
+                            <textarea name="task" rows="4" cols="20" class="form-control" id="task"></textarea>
                         </td>
                     </tr>
                     <tr>
@@ -60,13 +60,14 @@
         <div class="panel-body">
             <h2>List of Users with Tasks</h2>
             <?php
-                /*$data = Illuminate\Support\Facades\DB::table("tasks")
+                $data = Illuminate\Support\Facades\DB::table("tasks")
                         ->where("users.user_type_id","!=",1)
-                        ->join("users","users.user_id","tasks.user_id")
-                        ->select("tasks.*","users.user_id","users.user_first_name","users.user_last_name")
+                        ->join("users","users.user_id","tasks.task_assigned_to")
+                        ->leftjoin("user_task_timeline","user_task_timeline.task_id","tasks.task_id")
+                        ->select("tasks.*","users.user_id","users.user_first_name","users.user_last_name","user_task_timeline.status_by_user")
                         ->get();
                 $user = \Auth::user();
-                */
+                
                     ?>
             
                 <table class="table tab-content table-responsive">
@@ -77,26 +78,27 @@
                     <th>Pause/Stop Date & Time</th>
                     <th>Status By User</th>
                     <th colspan="2">Status By Admin</th>
+                    <th colspan="2">Actions</th>
                     </thead>
                     <tbody>
-<!--                    @foreach($data as $val)
+                    @foreach($data as $val)
                     <tr>
                         
                         <td>{{$val->user_id}}</td>
                         <td>{{$val->user_first_name}} {{$val->user_last_name}}</td>
-                        <td>{{--$val->task--}}</td>
-                        <td>{{--$val->start_datetime--}}</td>
-                        <td>{{--$val->end_datetime--}}</td>
-                        <td></td>
+                        <td>{{$val->task or '-'}}</td>
+                        <td>{{$val->start_datetime or '-'}}</td>
+                        <td>{{$val->end_datetime or '-'}}</td>
+                        <td>{{$val->status_by_user or '-'}}</td>
                         <td>
-                            <form method="post" action="tasks/statusByAdmin?taskid={{--$val->task_id--}}&userid={{$val->user_id}}">
+                            <form method="post" action="tasks/statusByAdmin?taskid={{$val->task_id}}&userid={{$val->user_id}}">
                                 {{csrf_field()}}
                                 <input type="hidden" name="status" value="reassign" />
                                 <input type="submit" name="adminanswer" value="Reassign"  class="btn button"/>
                             </form>
                         </td>
                         <td>
-                            <form method="post" action="tasks/statusByAdmin?taskid={{--$val->task_id--}}&userid={{$val->user_id}}">
+                            <form method="post" action="tasks/statusByAdmin?taskid={{$val->task_id}}&userid={{$val->user_id}}">
                                 {{csrf_field()}}                                
                                 <input type="hidden" name="status" value="done" />
                                 <input type="submit" name="adminanswer" value="Complete"  class="btn btn-primary"/>
@@ -105,14 +107,22 @@
                         <td>
                             <form method="post" action="tasks/delete-task">
                                     {{csrf_field()}}                                
-                                    <input type="hidden" name="taskid" value="{{-- $val->task_id --}}" />
+                                    <input type="hidden" name="taskid" value="{{ $val->task_id }}" />
                                     <button type="submit" name="adminanswer" class="btn"><i class="fa fa-trash"></i></button>
+
+                            </form>
+                        </td>
+                        <td>
+                            <form method="post" action="tasks/edit-task">
+                                    {{csrf_field()}}                                
+                                    <input type="hidden" name="taskid" value="{{ $val->task_id }}" />
+                                    <button type="submit" name="adminanswer" class="btn"><i class="fa fa-edit"></i></button>
 
                             </form>
                         </td>
                     </tr>
                     </tbody>
-                    @endforeach-->
+                    @endforeach
                 </table>
             
         </div>
