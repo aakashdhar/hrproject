@@ -20,7 +20,7 @@
                     {{ session('status') }}
                 </div>
             @endif
-            <form action="{{ url(config('adminlte.password_email_url', 'password/email')) }}" method="post">
+            <form action="{{ url(config('adminlte.password_email_url', 'password/sendemail')) }}" method="post">
                 {!! csrf_field() !!}
 
                 <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">

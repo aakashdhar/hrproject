@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Title
@@ -12,13 +10,9 @@ return [
     | You can optionally also specify a title prefix and/or postfix.
     |
     */
-
     'title' => 'Siimteq HR',
-
     'title_prefix' => '',
-
     'title_postfix' => '',
-
     /*
     |--------------------------------------------------------------------------
     | Logo
@@ -29,11 +23,8 @@ return [
     | variant, used for the mini side bar. Make it 3 letters or so
     |
     */
-
     'logo' => 'Siimteq<b>HR</b>',
-
     'logo_mini' => '<b>S</b>HR',
-
     /*
     |--------------------------------------------------------------------------
     | Skin Color
@@ -44,9 +35,7 @@ return [
     | ligth variant: blue-light, purple-light, purple-light, etc.
     |
     */
-
     'skin' => 'blue',
-
     /*
     |--------------------------------------------------------------------------
     | Layout
@@ -57,9 +46,7 @@ return [
     | removes the sidebar and places your menu in the top navbar
     |
     */
-
     'layout' => null,
-
     /*
     |--------------------------------------------------------------------------
     | Collapse Sidebar
@@ -70,9 +57,7 @@ return [
     | this is compatible with layouts except top-nav layout option
     |
     */
-
     'collapse_sidebar' => false,
-
     /*
     |--------------------------------------------------------------------------
     | URLs
@@ -84,17 +69,11 @@ return [
     | Set register_url to null if you don't want a register link.
     |
     */
-
     'dashboard_url' => 'home',
-
     'logout_url' => 'logout',
-
     'logout_method' => null,
-
     'login_url' => 'login',
-
     'register_url' => 'register',
-
     /*
     |--------------------------------------------------------------------------
     | Menu Items
@@ -106,63 +85,69 @@ return [
     | layout. The 'can' is a filter on Laravel's built in Gate functionality.
     |
     */
-
     'menu' => [
         'GENERAL',
         [
             'text'        => 'Dashboard',
-            'url'         => '#',
+            'url'         => 'home',
             'icon'        => 'home',
+        ],
+        'TASKS MANAGEMENT',
+        [
+            'text'        => 'Tasks',
+            'url'         => 'tasks',
+            'icon'        => 'tasks',
         ],
         'USERS',
         [
             'text' => 'Admins',
-            'url'  => 'admin/admin',
+            'url'  => 'admin',
             'icon' => 'user',
         ],
         [
             'text' => 'Employees',
-            'url'  => 'das',
+            'url'  => 'employees',
             'icon' => 'user',
         ],
         'LEAVE MANAGEMENT',
         [
-            'text'    => 'Multilevel',
-            'icon'    => 'share',
-            'submenu' => [
-                [
-                    'text' => 'Level One',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'Level One',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Level Two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'Level Two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'Level One',
-                    'url'  => '#',
-                ],
-            ],
+            'text'    => 'Leave Applications',
+            'icon'    => 'sign-out',//'share',
+            'url'     =>  'leaves'
+            // 'submenu' => [
+            //     [
+            //         'text' => 'Level One',
+            //         'url'  => '#',
+            //     ],
+            //     [
+            //         'text'    => 'Level One',
+            //         'url'     => '#',
+            //         'submenu' => [
+            //             [
+            //                 'text' => 'Level Two',
+            //                 'url'  => '#',
+            //             ],
+            //             [
+            //                 'text'    => 'Level Two',
+            //                 'url'     => '#',
+            //                 'submenu' => [
+            //                     [
+            //                         'text' => 'Level Three',
+            //                         'url'  => '#',
+            //                     ],
+            //                     [
+            //                         'text' => 'Level Three',
+            //                         'url'  => '#',
+            //                     ],
+            //                 ],
+            //             ],
+            //         ],
+            //     ],
+            //     [
+            //         'text' => 'Level One',
+            //         'url'  => '#',
+            //     ],
+            // ],
         ],
         'ATTENDANCE MANAGEMENT',
         [
@@ -178,7 +163,6 @@ return [
             'icon_color' => 'aqua',
         ],
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Menu Filters
@@ -190,7 +174,6 @@ return [
     | built in Gate functionality
     |
     */
-
     'filters' => [
         JeroenNoten\LaravelAdminLte\Menu\Filters\HrefFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\ActiveFilter::class,
@@ -198,7 +181,6 @@ return [
         JeroenNoten\LaravelAdminLte\Menu\Filters\ClassesFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter::class,
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Plugins Initialization
@@ -209,7 +191,6 @@ return [
     | to include the JavaScript file from a CDN via a script tag.
     |
     */
-
     'plugins' => [
         'datatables' => true,
         'select2'    => true,
