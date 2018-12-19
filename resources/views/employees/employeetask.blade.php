@@ -46,6 +46,7 @@
             <tr>
 
                 <td>{{$val->task_id}}</td>
+
                 <td>{{$val->task}}  <i class="fa fa-plus"></i>
                 <hr/>
                 <table>

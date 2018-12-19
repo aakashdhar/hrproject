@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 use App\Models\Tasks;
 use Illuminate\Support\Facades\Auth;
@@ -182,6 +181,30 @@ class TaskDistributionController extends Controller
                         // ->withCookie(cookie("oldtime", $oldtime));
             }*/
         }
+        
+        public function editTask(Request $request)
+        {
+//            dd($request->all());
+            $taskid = $request->get("taskid");
+            $data = DB::table("tasks")
+                    ->where("task_id","=",$taskid)
+                    ->join("users","users.user_id","tasks.task_assigned_to")
+                    ->select("users.user_first_name","users.user_last_name","tasks.task_title","tasks.task_description","tasks.task_id")
+                    ->first();
+            $this->addData("taskdata", $data);
+            return $this->getView("admins.taskdistributionform_edit");
+            
+        }
+        public function editTaskDetails(Request $request)
+        {
+            $task_id = $request->get('task_id');
+            $task = Tasks::find($task_id);
+            $task->task_title = $request->get("taskTitle");
+            $task->task_description = $request->get("task");
+            $res = $task->update();
+            
+            return redirect()->back();
+        }
         //this function is just to show view to user
         public function showPage_user()
         {
@@ -193,4 +216,5 @@ class TaskDistributionController extends Controller
             $this->addData('auth', $auth);
             return $this->getView('employees.employeetask');
         }
+        
     }
