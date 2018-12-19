@@ -53,7 +53,7 @@
             <tr>
                 
                 <td>{{$val->task_id}}</td>
-                <td>{{$val->task}}  <img src="{{asset("icons/plus.png")}}" height="15" width="15">
+                <td>{{$val->task}}
                 <hr/>
                 <table>
                     <thead>

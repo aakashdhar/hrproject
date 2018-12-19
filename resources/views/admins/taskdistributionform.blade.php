@@ -15,7 +15,9 @@
         <div class="panel-body">
             <h2>Assign Task to User</h2>
             <form action="{{url("tasks/assignTask")}}" id="taskform" method="post">
+                
                 {{ csrf_field() }}
+                
                 <table id="usertask" class="table tab-content table-responsive">
                     <tr>
                         <td>Choose User :</td>
@@ -87,7 +89,7 @@
                             </form>
                         </td>
                         <td class="text-center">
-                            <form method="post" action="tasks/delete-task">
+                            <form method="post" action="tasks/delete-task?taskid={{$val->task_id}}&userid={{$val->user_id}}">
                                     {{csrf_field()}}
                                     <input type="hidden" name="taskid" value="{{ $val->task_id }}" />
                                     <button type="submit" name="adminanswer" class="btn"><i class="fa fa-trash"></i></button>
@@ -95,7 +97,7 @@
                             </form>
                         </td>
                         <td class="text-center">
-                            <form method="post" action="tasks/edit-task">
+                            <form action="tasks/edit-task">
                                     {{csrf_field()}}
                                     <input type="hidden" name="taskid" value="{{ $val->task_id }}" />
                                     <button type="submit" name="adminanswer" class="btn"><i class="fa fa-edit"></i></button>

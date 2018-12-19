@@ -14,30 +14,22 @@
         </div>
         <div class="panel-body">
             <h2>Assign Task to User</h2>
-            <form action="{{url("tasks/assignTask")}}" id="taskform" method="post">
-                <?php
-                $data = \Illuminate\Support\Facades\DB::table("users")->where("user_type","!=","Admin")->join("user_types","user_types.user_type_id","users.user_type_id")->select("users.user_id","users.user_first_name","users.user_last_name")->get();
-                
-                ?>
+            
+            <form action="{{url("tasks/edit-task")}}" id="taskform" method="post">
                 {{ csrf_field() }}
+                <input type="hidden" name="task_id" value="{{$taskdata->task_id}}">
                 <table id="usertask" class="table tab-content table-responsive">
                     
                     <tr>
                         <td>Choose User :</td>
                         <td>
-                            <select name="userwithid" class="form-control">
-                                 @foreach($data as $val)
-                                 <option>
-                                     {{$val->user_id}},{{$val->user_first_name}} {{$val->user_last_name}}
-                                 </option>
-                                 @endforeach
-                            </select>
+                            <pre>{{$taskdata->user_first_name}} {{$taskdata->user_last_name}}</pre>
                         </td>
                     </tr>
                     <tr>
                         <td>Task Title :</td>
                         <td>
-                            <input type="text" name="taskTitle" required/>
+                            <input class="form-control" type="text" name="taskTitle" value="{{$taskdata->task_title}}" required/>
                         </td>
                     </tr>
                     <tr>
@@ -45,12 +37,12 @@
                             Give task here :
                         </td>
                         <td>
-                            <textarea name="task" rows="4" cols="20" class="form-control" id="task"></textarea>
+                            <textarea name="task" rows="4" cols="20" class="form-control" id="task">{{$taskdata->task_description}}</textarea>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <button type="submit" class="btn btn-primary" name="assigntask">Assign</button>
+                            <button type="submit" class="btn btn-primary" name="assigntask">Edit</button>
                         </td>
                     </tr>
                 </table>

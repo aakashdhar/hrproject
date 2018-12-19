@@ -22,9 +22,9 @@ Route::post("password/sendemail","PasswordResetController@sendLink");
 
 Route::get("tasks","Admin\TaskDistributionController@showPage_admin");
 Route::post("tasks/delete-task","Admin\TaskDistributionController@deleteTask");
-Route::post("tasks/edit-task", function (){
-    return view("admins.taskdistributionform_edit");
-});
+Route::get("tasks/edit-task","Admin\TaskDistributionController@editTask");
+Route::post("tasks/edit-task","Admin\TaskDistributionController@editTaskDetails");
+
 Route::post("tasks/assignTask","Admin\TaskDistributionController@assignTask");
 Route::post("tasks/statusByAdmin","Admin\TaskDistributionController@taskStatusByAdmin");
 
