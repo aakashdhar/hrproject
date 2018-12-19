@@ -89,7 +89,7 @@
             var cookieTime =  "<?=$data[0]['time']?>";
             @endif
 
-            $("#DateCountdown").TimeCircles();
+            $("#DateCountdown").TimeCircles().stop();
             if(d.getDate()<10)
                 digitsOfDate = "0"+d.getDate();
             if(d.getHours()<10)
