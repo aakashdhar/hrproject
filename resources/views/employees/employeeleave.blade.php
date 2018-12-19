@@ -16,7 +16,7 @@
         <div class="panel-body">
             <h2>Leave Application Form</h2>
             
-            <form enctype="multipart/form-data" class="form" method="post" action="{{url("employees/leave/apply")}}">
+            <form enctype="multipart/form-data"  class="form" method="post" action="{{url("employees/leave/apply")}}">
                 {{ csrf_field() }}
                 <table>
                     
@@ -77,6 +77,36 @@
                     </tr>
                 </table>
             </form>
+            <hr />
+            <div>
+                <?php
+                    $user = Auth::user();
+                    $data = DB::select('select * from user_holiday where user_id ='.$user->user_id);
+                    //dd($data);
+                    ?>
+                <table class="table table-bordered table-active">
+                    <thead>
+                        <th>Holiday ID</th>
+                        <th>Subject</th>
+                        <th>Reason</th>
+                        <th>From Date</th>
+                        <th>To Date</th>
+                        <th>Status</th>
+                    </thead>
+                    <tbody>
+                        @foreach($data as $val)
+                        <tr>
+                            <td>{{$val->user_holiday_id}}</td>
+                            <td>{{$val->user_holiday_subject}}</td>
+                            <td>{{$val->user_holiday_reason}}</td>
+                            <td>{{$val->user_holiday_from}}</td>
+                            <td>{{$val->user_holiday_to}}</td>
+                            <td>{{$val->user_holiday_approval_status}}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
         
     </div>
