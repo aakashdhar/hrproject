@@ -35,6 +35,12 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>Task Title :</td>
+                        <td>
+                            <input type="text" name="taskTitle" required/>
+                        </td>
+                    </tr>
+                    <tr>
                         <td>
                             Give task here :
                         </td>
@@ -54,13 +60,13 @@
         <div class="panel-body">
             <h2>List of Users with Tasks</h2>
             <?php
-                $data = Illuminate\Support\Facades\DB::table("tasks")
+                /*$data = Illuminate\Support\Facades\DB::table("tasks")
                         ->where("users.user_type_id","!=",1)
                         ->join("users","users.user_id","tasks.user_id")
                         ->select("tasks.*","users.user_id","users.user_first_name","users.user_last_name")
                         ->get();
                 $user = \Auth::user();
-                
+                */
                     ?>
             
                 <table class="table tab-content table-responsive">
@@ -73,24 +79,24 @@
                     <th colspan="2">Status By Admin</th>
                     </thead>
                     <tbody>
-                    @foreach($data as $val)
+<!--                    @foreach($data as $val)
                     <tr>
                         
                         <td>{{$val->user_id}}</td>
                         <td>{{$val->user_first_name}} {{$val->user_last_name}}</td>
-                        <td>{{$val->task}}</td>
-                        <td>{{$val->start_datetime}}</td>
-                        <td>{{$val->end_datetime}}</td>
+                        <td>{{--$val->task--}}</td>
+                        <td>{{--$val->start_datetime--}}</td>
+                        <td>{{--$val->end_datetime--}}</td>
                         <td></td>
                         <td>
-                            <form method="post" action="tasks/statusByAdmin?taskid={{$val->task_id}}&userid={{$val->user_id}}">
+                            <form method="post" action="tasks/statusByAdmin?taskid={{--$val->task_id--}}&userid={{$val->user_id}}">
                                 {{csrf_field()}}
                                 <input type="hidden" name="status" value="reassign" />
                                 <input type="submit" name="adminanswer" value="Reassign"  class="btn button"/>
                             </form>
                         </td>
                         <td>
-                            <form method="post" action="tasks/statusByAdmin?taskid={{$val->task_id}}&userid={{$val->user_id}}">
+                            <form method="post" action="tasks/statusByAdmin?taskid={{--$val->task_id--}}&userid={{$val->user_id}}">
                                 {{csrf_field()}}                                
                                 <input type="hidden" name="status" value="done" />
                                 <input type="submit" name="adminanswer" value="Complete"  class="btn btn-primary"/>
@@ -99,14 +105,14 @@
                         <td>
                             <form method="post" action="tasks/delete-task">
                                     {{csrf_field()}}                                
-                                    <input type="hidden" name="taskid" value="{{ $val->task_id }}" />
+                                    <input type="hidden" name="taskid" value="{{-- $val->task_id --}}" />
                                     <button type="submit" name="adminanswer" class="btn"><i class="fa fa-trash"></i></button>
 
                             </form>
                         </td>
                     </tr>
                     </tbody>
-                    @endforeach
+                    @endforeach-->
                 </table>
             
         </div>

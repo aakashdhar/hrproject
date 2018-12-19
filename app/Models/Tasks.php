@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
 
 class Tasks extends Model
 {
@@ -12,12 +11,18 @@ class Tasks extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'task_id', 'user_id', 'task', 'start_datetime', 'end_datetime', 'status_by_admin', 
-        'comments_by_admin','created_at','updated_at'
+        'task_id',
+        'task_title',
+        'task_description',
+        'task_created_by',
+        'task_assigned_to',
+        'task_assigned_by',
+        'created_at',
+        'updated_at'
     ];
 
     public function user()
     {
-        return $this->hasOne(User::class,"user_id","user_id");
+        
     }
 }

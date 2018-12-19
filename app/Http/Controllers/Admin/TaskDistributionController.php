@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 use App\Models\Tasks;
+use Illuminate\Support\Facades\Auth;
 use Toastr;
 
 class TaskDistributionController extends Controller
@@ -22,15 +23,19 @@ class TaskDistributionController extends Controller
     //it recevies user name with his id just to distinguish in case of same name
     public function assignTask(Request $request)
     {
+        $user = Auth::user();
         $res = false;
         $temp = $request->get("userwithid");
         $temp = explode(",", $temp);
         $id = $temp[0];
         $task = $request->get("task");
+        $tasktitle = $request->get("taskTitle");
         if(!empty($task)) {
             $data = array(
                 "user_id" => $id,
-                "task" => trim($task)
+                "task_title" => $tasktitle,
+                "task_description" => trim($task),
+                "task_created_by" => $user->user_id
             );
             $res = Tasks::create($data); 
         }
