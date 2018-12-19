@@ -1,0 +1,46 @@
++--------+-----------+------------------------------+------------------+-------------------------------------------------------------------------+--------------+
+| Domain | Method    | URI                          | Name             | Action                                                                  | Middleware   |
++--------+-----------+------------------------------+------------------+-------------------------------------------------------------------------+--------------+
+|        | GET|HEAD  | /                            |                  | Closure                                                                 | web          |
+|        | POST      | admin                        | admin.store      | App\Http\Controllers\Admin\AdminController@store                        | web,auth     |
+|        | GET|HEAD  | admin                        | admin.index      | App\Http\Controllers\Admin\AdminController@index                        | web,auth     |
+|        | GET|HEAD  | admin/addUser                |                  | App\Http\Controllers\Admin\UserRegistrationFormController@showPage      | web          |
+|        | POST      | admin/addUser/registerUser   |                  | App\Http\Controllers\Admin\UserRegistrationFormController@addUser       | web          |
+|        | GET|HEAD  | admin/addUserType            |                  | App\Http\Controllers\Admin\UserTypeController@addUserType               | web          |
+|        | GET|HEAD  | admin/addUserType/assignType |                  | App\Http\Controllers\Admin\UserTypeController@assignUserType            | web          |
+|        | GET|HEAD  | admin/create                 | admin.create     | App\Http\Controllers\Admin\AdminController@create                       | web,auth     |
+|        | POST      | admin/leave/accept           |                  | App\Http\Controllers\Employees\LeaveManagementController@respond        | web          |
+|        | POST      | admin/leave/reject           |                  | App\Http\Controllers\Employees\LeaveManagementController@respond        | web          |
+|        | POST      | admin/update/{id}            |                  | App\Http\Controllers\Admin\AdminController@UpdateAdmin                  | web          |
+|        | DELETE    | admin/{admin}                | admin.destroy    | App\Http\Controllers\Admin\AdminController@destroy                      | web,auth     |
+|        | PUT|PATCH | admin/{admin}                | admin.update     | App\Http\Controllers\Admin\AdminController@update                       | web,auth     |
+|        | GET|HEAD  | admin/{admin}                | admin.show       | App\Http\Controllers\Admin\AdminController@show                         | web,auth     |
+|        | GET|HEAD  | admin/{admin}/edit           | admin.edit       | App\Http\Controllers\Admin\AdminController@edit                         | web,auth     |
+|        | GET|HEAD  | api/user                     |                  | Closure                                                                 | api,auth:api |
+|        | POST      | employee/delete/{id}         |                  | App\Http\Controllers\Employees\EmployeesController@deleteEmployee       | web          |
+|        | POST      | employee/update/{id}         |                  | App\Http\Controllers\Employees\EmployeesController@updateEmployee       | web          |
+|        | GET|HEAD  | employees                    |                  | App\Http\Controllers\Employees\EmployeesController@showPage             | web          |
+|        | GET|HEAD  | employees/leave              |                  | App\Http\Controllers\Employees\LeaveManagementController@showPage_user  | web          |
+|        | POST      | employees/leave/apply        |                  | App\Http\Controllers\Employees\LeaveManagementController@apply          | web          |
+|        | POST      | employees/sendmail           |                  | App\Http\Controllers\Admin\MailController@sendmail                      | web          |
+|        | GET|HEAD  | employees/task               |                  | App\Http\Controllers\Admin\TaskDistributionController@showPage_user     | web          |
+|        | POST      | employees/task/pause         |                  | App\Http\Controllers\Admin\TaskDistributionController@taskStatus        | web          |
+|        | POST      | employees/task/start         |                  | App\Http\Controllers\Admin\TaskDistributionController@taskStatus        | web          |
+|        | POST      | employees/task/stop          |                  | App\Http\Controllers\Admin\TaskDistributionController@taskStatus        | web          |
+|        | GET|HEAD  | home                         | home             | App\Http\Controllers\HomeController@index                               | web,auth     |
+|        | GET|HEAD  | leaves                       |                  | App\Http\Controllers\Employees\LeaveManagementController@showPage_admin | web          |
+|        | POST      | login                        |                  | App\Http\Controllers\Auth\LoginController@login                         | web,guest    |
+|        | GET|HEAD  | login                        | login            | App\Http\Controllers\Auth\LoginController@showLoginForm                 | web,guest    |
+|        | POST      | logout                       | logout           | App\Http\Controllers\Auth\LoginController@logout                        | web          |
+|        | POST      | password/email               | password.email   | App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail   | web,guest    |
+|        | POST      | password/reset               |                  | App\Http\Controllers\Auth\ResetPasswordController@reset                 | web,guest    |
+|        | GET|HEAD  | password/reset               | password.request | App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm  | web,guest    |
+|        | GET|HEAD  | password/reset/{token}       | password.reset   | App\Http\Controllers\Auth\ResetPasswordController@showResetForm         | web,guest    |
+|        | POST      | password/sendemail           |                  | App\Http\Controllers\PasswordResetController@sendLink                   | web          |
+|        | POST      | register                     |                  | App\Http\Controllers\Auth\RegisterController@register                   | web,guest    |
+|        | GET|HEAD  | register                     | register         | App\Http\Controllers\Auth\RegisterController@showRegistrationForm       | web,guest    |
+|        | GET|HEAD  | tasks                        |                  | App\Http\Controllers\Admin\TaskDistributionController@showPage_admin    | web          |
+|        | POST      | tasks/assignTask             |                  | App\Http\Controllers\Admin\TaskDistributionController@assignTask        | web          |
+|        | POST      | tasks/delete-task            |                  | App\Http\Controllers\Admin\TaskDistributionController@deleteTask        | web          |
+|        | POST      | tasks/statusByAdmin          |                  | App\Http\Controllers\Admin\TaskDistributionController@taskStatusByAdmin | web          |
++--------+-----------+------------------------------+------------------+-------------------------------------------------------------------------+--------------+
