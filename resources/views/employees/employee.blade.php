@@ -3,7 +3,12 @@
 @section('title', 'Employees')
 
 @section('content_header')
-
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-9">
+        <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#newEmployeeModal">Add new Employee</button>
+    </div>
+  </div>
 @stop
 @section('content')
 
@@ -240,12 +245,83 @@
         </div>
     </div>
 
-    <div id="newAdminModal" class="modal fade" role="dialog">
+    <div id="newEmployeeModal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
 
             <!-- Modal content-->
             <div class="modal-content">
+                <form method="post" action="{{url("employees/store")}}">
+                    {{ csrf_field() }}
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add new Employee</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="user_name">User name</label>
+                                <input type="text" name="user_name" id="user_name" class="form-control" placeholder="U name" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="user_first_name">First name</label>
+                                <input type="text" name="user_first_name" id="user_first_name" class="form-control" placeholder="First name" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="user_last_name">Last name</label>
+                                <input type="text" name="user_last_name" id="user_last_name" class="form-control" placeholder="Last name">
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 2%;">
+                            <div class="col-md-4">
+                                <label for="user_email">Email</label>
+                                <input type="email" name="user_email" id="user_email" class="form-control" placeholder="Email" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="user_contact_no">Contact</label>
+                                <input type="text" name="user_contact_no" id="user_contact_no" class="form-control" placeholder="Contact no">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="user_password">Password</label>
+                                <input type="password" name="user_password" id="user_password" class="form-control" placeholder="Password" required>
+                            </div>
 
+                        </div>
+                        <div class="row" style="margin-top: 2%;">
+                            <div class="col-md-4">
+                                <label for="user_address">Address</label>
+                                <input name="user_address" class="form-control"  id="user_address" placeholder="Address">
+                            </div>
+                            <div class="col-md-4">
+                              <label for="user_address">Date of joining</label>
+                              <input type="date" name="joining_date" class="form-control" id="joining_date" placeholder="Date of Joining">
+                            </div>
+                            <div class="col-md-4">
+                              <label for="user_address">Date of birth</label>
+                              <input type="date" name="user_dob" class="form-control"  id="user_dob" placeholder="Date of birth">
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 2%;">
+                          <div class="col-md-4">
+                            <label for="user_address">Emergency Contact</label>
+                            <input name="user_emergency_name" class="form-control"  id="user_emergency_name" placeholder="Emergency Contact">
+                          </div>
+                          <div class="col-md-4">
+                            <label for="user_address">Emergency Contact number</label>
+                            <input name="user_emergency_contact" class="form-control"  id="user_emergency_contact" placeholder="Emergency Contact Number">
+                          </div>
+                        </div>
+                       <div class="row" style="margin-top: 2%;">
+                         <div class="col-md-12">
+                           <label for="user_address">Hobbies</label>
+                           <input name="user_hobbies" class="form-control"  id="user_hobbies" placeholder="Hobbies">
+                         </div>
+                       </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
             </div>
 
         </div>

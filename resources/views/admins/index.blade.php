@@ -13,20 +13,20 @@
 @stop
 
 @section('content')
-    
+
     <br>
     <div class="panel">
         <div class="panel-heading">
         </div>
         <div class="panel-body">
-            
-            
-            
+
+
+
                 <?php
                     $userdata = \App\Models\User::all();
                     $usertype = \App\Models\Admins\UserType::all();
                 ?>
-             
+
             <h2>Admins</h2>
             <table id="listOfAdmins" class="table text-center table-bordered table-hover">
                 <thead>
@@ -36,7 +36,7 @@
                         <th>Email</th>
                         <th>Password</th>
                         <th>Type</th>
-                        
+
                         <th>Created At</th>
                         <th>Updated At</th>
                     </thead>
@@ -58,7 +58,7 @@
                                         @foreach($usertype as $val)
                                             <option>{{$val->user_type}}</option>
                                         @endforeach
-                                    </select> 
+                                    </select>
                                     <input type="hidden" name="userid" value="{{$admin->user_id}}" />
                                     <input value="Change User Type" class="btn btn-default" type="submit"/>
                                 </form>
@@ -174,7 +174,7 @@
 
             <!-- Modal content-->
             <div class="modal-content">
-                <form action="{{ route('admin.store') }}" method="post">
+                <form action="{{ route('admin.updateEmployee') }}" method="post">
                     {{ csrf_field() }}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>

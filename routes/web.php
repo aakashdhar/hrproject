@@ -10,7 +10,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('home', 'HomeController@index'); 
+Route::get('home', 'HomeController@index');
 
 Route::get('admin/addUserType', 'Admin\UserTypeController@addUserType');
 Route::get('admin/addUserType/assignType', 'Admin\UserTypeController@assignUserType');
@@ -33,6 +33,7 @@ Route::post("admin/leave/accept","Employees\LeaveManagementController@respond");
 Route::post("admin/leave/reject","Employees\LeaveManagementController@respond");
 
 Route::get("employees","Employees\EmployeesController@showPage");
+Route::post("employees/store","Employees\EmployeesController@store");
 Route::post("employees/sendmail","Admin\MailController@sendmail");
 Route::get("employees/task","Admin\TaskDistributionController@showPage_user");
 Route::post("employees/task/start","Admin\TaskDistributionController@taskStatus");
