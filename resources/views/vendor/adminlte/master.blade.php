@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
-<head>  
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@yield('title_prefix', config('adminlte.title_prefix', ''))
-    @yield('title', config('adminlte.title', 'AdminLTE 2'))
-    @yield('title_postfix', config('adminlte.title_postfix', ''))</title>
-    
-    
+    <title> .: Siimteq HR |
+        @yield('title_prefix', config('adminlte.title_prefix', ''))
+        @yield('title', config('adminlte.title', 'AdminLTE 2'))
+        @yield('title_postfix', config('adminlte.title_postfix', '')):.
+    </title>
+
+
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -16,7 +18,7 @@
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/font-awesome/css/font-awesome.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/Ionicons/css/ionicons.min.css') }}">
-    
+
     <!--toast css-->
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
 
@@ -24,11 +26,11 @@
     <!-- stop watch starts here -->
     <link href="{{asset('time/TimeCircles.css')}}" rel="stylesheet" type="text/css">
     <!-- stop watch ends here -->
-    
+
     <!--start of validateTaskBeforeAssignment.js-->
         <script src="{{ asset("task/validateTaskBeforeAssignment.js") }}"></script>
     <!--end of validateTaskBeforeAssignment.js-->
-    
+
     @if(config('adminlte.plugins.select2'))
         <!-- Select2 -->
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css">
@@ -43,7 +45,7 @@
     @endif
 
     @yield('adminlte_css')
-        
+
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -72,7 +74,7 @@
 ?>
 <!--start of Stop watch JS-->
 <script src="{{ asset('time/TimeCircles.js')}}"></script>
- <script>       
+ <script>
             var date;
             var time;
             var datetime;
@@ -86,7 +88,7 @@
             @if(!empty($data))
             var cookieTime =  "<?=$data[0]['time']?>";
             @endif
-            
+
             $("#DateCountdown").TimeCircles();
             if(d.getDate()<10)
                 digitsOfDate = "0"+d.getDate();
@@ -94,36 +96,36 @@
                 digitsofHours = "0"+d.getHours();
             if(d.getMinutes()<10)
                 digitsofMinutes = "0"+d.getMinutes();
-            <!--start watch-->    
+            <!--start watch-->
             $(".startTimer").click(function() {
                 if(cookieDate!="")
                 {
                     date = cookieDate;
                     time = cookieTime;
-                    
+
                 }
                 else
                 {
                     date = d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate();
                     time = d.getHours()+":"+d.getMinutes();
                 }
-                    
-                    
+
+
 
                 datetime = date + ' ' + time + ':00';
-                
+
                 $("#DateCountdown").TimeCircles().start();
-                
+
             });
-            <!--stop or pause watch--> 
-            
+            <!--stop or pause watch-->
+
             $(".stopTimer,.pauseTimer").click(function() {
                 $("#DateCountdown").TimeCircles().stop();
             });
- </script>     
+ </script>
 
         <script>
-                
+
     $(document).ready(function(){
                 var sysdate = new Date();
                 day = sysdate.getDate();
@@ -136,7 +138,7 @@
                 var subject;
                 var reason;
                 var result;
-                
+
                 $('.button').click(function(){
                     startdate = new Date($('#startdate').val());
                     enddate = new Date($('#enddate').val());
@@ -150,12 +152,12 @@
                     {
                         $(".enddate").html("Date must be of future");
                     }
-                    
+
                     while((result = regrex.exec(subject)) !=null)
                     {
                         $(".subject").html("Only alphabtes and .");
                     }
-                    
+
                     while((result = regrex2.exec(reason)) !=null)
                     {
                         $(".reason").html("Only alphabtes, numbers and .,@%&");
@@ -163,7 +165,7 @@
 //                      setTimeout(location.reload.bind(location), 5000);
                 });
                 $("#startdate").blur(function (){
-                    
+
                     startdate = new Date($('#startdate').val());
                     if(startdate => sysdate)
                     {
@@ -177,34 +179,34 @@
                             $(".enddate").html("");
                         }
                     });
-                $("#subject").blur(function (){                    
+                $("#subject").blur(function (){
                         while((result = regrex.exec(subject)) !=null)
                         {
-                            $(".subject").html("");  
+                            $(".subject").html("");
                         }
                     });
-                $("#reason").blur(function (){                    
+                $("#reason").blur(function (){
                         while((result = regrex2.exec(reason)) !=null)
                         {
-                            $(".reason").html("");  
+                            $(".reason").html("");
                         }
-                    });  
-                    
-                    
-                $("#startbu").blur(function (){                    
+                    });
+
+
+                $("#startbu").blur(function (){
                         while((result = regrex2.exec(reason)) !=null)
                         {
-                            $(".reason").html("");  
+                            $(".reason").html("");
                         }
-                    });      
+                    });
                 $("#starttask").click()
                 {
                     $("#stopbutton").attr("style","");
-                }        
+                }
     });
-    
+
         </script>
- 
+
 <!--end of Stop watch JS-->
  <!--start message box
  {{-- <script src="{{ asset("massage_box/jquery.bs.msgbox.js") }}"></script> --}}
@@ -222,24 +224,24 @@
         }
         });
     });
-    
+
 </script>
- 
+
  <script type="text/javascript">
 
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-36251023-1']);
     _gaq.push(['_setDomainName', 'jqueryscript.net']);
     _gaq.push(['_trackPageview']);
-  
+
     (function() {
       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
-  
+
   </script>-->
- <!--end message box--> 
+ <!--end message box-->
 
 @if(config('adminlte.plugins.select2'))
     <!-- Select2 -->

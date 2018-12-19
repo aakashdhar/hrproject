@@ -10,62 +10,54 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Tasks;
 use Illuminate\Support\Facades\Auth;
 use Toastr;
+use App\Models\User;
+use App\Models\Constants\UserType;
+use Carbon\Carbon;
 
 class TaskDistributionController extends Controller
 {
     //this function is just to show view to admin
     public function showPage_admin()
     {
-        return view("admins.taskdistributionform");
+        $users = User::with(['type'])->whereNotIn('user_type_id',[UserType::ADMIN])->get();
+        $tasks = Tasks::leftjoin("users", "users.user_id", "tasks.task_assigned_to")
+            ->leftjoin("user_task_timeline", "user_task_timeline.task_id", "tasks.task_id")
+            ->select("tasks.*", "users.user_id", "users.user_first_name", "users.user_last_name", "user_task_timeline.status_by_user")
+            ->get();
+        $this->addData('tasks', $tasks);
+        $this->addData('users', $users);
+        return $this->getView('admins.taskdistributionform');
     }
-    
+
     //this function is to assign task to user
     //it recevies user name with his id just to distinguish in case of same name
     public function assignTask(Request $request)
     {
-        
         $user = Auth::user();
         $res = false;
-        $temp = $request->get("userwithid");
-        $temp = explode(",", $temp);
-        $id = $temp[0];
-        
-        
+        $user_id = $request->get("userwithid");
         $tasktitle = $request->get("taskTitle");
-        if(!empty($task)) {
-            $data = array(
-                "user_id" => $id,
-                "task_title" => $tasktitle,
-                "task_description" => $task,
-                "task_created_by" => $user->user_id,
-                "task_assigned_to" => $id
-            );
-            
-            $res = Tasks::create($data); 
-        }
-        else {
-            $data = array(
-                "user_id" => $id,
-                "task_title" => $tasktitle,
-                "task_description" => null,
-                "task_created_by" => $user->user_id,
-                "task_assigned_to" => $id
-            );
-            
-            $res = Tasks::create($data);
-        }
-        
+        $data = array(
+            "task_assigned_by" => Auth::id(),
+            "task_title" => $tasktitle,
+            "task_description" => $request->get('task'),
+            "task_created_by" => Auth::id(),
+            "task_assigned_to" => $user_id,
+            "created_at" => Carbon::now()
+        );
+
+        $res = Tasks::create($data);
+
         if($res) {
             Toastr::success('Task is assigned successfully');
         } else {
             Toastr::error('Something went wrong');
         }
-        return redirect()->back();  
+        return redirect()->back();
     }
-    
+
     public function deleteTask(Request $request)
     {
-        
         Tasks::where("task_id",$request->get("taskid"))->delete();
         return redirect()->back();
     }
@@ -82,16 +74,16 @@ class TaskDistributionController extends Controller
         date_default_timezone_set("Asia/Kolkata");
         $start_date = null;
         $start_time = null;
-        
-        
-        
-        
+
+
+
+
         if($request->get("start") == ("Start"))
-        { 
+        {
             $start_date = date("Y-m-d");
-            $start_time = date('H:i:s');  
+            $start_time = date('H:i:s');
             DB::update("update tasks set start_datetime='$start_date $start_time' where task_id=$taskid and user_id=$userid");
-            
+
             $data = DB::select("select * from user_task_timeline where task_id=$taskid and user_id=$userid");
             if(empty($data))
             {
@@ -118,13 +110,13 @@ class TaskDistributionController extends Controller
             Session::forget("usertaskdata");
             Session::push('usertaskdata', ['userid'=>$userid,'taskid'=>$taskid,'date'=>$start_date,'time'=>$start_time]);
             return redirect()->back();
-                        
+
         }
         else
         {
             if($request->get("pause") == ("Pause"))
             {
-                
+
                 $olddate = null;
                 $oldtime = null;
                 $start_date = date("Y-m-d");
@@ -137,10 +129,10 @@ class TaskDistributionController extends Controller
                         $olddate = $data[0]["date"];
                         $oldtime = $data[0]["time"];
                     }
-                    
+
                 }
 
-                
+
                     DB::table("user_task_timeline")
                         ->where("user_task_timeline_id","=",$timelineid)
                         ->insert([
@@ -150,18 +142,18 @@ class TaskDistributionController extends Controller
                         "status_by_user" => "Pause"
                     ]);
             }
-                
-                
+
+
                 Session::forget("usertaskdata");
                 Session::push('usertaskdata', ['userid'=>$userid,'taskid'=>$taskid,'date'=>$olddate,'time'=>$oldtime]);
-               
+
                 return redirect()
                         ->back();
                         // ->withCookie(cookie("date",$start_date))
                         // ->withCookie(cookie("time",$start_time))
                         // ->withCookie(cookie("olddate",$olddate))
                         // ->withCookie(cookie("oldtime", $oldtime));
-                
+
             }
             /*if($request->get("stop") == ("Stop"))
             {
@@ -175,9 +167,9 @@ class TaskDistributionController extends Controller
                     if($data[0]["taskid"]==$taskid)
                     {
                         $olddate = $data[0]["date"];
-                        $oldtime = $data[0]["time"];                  
+                        $oldtime = $data[0]["time"];
                     }
-                    
+
                 }
                 Session::forget("usertaskdata");
                 Session::push('usertaskdata', ['userid'=>$userid,'taskid'=>$taskid,'date'=>$olddate,'time'=>$oldtime]);
@@ -190,9 +182,9 @@ class TaskDistributionController extends Controller
                         // ->withCookie(cookie("oldtime", $oldtime));
             }*/
         }
-        //this function is just to show view to user    
+        //this function is just to show view to user
         public function showPage_user()
         {
             return view("employees.employeetask");
-        } 
+        }
     }

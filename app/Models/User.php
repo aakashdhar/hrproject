@@ -31,4 +31,8 @@ class User extends Authenticatable
     public function type() {
         return $this->hasOne(UserType::class, 'user_type_id', 'user_type_id');
     }
+
+    public function getFullNameAttribute() {
+        return ucwords($this->attributes['user_first_name']) . " " . ucwords($this->attributes['user_last_name']);
+    }
 }

@@ -10,6 +10,8 @@ class Tasks extends Model
     protected $primaryKey = "task_id";
     public $timestamps = true;
 
+    protected $with = ['assigner', 'assignedTo'];
+
     protected $fillable = [
         'task_id',
         'task_title',
@@ -21,8 +23,17 @@ class Tasks extends Model
         'updated_at'
     ];
 
+    public function assigner() {
+        return $this->hasOne(User::class, 'user_id', 'task_created_by');
+    }
+
+    public function assignedTo()
+    {
+        return $this->hasOne(User::class, 'user_id', 'task_assigned_to');
+    }
+
     public function user()
     {
-        
+
     }
 }

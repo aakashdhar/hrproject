@@ -3,11 +3,11 @@
 @section('title', 'Admins')
 
 @section('content_header')
-    
+
     @stop
 
 @section('content')
-    
+
     <br>
     <div class="panel">
         <div class="panel-heading">
@@ -15,20 +15,16 @@
         <div class="panel-body">
             <h2>Assign Task to User</h2>
             <form action="{{url("tasks/assignTask")}}" id="taskform" method="post">
-                <?php
-                $data = \Illuminate\Support\Facades\DB::table("users")->where("user_type","!=","Admin")->join("user_types","user_types.user_type_id","users.user_type_id")->select("users.user_id","users.user_first_name","users.user_last_name")->get();
-                
-                ?>
                 {{ csrf_field() }}
                 <table id="usertask" class="table tab-content table-responsive">
-                    
                     <tr>
                         <td>Choose User :</td>
                         <td>
                             <select name="userwithid" class="form-control">
-                                 @foreach($data as $val)
-                                 <option>
-                                     {{$val->user_id}},{{$val->user_first_name}} {{$val->user_last_name}}
+                                <option disabled selected>Select user...</option>
+                                 @foreach($users as $val)
+                                <option value="{{$val->user_id}}">
+                                     {{ucwords($val->user_first_name)}} {{ucwords($val->user_last_name)}} [{{ $val->user_name }}]
                                  </option>
                                  @endforeach
                             </select>
@@ -37,7 +33,7 @@
                     <tr>
                         <td>Task Title :</td>
                         <td>
-                            <input type="text" name="taskTitle" required/>
+                            <input type="text" name="taskTitle" class="form-control" required/>
                         </td>
                     </tr>
                     <tr>
@@ -50,46 +46,32 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <button type="submit" class="btn btn-primary" name="assigntask">Assign</button>
+                            <button type="submit" class="btn btn-primary pull-right" name="assigntask">Assign</button>
                         </td>
                     </tr>
                 </table>
             </form>
         </div>
-        
+
         <div class="panel-body">
             <h2>List of Users with Tasks</h2>
-            <?php
-                $data = Illuminate\Support\Facades\DB::table("tasks")
-                        ->where("users.user_type_id","!=",1)
-                        ->join("users","users.user_id","tasks.task_assigned_to")
-                        ->leftjoin("user_task_timeline","user_task_timeline.task_id","tasks.task_id")
-                        ->select("tasks.*","users.user_id","users.user_first_name","users.user_last_name","user_task_timeline.status_by_user")
-                        ->get();
-                $user = \Auth::user();
-                
-                    ?>
-            
                 <table class="table tab-content table-responsive">
-                    <thead><th>User ID</th>
-                    <th>Name</th>
-                    <th>Task</th>
-                    <th>Start Date & Time</th>
-                    <th>Pause/Stop Date & Time</th>
-                    <th>Status By User</th>
-                    <th colspan="2">Status By Admin</th>
-                    <th colspan="2">Actions</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Task</th>
+                    <th class="text-center">Start Date & Time</th>
+                    <th class="text-center">Pause/Stop Date & Time</th>
+                    <th class="text-center">Status By User</th>
+                    <th class="text-center" colspan="2">Status By Admin</th>
+                    <th class="text-center" colspan="2">Actions</th>
                     </thead>
                     <tbody>
-                    @foreach($data as $val)
+                    @foreach($tasks as $val)
                     <tr>
-                        
-                        <td>{{$val->user_id}}</td>
-                        <td>{{$val->user_first_name}} {{$val->user_last_name}}</td>
-                        <td>{{$val->task or '-'}}</td>
-                        <td>{{$val->start_datetime or '-'}}</td>
-                        <td>{{$val->end_datetime or '-'}}</td>
-                        <td>{{$val->status_by_user or '-'}}</td>
+                        <td class="text-center">{{$val->assignedTo->full_name or '-'}}</td>
+                        <td class="text-center">{{$val->task_title or '-'}}</td>
+                        <td class="text-center">{{$val->start_datetime or '-'}}</td>
+                        <td class="text-center">{{$val->end_datetime or '-'}}</td>
+                        <td class="text-center">{{$val->status_by_user or '-'}}</td>
                         <td>
                             <form method="post" action="tasks/statusByAdmin?taskid={{$val->task_id}}&userid={{$val->user_id}}">
                                 {{csrf_field()}}
@@ -97,24 +79,24 @@
                                 <input type="submit" name="adminanswer" value="Reassign"  class="btn button"/>
                             </form>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <form method="post" action="tasks/statusByAdmin?taskid={{$val->task_id}}&userid={{$val->user_id}}">
-                                {{csrf_field()}}                                
+                                {{csrf_field()}}
                                 <input type="hidden" name="status" value="done" />
                                 <input type="submit" name="adminanswer" value="Complete"  class="btn btn-primary"/>
                             </form>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <form method="post" action="tasks/delete-task">
-                                    {{csrf_field()}}                                
+                                    {{csrf_field()}}
                                     <input type="hidden" name="taskid" value="{{ $val->task_id }}" />
                                     <button type="submit" name="adminanswer" class="btn"><i class="fa fa-trash"></i></button>
 
                             </form>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <form method="post" action="tasks/edit-task">
-                                    {{csrf_field()}}                                
+                                    {{csrf_field()}}
                                     <input type="hidden" name="taskid" value="{{ $val->task_id }}" />
                                     <button type="submit" name="adminanswer" class="btn"><i class="fa fa-edit"></i></button>
 
@@ -124,7 +106,7 @@
                     </tbody>
                     @endforeach
                 </table>
-            
+
         </div>
     </div>
 
@@ -188,5 +170,5 @@
     </div>
 @stop
 <script>
-    
+
 </script>
