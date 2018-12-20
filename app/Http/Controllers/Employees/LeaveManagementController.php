@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use App\Models\UserHoliday;
 use Toastr;
 
 class LeaveManagementController extends Controller
@@ -21,6 +22,7 @@ class LeaveManagementController extends Controller
     public function apply(Request $request)
     {
         $name = '';
+        $msg = array();
         $start_date = $request->get("start_date");
         $sd = date_create($start_date);
         $end_date = $request->get("end_date");
@@ -34,11 +36,14 @@ class LeaveManagementController extends Controller
             $name = $request->file("file")->hashName();
         }
         
-        if(preg_match("/[A-z.\\s]/g", $subject))
-        {
-            dd("here");
-        }
-        
+//        if(preg_match("/[A-z.\s]/i", $subject))
+//        {
+//        }
+//        else
+//        {
+//            dd("here");
+//            //$msg = ["subject"=>""];
+//        }
         $data = User::all()->where("user_id",'=',\Auth::user()->user_id)->first();
     
         $from_content="User";
@@ -61,12 +66,18 @@ class LeaveManagementController extends Controller
             "user_holiday_from" => $start_date,
             "user_holiday_to" => $end_date,
             "user_holiday_docname"=> $name,
-            "user_holiday_doc"=> "C:/Users/Hp/Documents/GitHub/hrproject/storage/app/upload",
+            "user_holiday_doc"=> public_path(),
             "user_holiday_subject" => $subject,
             "user_holiday_reason" => $reason
         );      
         DB::table("user_holiday")->insert($dataholiday);
         Toastr::success('Application has been sent.');
+        return redirect()->back();
+    }
+    
+    public function deleteLeave(Request $request)
+    {
+        DB::delete("delete from user_holiday where user_holiday_id ='".$request->get('holidayid')."'");
         return redirect()->back();
     }
     

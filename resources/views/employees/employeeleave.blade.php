@@ -89,9 +89,11 @@
                         <th>Holiday ID</th>
                         <th>Subject</th>
                         <th>Reason</th>
+                        <th>Document</th>
                         <th>From Date</th>
                         <th>To Date</th>
                         <th>Status</th>
+                        <th>Action</th>
                     </thead>
                     <tbody>
                         @foreach($data as $val)
@@ -99,9 +101,18 @@
                             <td>{{$val->user_holiday_id}}</td>
                             <td>{{$val->user_holiday_subject}}</td>
                             <td>{{$val->user_holiday_reason}}</td>
+                            <td><a href={{asset('upload/'.$val->user_holiday_docname)}} target="_blank">Click her</a></td>
                             <td>{{$val->user_holiday_from}}</td>
                             <td>{{$val->user_holiday_to}}</td>
                             <td>{{$val->user_holiday_approval_status}}</td>
+                            <td>
+                                <form method="post" action="/employees/leave/delete-leave">
+                                    {{csrf_field()}}
+                                    <input type="hidden" name="holidayid" value="{{$val->user_holiday_id}}" />
+                                    <button type="submit" name="deleteleave" class="btn"><i class="fa fa-trash"></i></button>
+
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

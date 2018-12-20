@@ -40,6 +40,7 @@ Route::post("employees/task/start","Admin\TaskDistributionController@taskStatus"
 Route::post("employees/task/pause","Admin\TaskDistributionController@taskStatus");
 Route::post("employees/task/stop","Admin\TaskDistributionController@taskStatus");
 Route::get("employees/leave","Employees\LeaveManagementController@showPage_user");
+Route::post("employees/leave/delete-leave","Employees\LeaveManagementController@deleteLeave");
 Route::post("employees/leave/apply","Employees\LeaveManagementController@apply");
 Route::post("employee/update/{id}","Employees\EmployeesController@updateEmployee");
 Route::post("employee/delete/{id}","Employees\EmployeesController@deleteEmployee");
