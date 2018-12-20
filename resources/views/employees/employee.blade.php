@@ -14,9 +14,6 @@
 
     <br>
     <div class="panel">
-        <div class="panel-heading">
-        <br/>
-        </div>
         <?php
         $count = 1;
         $userdata = \Illuminate\Support\Facades\DB::select("SELECT * from users u,user_types ut where ut.user_type_id=u.user_type_id and ut.user_type!='Admin'")
@@ -260,7 +257,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="user_name">User name</label>
-                                <input type="text" name="user_name" id="user_name" class="form-control" placeholder="U name" required>
+                                <input type="text" name="user_name" id="user_name" class="form-control" placeholder="User name" required>
                             </div>
                             <div class="col-md-4">
                                 <label for="user_first_name">First name</label>
