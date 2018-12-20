@@ -113,6 +113,14 @@
 
                                 </form>
                             </td>
+                            <td>
+                                <form action="/employees/leave/edit-leave">
+                                    {{csrf_field()}}
+                                    <input type="hidden" name="holidayid" value="{{$val->user_holiday_id}}" />
+                                    <button type="submit" name="editleave" class="btn"><i class="fa fa-edit"></i></button>
+
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

@@ -47,6 +47,7 @@ Route::post("employees/task/stop","Admin\TaskDistributionController@taskStatus")
 Route::get("employees/leave","Employees\LeaveManagementController@showPage_user");
 Route::get("employees/leave/delete-leave","Employees\LeaveManagementController@deleteLeave");
 Route::get("employees/leave/edit-leave","Employees\LeaveManagementController@editLeave");
+Route::post("employees/leave/edit-leave","Employees\LeaveManagementController@editLeaveDetails");
 Route::post("employees/leave/apply","Employees\LeaveManagementController@apply");
 
 Route::post("employee/update/{id}","Employees\EmployeesController@updateEmployee");

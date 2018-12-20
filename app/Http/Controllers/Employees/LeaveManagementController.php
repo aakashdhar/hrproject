@@ -88,8 +88,27 @@ class LeaveManagementController extends Controller
     public function editLeave(Request $request)
     {
         $leavedata = UserHoliday::all()->where("user_holiday_id","=",$request->get('holidayid'))->first();
+//        dd($leavedata);
         $this->addData("leavedata", $leavedata);
         return $this->getView("employees.employeeleave_edit");
+    }
+    public function editLeaveDetails(Request $request)
+    {
+        $holiday_id = $request->get('user_holiday_id');
+        $start_date = $request->get("start_date");
+        $end_date = $request->get("end_date");
+        $subject = $request->get("subject");
+        $reason = $request->get("reason");
+        $holiday = UserHoliday::find($holiday_id);
+        $holiday->user_holiday_from = $start_date;
+        $holiday->user_holiday_to = $end_date;
+        $holiday->user_holiday_reason = $reason;
+        $holiday->user_holiday_subject = $subject;
+        $holiday->save();
+        return view('employees.employeeleave');
+//        return redirect()->back();
+        
+        
     }
     
     //this function is just to show view to admin
