@@ -35,7 +35,7 @@ if(\Session::has('timer_data')){
 @section('content')
      <div class="container">
             <?php date_default_timezone_set("Asia/Kolkata"); ?>
-            <h2>Time spent</h2>
+            <h2 style="font-family:'Digital';font-size:40px;">TIME SPENT</h2>
             {{-- dd-mm-yyyy h:i:s --}}
             @if(!empty($timer_task_name) && $timer_task_name != '')
             <h2 style="text-align:center;font-family:'Digital;font-size:18px;'"><b>Current Task : </b>{{ $timer_task_name }}</h2>
@@ -228,6 +228,9 @@ if(\Session::has('timer_data')){
 
 @push('body_script')
 <script>
+        var myclose = false;
+
+
         var date;
         var time;
         var datetime;
@@ -311,6 +314,49 @@ function timerStatus(task_id,user_id,timeline_id,status){
     });
 }
 
+$(document).ready(function(){
+    $(window).on('mouseover', (function () {
+        window.onbeforeunload = null;
+    }));
+    $(window).on('mouseout', (function () {
+        window.onbeforeunload = ConfirmLeave;
+    }));
+    function ConfirmLeave() {
+        if(confirm('Test')){
+            return false;
+        }
+    }
+    var prevKey="";
+    $(document).keydown(function (e) {            
+        
+        if (e.key.toUpperCase() == "F4" && (prevKey == "ALT" || prevKey == "CONTROL")) {
+            return false;
+        }
+        if (e.key=="F5") {
+            window.onbeforeunload = ConfirmLeave();
+        }
+        else if (e.key.toUpperCase() == "W" && prevKey == "CONTROL") {                
+            window.onbeforeunload = ConfirmLeave();   
+        }
+        else if (e.key.toUpperCase() == "R" && prevKey == "CONTROL") {
+            window.onbeforeunload = ConfirmLeave();
+        }
+        else if (e.key.toUpperCase() == "F4" && (prevKey == "ALT" || prevKey == "CONTROL")) {
+            window.onbeforeunload = ConfirmLeave();
+            return false;
+        }
+        prevKey = e.key.toUpperCase();
+    
+    });
+
+    $(document).keypress(function(e) {
+        console.log(e.key.toUpperCase(),prevKey);
+        if (e.key.toUpperCase() == "F4" && (prevKey == "ALT" || prevKey == "CONTROL")) {
+            window.onbeforeunload = ConfirmLeave;
+            return false;
+        }
+    });
+});
 </script>
 
 @endpush
