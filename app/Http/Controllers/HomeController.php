@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Reminder;
 use App\Models\User;
 use App\Models\Constants\UserType;
+use App\Models\UserHoliday;
+use Illuminate\Support\Facades\Auth;
 
 
 class HomeController extends Controller
@@ -31,6 +33,8 @@ class HomeController extends Controller
                     ->get()->count();
         $admins = User::where('user_type_id', '=', UserType::ADMIN)->get()->count();
         $employee = User::where('user_type_id', '=', UserType::EMPLOYEE)->get()->count();
+        $leave_count = UserHoliday::where('user_id', '=', Auth::id())->get()->count();
+        $this->addData('leave_count', $leave_count);
         $this->addData('employee_count', $employee);
         $this->addData('admin_count', $admins);
         $this->addData('reminder_count', $reminders);
