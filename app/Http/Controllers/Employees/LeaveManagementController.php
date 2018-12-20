@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use App\Models\UserHoliday;
+use Illuminate\Support\Facades\Storage;
 use Toastr;
 
 class LeaveManagementController extends Controller
@@ -33,8 +34,8 @@ class LeaveManagementController extends Controller
         $reason = $request->get("reason");
         if(!empty($request->file("file")))
         {
-            $request->file("file")->store("upload");
-            $name = $request->file("file")->hashName();
+                Storage::disk("uploads")->put("Medical-Documents",$request->file("file"));
+                $name = $request->file("file")->hashName();
         }
 
 //        if(preg_match("/[A-z.\s]/i", $subject))
@@ -67,7 +68,7 @@ class LeaveManagementController extends Controller
             "user_holiday_from" => $start_date,
             "user_holiday_to" => $end_date,
             "user_holiday_docname"=> $name,
-            "user_holiday_doc"=> public_path(),
+            "user_holiday_doc"=> public_path()."/Medical-Documents",
             "user_holiday_subject" => $subject,
             "user_holiday_reason" => $reason
         );

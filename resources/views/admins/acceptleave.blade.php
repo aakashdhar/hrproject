@@ -38,10 +38,15 @@
                 @foreach($leaves as $val)
                 <tr>
                     <td>{{$count++}}</td>
-                    <td>{{$val->user->full_name}}</td>
-                    <td>{{\Carbon\Carbon::parse($val->user_holiday_from)->format('d-m-Y')}}</td>
-                    <td>{{\Carbon\Carbon::parse($val->user_holiday_to)->format('d-m-Y')}}</td>
-                    <td><a target="_blank" href=<?php print asset('upload/'.$val->user_holiday_docname);?>> Click here </a></td>
+
+                    <td>{{$val->user_id}}</td>
+                    <td>{{$val->user_holiday_from}}</td>
+                    <td>{{$val->user_holiday_to}}</td>
+                    <td>{{$val->user_holiday_subject}}</td>
+                    <td>{{ $val->user_holiday_reason }}</td>
+                   
+                    <td><a target="_blank" href=<?php print asset('Medical-Documents/'.$val->user_holiday_docname);?>> Click here </a></td> 
+
                     <td>{{$val->user_holiday_approval_status}}</td>
                     <td>
                         <div style="display: inline-block">
