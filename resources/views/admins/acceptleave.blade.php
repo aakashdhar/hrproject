@@ -52,7 +52,7 @@
                     <td>{{$val->user_holiday_subject}}</td>
                     <td>{{ $val->user_holiday_reason }}</td>
                    
-                    <td><a target="_blank" href=<?php print asset('upload/'.$val->user_holiday_docname);?>> Click here </a></td> 
+                    <td><a target="_blank" href=<?php print asset('Medical-Documents/'.$val->user_holiday_docname);?>> Click here </a></td> 
                     <td>{{$val->user_holiday_approval_status}}</td>
                     <td>
                         <form action="{{url('admin/leave/accept')}}?holidayid={{$val->user_holiday_id}}&id={{$val->user_id}}&start_date={{$val->user_holiday_from}}&end_date={{$val->user_holiday_to}}" method="POST">

@@ -101,7 +101,7 @@
                             <td>{{$val->user_holiday_id}}</td>
                             <td>{{$val->user_holiday_subject}}</td>
                             <td>{{$val->user_holiday_reason}}</td>
-                            <td><a href={{asset('upload/'.$val->user_holiday_docname)}} target="_blank">Click her</a></td>
+                            <td><a href={{asset('Medical-Documents/'.$val->user_holiday_docname)}} target="_blank">Click here</a></td>
                             <td>{{$val->user_holiday_from}}</td>
                             <td>{{$val->user_holiday_to}}</td>
                             <td>{{$val->user_holiday_approval_status}}</td>

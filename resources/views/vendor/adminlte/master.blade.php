@@ -177,10 +177,14 @@
                     });
                 $("#enddate").blur(function (){
                        enddate = new Date($('#enddate').val());
-                       
-                       if(enddate <= startdate)
+                       startdate = new Date($('#startdate').val());
+                       if(enddate < startdate)
                         {
                             $(".enddate").html("End date can not less than Start date");
+                        }
+                       else if(enddate == startdate)
+                        {
+                            $(".enddate").html("End date can not same Start date");
                         }
                         else
                         {
