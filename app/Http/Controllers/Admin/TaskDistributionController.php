@@ -12,6 +12,8 @@ use Toastr;
 use App\Models\User;
 use App\Models\Constants\UserType;
 use Carbon\Carbon;
+use App\Models\LogTask;
+use App\Models\Constants\TaskStatus;
 
 class TaskDistributionController extends Controller
 {
@@ -67,121 +69,64 @@ class TaskDistributionController extends Controller
     //when stop it stops with system date
     public function taskStatus(Request $request)
     {
-        $taskid = $request->get("taskid");
-        $userid = $request->get("userid");
-        $timelineid = $request->get("timelineid");
-        date_default_timezone_set("Asia/Kolkata");
-        $start_date = null;
-        $start_time = null;
-
-
-
-
-        if($request->get("start") == ("Start"))
-        {
-            $start_date = date("Y-m-d");
-            $start_time = date('H:i:s');
-            DB::update("update tasks set start_datetime='$start_date $start_time' where task_id=$taskid and user_id=$userid");
-
-            $data = DB::select("select * from user_task_timeline where task_id=$taskid and user_id=$userid");
-            if(empty($data))
-            {
-                DB::table("user_task_timeline")->insert([
-                    "task_id" => $taskid,
-                    "user_id" => $userid,
-                    "start_datetime" =>$start_date." ".$start_time,
-                    "status_by_user" => "Start"
-                ]);
-            }
-            else
-            {
-                DB::table("user_task_timeline")
-                    ->where("user_id","=",$userid)
-                    ->where("task_id","=",$taskid)
-                    ->update([
-                    "task_id" => $taskid,
-                    "user_id" => $userid,
-                    "start_datetime" =>$start_date." ".$start_time,
-                    "status_by_user" => "Start"
-                ]);
-            }
-            DB::update("update user_task_timeline set start_datetime='$start_date $start_time' where task_id=$taskid and user_id=$userid");
-            Session::forget("usertaskdata");
-            Session::push('usertaskdata', ['userid'=>$userid,'taskid'=>$taskid,'date'=>$start_date,'time'=>$start_time]);
-            return redirect()->back();
-
+        // dd($request->all());
+        $res = false;
+        $task_id = $request->input('task_id');
+        $status = $request->input('status');
+        $timeline_id = $request->input('timeline_id');
+        $user_id = $request->input('user_id');
+        // $date_time = $request->input('date_time');
+        $date_time = date('Y/m/d H:i:s');
+        $j_date = $date_time;
+        $date_time = date('Y/m/d H:i:s',strtotime($date_time));
+        $task = Tasks::find($task_id);
+        if($status == 'Pause'){
+            $task_status = TaskStatus::PAUSED;
+            $task->task_status = TaskStatus::PAUSED;
         }
-        else
-        {
-            if($request->get("pause") == ("Pause"))
-            {
-
-                $olddate = null;
-                $oldtime = null;
-                $start_date = date("Y-m-d");
-                $start_time = date('H:i:s');
-                if(!empty(Session::get("usertaskdata")))
-                {
-                    $data = Session::get("usertaskdata");
-                    if($data[0]["taskid"]==$taskid)
-                    {
-                        $olddate = $data[0]["date"];
-                        $oldtime = $data[0]["time"];
-                    }
-
-                }
-
-
-                    DB::table("user_task_timeline")
-                        ->where("user_task_timeline_id","=",$timelineid)
-                        ->insert([
-                        "task_id" => $taskid,
-                        "user_id" => $userid,
-                        "halt_datetime" =>$start_date." ".$start_time,
-                        "status_by_user" => "Pause"
-                    ]);
-            }
-
-
-                Session::forget("usertaskdata");
-                Session::push('usertaskdata', ['userid'=>$userid,'taskid'=>$taskid,'date'=>$olddate,'time'=>$oldtime]);
-
-                return redirect()
-                        ->back();
-                        // ->withCookie(cookie("date",$start_date))
-                        // ->withCookie(cookie("time",$start_time))
-                        // ->withCookie(cookie("olddate",$olddate))
-                        // ->withCookie(cookie("oldtime", $oldtime));
-
-            }
-            /*if($request->get("stop") == ("Stop"))
-            {
-                $olddate = null;
-                $oldtime = null;
-                $start_date = date("Y-m-d");
-                $start_time = date('H:i:s');
-                if(!empty(Session::get("usertaskdata")))
-                {
-                    $data = Session::get("usertaskdata");
-                    if($data[0]["taskid"]==$taskid)
-                    {
-                        $olddate = $data[0]["date"];
-                        $oldtime = $data[0]["time"];
-                    }
-
-                }
-                Session::forget("usertaskdata");
-                Session::push('usertaskdata', ['userid'=>$userid,'taskid'=>$taskid,'date'=>$olddate,'time'=>$oldtime]);
-                DB::update("update tasks set status_by_user='stop',end_date='$start_date',end_time='$start_time' where task_id=$taskid && user_id=$userid");
-                return redirect()
-                        ->back();
-                        // ->withCookie(cookie("date",$start_date))
-                        // ->withCookie(cookie("time", $start_time))
-                        // ->withCookie(cookie("olddate",$olddate))
-                        // ->withCookie(cookie("oldtime", $oldtime));
-            }*/
+        if($status == 'Start'){
+            $task_status = TaskStatus::STARTED;
+            $task->task_status = TaskStatus::STARTED;
         }
-        
+        if($status == 'Stop'){
+            $task_status = TaskStatus::FINISHED;
+            $task->task_status = TaskStatus::FINISHED;
+        }
+        $task->update();
+        // dd($task_status);
+        $logs = LogTask::where('log_task_id', '=', $task_id)->get();
+        if($logs->count() > 0) {
+            $last_log = LogTask::where('log_task_id', '=', $task_id)
+            ->where('log_task_finished_at', '=', null)
+            ->orderBy('log_task_details_id', 'desc')->first();
+            if(isset($last_log) && !empty($last_log)) {
+                $last_log->log_task_status = $task_status;
+                $last_log->log_task_finished_at = $date_time;
+                $last_log->update();
+            } else {
+                if($status != 'Stop') {
+                    $new_log = new LogTask();
+                    $new_log->log_task_id = $task_id;
+                    $new_log->log_task_started_at = $date_time;
+                    $new_log->log_task_status = $task_status;
+                    $res = $new_log->save();
+                }
+            }
+            // echo json_encode(['status'=>true,'task_status'=>$status,'date_time'=>$j_date]);
+            $get_timer_data = $this->getTaskMonthYear($task,$status);
+            return redirect()->back()->with(['timer_data'=>$get_timer_data]);
+        } else {
+            $new_log = new LogTask();
+            $new_log->log_task_id = $task_id;
+            $new_log->log_task_started_at = $date_time;
+            $new_log->log_task_status = $task_status;
+            $res  = $new_log->save();
+            // echo json_encode(['status'=>true,'task_status'=>$status,'date_time'=>$j_date]);
+            $get_timer_data = $this->getTaskMonthYear($task,$status);
+            return redirect()->back()->with(['timer_data'=>$get_timer_data]);
+        }
+        }
+
         public function editTask(Request $request)
         {
 //            dd($request->all());
@@ -193,7 +138,7 @@ class TaskDistributionController extends Controller
                     ->first();
             $this->addData("taskdata", $data);
             return $this->getView("admins.taskdistributionform_edit");
-            
+
         }
         public function editTaskDetails(Request $request)
         {
@@ -202,7 +147,7 @@ class TaskDistributionController extends Controller
             $task->task_title = $request->get("taskTitle");
             $task->task_description = $request->get("task");
             $res = $task->update();
-            
+
             return redirect()->back();
         }
         //this function is just to show view to user
@@ -211,10 +156,64 @@ class TaskDistributionController extends Controller
             $tasks = Tasks::with(['timeline'])
                     ->Where('task_assigned_to', '=', Auth::id())
                     ->get();
+            $started_count = Tasks::where('task_status', '=', 'Started')->get()->count();
+            $this->addData('started_count', $started_count);
             $auth = $this->getData()['auth'];
             $this->addData('tasks', $tasks);
             $this->addData('auth', $auth);
             return $this->getView('employees.employeetask');
         }
-        
+
+
+        public function getTaskMonthYear($task,$status)
+        {
+            $total_time_spent = '0000-00-00 00:00:00';
+            $t_minute = 0;
+            $t_hour = 0;
+            $t_seconds = 0;
+            if(count($task->timeline) > 0){
+                foreach ($task->timeline as $timeline)
+                {
+                    if($timeline->log_task_finished_at != null && $timeline->log_task_started_at != null) {
+                        $started = date('H:i:s', strtotime($timeline->log_task_started_at));
+                        $end = date('H:i:s', strtotime($timeline->log_task_finished_at));
+                        $spent = date_diff(new \DateTime($started), new \DateTime($end));
+
+                        $started = new \DateTime($started);
+                        $end = new \DateTime($end);
+                        $diff = new \DateTime();
+
+                        $diff = $end->diff($started);
+                        $second = $diff->s;
+                        $minute = $diff->i;
+                        $hours  = $diff->h;
+                        $t_minute += $minute;
+                        $t_hour += $hours;
+                        $t_seconds += $second;
+                    }
+                }
+            }
+
+            if($t_seconds > 60){
+                $minute = $t_seconds/60;
+                $t_minute = $t_minute + floor($minute);
+                $minute_fl = floor($minute);
+                $seconds = $t_seconds - ($minute_fl * 60);
+                $t_seconds = $seconds;
+            }
+
+            if($t_minute > 60){
+                $hour = $t_minute/60;
+                $t_hour = $t_hour + floor($hour);
+                $hour_fl = floor($hour);
+                $minutes = $t_minute - ($hour_fl * 60);
+                $t_minute = floor($minutes);
+            }
+
+
+            $data = ['hour'=>$t_hour,'minute'=>$t_minute,'second'=>$t_seconds,'task_name'=>$task->task_title,'status'=>$status];
+            // dd($data);
+            return $data;
+        }
+
     }
