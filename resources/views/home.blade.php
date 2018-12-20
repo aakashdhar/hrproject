@@ -53,13 +53,13 @@
         <!-- small box -->
         <div class="small-box bg-aqua">
             <div class="inner">
-                <h3>{{ $reminder_count }}</h3>
+                <h3>{{ $leave_count }}</h3>
                 <p>Leave Applications</p>
             </div>
             <div class="icon">
                 <i class="ion ion-ios-email"></i>
             </div>
-            <a href="/leave" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/leaves" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
 </div>
