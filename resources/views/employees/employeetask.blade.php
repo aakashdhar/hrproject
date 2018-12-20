@@ -322,40 +322,40 @@ $(document).ready(function(){
         window.onbeforeunload = ConfirmLeave;
     }));
     function ConfirmLeave() {
-        if(confirm('Test')){
+        if(confirm('You stop watch is ru')){
             return false;
         }
     }
     var prevKey="";
-    $(document).keydown(function (e) {            
-        
-        if (e.key.toUpperCase() == "F4" && (prevKey == "ALT" || prevKey == "CONTROL")) {
-            return false;
-        }
-        if (e.key=="F5") {
-            window.onbeforeunload = ConfirmLeave();
-        }
-        else if (e.key.toUpperCase() == "W" && prevKey == "CONTROL") {                
-            window.onbeforeunload = ConfirmLeave();   
-        }
-        else if (e.key.toUpperCase() == "R" && prevKey == "CONTROL") {
-            window.onbeforeunload = ConfirmLeave();
-        }
-        else if (e.key.toUpperCase() == "F4" && (prevKey == "ALT" || prevKey == "CONTROL")) {
-            window.onbeforeunload = ConfirmLeave();
-            return false;
-        }
-        prevKey = e.key.toUpperCase();
-    
-    });
+    // $(document).keydown(function (e) {
 
-    $(document).keypress(function(e) {
-        console.log(e.key.toUpperCase(),prevKey);
-        if (e.key.toUpperCase() == "F4" && (prevKey == "ALT" || prevKey == "CONTROL")) {
-            window.onbeforeunload = ConfirmLeave;
-            return false;
-        }
-    });
+    //     if (e.key.toUpperCase() == "F4" && (prevKey == "ALT" || prevKey == "CONTROL")) {
+    //         return false;
+    //     }
+    //     if (e.key=="F5") {
+    //         window.onbeforeunload = ConfirmLeave();
+    //     }
+    //     else if (e.key.toUpperCase() == "W" && prevKey == "CONTROL") {
+    //         window.onbeforeunload = ConfirmLeave();
+    //     }
+    //     else if (e.key.toUpperCase() == "R" && prevKey == "CONTROL") {
+    //         window.onbeforeunload = ConfirmLeave();
+    //     }
+    //     else if (e.key.toUpperCase() == "F4" && (prevKey == "ALT" || prevKey == "CONTROL")) {
+    //         window.onbeforeunload = ConfirmLeave();
+    //         return false;
+    //     }
+    //     prevKey = e.key.toUpperCase();
+
+    // });
+
+    // $(document).keypress(function(e) {
+    //     console.log(e.key.toUpperCase(),prevKey);
+    //     if (e.key.toUpperCase() == "F4" && (prevKey == "ALT" || prevKey == "CONTROL")) {
+    //         window.onbeforeunload = ConfirmLeave;
+    //         return false;
+    //     }
+    // });
 });
 </script>
 
