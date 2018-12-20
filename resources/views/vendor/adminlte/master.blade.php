@@ -259,6 +259,13 @@
 @endif
 
 @yield('adminlte_js')
-
+<script>
+    $(document).ready(function() {
+        $('tr.data-list').hide();
+    });
+    var data_details = function(cls) {
+        $('tr'+cls).toggle();
+    }
+</script>
 </body>
 </html>
