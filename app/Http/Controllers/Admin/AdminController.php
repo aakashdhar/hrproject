@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Admins\Admin;
 use App\Models\Constants\UserType;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use App\Models\Admins\UserType as Type;
 
 class AdminController extends Controller
 {
@@ -21,10 +23,11 @@ class AdminController extends Controller
 
     public function index(Request $request)
     {
-        //$admins = User::with(['type'])->where('user_type_id', '=', 1)->get();
-        //$this->addData('admins', $admins);
-        //return $this->getView('admins.index');
-        return view('admins.index');
+        $admins = User::where('user_type_id', '=', UserType::ADMIN)->get();
+        $user_types = Type::all();
+        $this->addData('user_types', $user_types);
+        $this->addData('admins', $admins);
+        return $this->getView('admins.index');
     }
 
     public function create()
@@ -50,7 +53,7 @@ class AdminController extends Controller
         //
     }
 
-    public function update($id,Request $request)
+    public function update($id, Request $request)
     {
         dd($request->all(), $id);
     }
@@ -59,7 +62,8 @@ class AdminController extends Controller
     {
         dd($id);
     }
-    public function UpdateAdmin($id,Request $request) {
+    public function UpdateAdmin($id, Request $request)
+    {
         $admin = Admin::find($id);
         $admin->user_name = $request->get('user_name');
         $admin->user_first_name = $request->get('user_first_name');

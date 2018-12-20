@@ -9,62 +9,36 @@
             <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#newAdminModal">Add new</button>
         </div>
     </div>
-
 @stop
 
 @section('content')
-
-    <br>
     <div class="panel">
-        <div class="panel-heading">
-        </div>
         <div class="panel-body">
-
-
-
                 <?php
                     $userdata = \App\Models\User::all();
                     $usertype = \App\Models\Admins\UserType::all();
                 ?>
-
             <h2>Admins</h2>
             <table id="listOfAdmins" class="table text-center table-bordered table-hover">
                 <thead>
-                        <th>ID</th>
-                        <th>Userame</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Password</th>
-                        <th>Type</th>
-
-                        <th>Created At</th>
-                        <th>Updated At</th>
-                    </thead>
+                    <th>Sr. no</th>
+                    <th>Userame</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Type</th>
+                    <th>Actions</th>
+                </thead>
                 <tbody class="text-center">
                     <?php
                         $count = 0;
-                        $admins = \Illuminate\Support\Facades\DB::select("SELECT * from users u,user_types ut where ut.user_type_id=u.user_type_id and ut.user_type='Admin'");
                     ?>
                     @foreach($admins as $admin)
                         <tr>
                             <td>{{ ++$count }}</td>
                             <td>{{ $admin->user_name or '-' }}</td>
-                            <td>{{ $admin->user_first_name or '-' }} {{ $admin->user_last_name or '-' }}</td>
+                            <td>{{ $admin->full_name or '-' }}</td>
                             <td>{{ $admin->user_email or '-' }}</td>
-                            <td>{{ $admin->user_password_raw or '-' }}</td>
-                            <td>
-                                <form method="get" action="{{url("admin/addUserType/assignType")}}">
-                                    <select name="usertype" >
-                                        @foreach($usertype as $val)
-                                            <option>{{$val->user_type}}</option>
-                                        @endforeach
-                                    </select>
-                                    <input type="hidden" name="userid" value="{{$admin->user_id}}" />
-                                    <input value="Change User Type" class="btn btn-default" type="submit"/>
-                                </form>
-                            </td>
-                            <td>{{$val->created_at}}</td>
-                            <td>{{$val->updated_at}}</td>
+                            <td>{{ $admin->type->user_type }}</td>
                             <td>
                                 <div style="display: inline-block">
                                     <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteAdminModal_{{ $admin->user_id }}">Delete</button>
@@ -118,13 +92,23 @@
                                                     <label for="user_password">Password</label>
                                                     <input type="password" name="user_password" value="{{ $admin->user_password_raw }}" id="user_password" class="form-control" placeholder="Password" required>
                                                 </div>
-
                                             </div>
                                             <div class="row" style="margin-top: 2%;">
                                                 <div class="col-md-4">
+                                                    <label for="user_status"></label>
+                                                    <select name="user_status" id="user_status" class="form-control">
+                                                        @foreach ($user_types as $type)
+                                                            @if ($admin->user_type_id == $type->user_type_id)
+                                                                <option selected value="{{ $type->user_type_id }}">{{ $type->user_type }}</option>
+                                                            @else
+                                                                <option value="{{ $type->user_type_id }}">{{ $type->user_type }}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
                                                     <label for="user_address">Address</label>
                                                     <input name="user_address" class="form-control" value="{{ $admin->user_address }}" id="user_address" placeholder="Address">
-
                                                 </div>
                                             </div>
                                         </div>
@@ -134,7 +118,6 @@
                                         </div>
                                     </form>
                                 </div>
-
                             </div>
                         </div>
 
