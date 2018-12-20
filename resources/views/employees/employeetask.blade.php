@@ -34,12 +34,12 @@
 
     <div class="panel mt-3">
         <h2>Tasks</h2>
-        <table class="table">
+        <table class="table" id="table_id">
             <thead>
                 <th class="text-center">Details</th>
                 <th class="text-center">Task title</th>
                 <th class="text-center">Task Description</th>
-                <th class="text-center">Task Status</th>
+                <th class="text-center">Total time spent</th>
                 <th class="text-center">Action</th>
             </thead>
             <tbody>
@@ -48,6 +48,17 @@
                 @endphp
                 {{ csrf_field() }}
                 @foreach ($tasks as $task)
+                    @php
+                        $total_time_spent = new \Carbon\Carbon();
+                    @endphp
+                    @foreach ($task->timeline as $timeline)
+                        @php
+                            $started = \Carbon\Carbon::parse($timeline->log_task_started_at);
+                            $end = \Carbon\Carbon::parse($timeline->log_task_finished_at);
+                            $total_time_spent = $end->diff($started);
+                        @endphp
+                    @endforeach
+                    {{-- {{dd($total_time_spent)}} --}}
                     <tr id="{{$task->task_id}}">
                         <td class="text-center"><a href="javascript:data_details('.data-list-{{ $task->task_id }}')" class="btn btn-primary" style="border-radius: 20px;"><i class="fa fa-arrow-down"></i></a></td>
                         <td class="text-center">{{ $task->task_title or "-"}}</td>
@@ -57,10 +68,10 @@
                             <div style="display: inline-block">
                                     <button type="button" class="startTimer btn btn-primary" onclick="timerStatus('{{ $task->task_id }}','{{ $auth->user_id }}','{{ $task->user_task_timeline_id }}','Start')">Start</button>
                             </div>
-                            <div style="display: inline-block">                        
+                            <div style="display: inline-block">
                                     <button type="button" class="btn btn-primary pauseTimer" onclick="timerStatus('{{ $task->task_id }}','{{ $auth->user_id }}','{{ $task->user_task_timeline_id }}','Pause')">Pause</button>
                             </div>
-                            <div style="display: inline-block">    
+                            <div style="display: inline-block">
                                     <button type="button" class="btn btn-primary stopTimer" onclick="timerStatus('{{ $task->task_id }}','{{ $auth->user_id }}','{{ $task->user_task_timeline_id }}','Stop')">Stop</button>
                             </div>
                         </td>
@@ -137,7 +148,7 @@ function timerStatus(task_id,user_id,timeline_id,status){
         digitsofHours = "0"+d.getHours();
     }
     if(d.getMinutes()<10){
-        digitsofMinutes = "0"+d.getMinutes();    
+        digitsofMinutes = "0"+d.getMinutes();
     }
     var month = dt.getMonth() + 1;
     var current_date = dt.getDate() + '-' + month + '-' + dt.getFullYear();
@@ -159,7 +170,7 @@ function timerStatus(task_id,user_id,timeline_id,status){
                     $("#DateCountdown").TimeCircles().stop();
                 }
             }
-            
+            $("#table_id").load(window.location + " #table_id");
         }
     });
 }

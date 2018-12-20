@@ -89,12 +89,23 @@ class TaskDistributionController extends Controller
         if($status == 'Stop'){
             $task_status = TaskStatus::FINISHED;
         }
-        // dd($task);
+        // dd($task_status);
         $logs = LogTask::where('log_task_id', '=', $task_id)->get();
         if($logs->count() > 0) {
             $last_log = LogTask::where('log_task_id', '=', $task_id)
-            ->where('log_task_finished_at', '=', '')
+            ->where('log_task_finished_at', '=', null)
             ->orderBy('log_task_details_id', 'desc')->first();
+            if(isset($last_log) && !empty($last_log)) {
+                $last_log->log_task_status = $task_status;
+                $last_log->log_task_finished_at = $date_time;
+                $last_log->update();
+            } else {
+                $new_log = new LogTask();
+                $new_log->log_task_id = $task_id;
+                $new_log->log_task_started_at = $date_time;
+                $new_log->log_task_status = $task_status;
+                $res = $new_log->save();
+            }
             echo json_encode(['status'=>true,'task_status'=>$status,'date_time'=>$j_date]);
         } else {
             $new_log = new LogTask();
