@@ -13,7 +13,11 @@ class EmployeesController extends Controller
     //this function is just to show view
     public function showPage()
     {
-        return view("employees.employee");
+        $userdata = User::with(['type'])
+                    ->where('user_type_id','<>','1')
+                    ->get();
+        $this->addData('userdata',$userdata);
+        return $this->getView("employees.employee");
     }
     //Function for creating the employee
     public function store(Request $request)

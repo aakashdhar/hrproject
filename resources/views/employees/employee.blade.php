@@ -14,10 +14,7 @@
 
     <br>
     <div class="panel">
-        <?php
-        $count = 1;
-        $userdata = \Illuminate\Support\Facades\DB::select("SELECT * from users u,user_types ut where ut.user_type_id=u.user_type_id and ut.user_type!='Admin'")
-        ?>
+        <?php $count = 1; ?>
         <div class="panel-body">
             <h2>Employees</h2>
             <table class="table text-center table-bordered table-hover">
@@ -38,7 +35,7 @@
                         <td>{{$val->user_email or '-'}}</td>
                         <td>{{$val->user_contact_no or '-'}}</td>
                         <td>{{$val->user_address or '-'}}</td>
-                        <td>{{$val->user_type or '-'}}</td>
+                        <td>{{$val->type->user_type or '-'}}</td>
                         <td>
                           <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -247,7 +244,7 @@
 
             <!-- Modal content-->
             <div class="modal-content">
-                <form method="post" action="{{url("employees/store")}}">
+                <form method="post" action="{{url("employees/store")}}" autocomplete="off">
                     {{ csrf_field() }}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
