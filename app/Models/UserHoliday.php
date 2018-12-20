@@ -10,7 +10,7 @@ class UserHoliday extends Model
     protected $table = 'user_holiday';
     protected $primaryKey = 'user_holiday_id';
     public $timestamps = true;
-    
+
     protected $fillable = [
         'user_holiday_id',
         'user_id',
@@ -24,9 +24,13 @@ class UserHoliday extends Model
         'created_at',
         'updated_at'
     ];
-    
+
     public function relation()
     {
         return $this->hasMany(User::class, 'user_id', 'user_id');
+    }
+
+    public function user() {
+        return $this->hasOne(User::class, 'user_id', 'user_id');
     }
 }

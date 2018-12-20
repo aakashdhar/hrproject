@@ -3,12 +3,12 @@
 @section('title', 'Leaves')
 
 @section('content_header')
-    
+
 
 @stop
 
 @section('content')
-    
+
     <br>
     <div class="panel">
         <div class="panel-heading">
@@ -18,55 +18,51 @@
         <div class="panel-body">
             <table id="applications" class="table text-center table-bordered table-hover">
             <!--start pgfetching user's holiday details with personal details-->
-                <?php                       
-                $data = DB::table('user_holiday')
-                ->join('users', 'user_holiday.user_id', '=', 'users.user_id')
-                ->select('user_holiday.*')
-                ->get();
-                
-                $count = 1; 
-            ?>
+                <?php
+                    $count = 1;
+                ?>
             <!--end-->
                 <tr>
                     <th>No.</th>
-                    <th>User ID</th>
-                    <th>start date</th>
-                    <th>end date</th>
-                    
-                    <th>subject</th>
-                    <th>reason</th>
-                    <th>Medical Document</th>
+                    <th>Name</th>
+                    <th>Start date</th>
+                    <th>End date</th>
+                    <th>Medi. Doc.</th>
                     <th>Status</th>
-                    <th></th>
+                    <th>Actions</th>
                 </tr>
-                @if(empty($data))
+                @if(empty($leaves))
                    <tr><td>NO Applications yet</td></tr>
-                @else  
+                @else
                 <!--start of loop retrieving the data -->
-                @foreach($data as $val)
+                @foreach($leaves as $val)
                 <tr>
                     <td>{{$count++}}</td>
-                    <td>{{$val->user_id}}</td>
-                    <td>{{$val->user_holiday_from}}</td>
-                    <td>{{$val->user_holiday_to}}</td>
-                    <td>{{$val->user_holiday_subject}}</td>
-                    <td>{{ $val->user_holiday_reason }}</td>
-                   
-                    <td><a target="_blank" href=<?php print asset('upload/'.$val->user_holiday_docname);?>> Click here </a></td> 
+                    <td>{{$val->user->full_name}}</td>
+                    <td>{{\Carbon\Carbon::parse($val->user_holiday_from)->format('d-m-Y')}}</td>
+                    <td>{{\Carbon\Carbon::parse($val->user_holiday_to)->format('d-m-Y')}}</td>
+                    <td><a target="_blank" href=<?php print asset('upload/'.$val->user_holiday_docname);?>> Click here </a></td>
                     <td>{{$val->user_holiday_approval_status}}</td>
                     <td>
-                        <form action="{{url('admin/leave/accept')}}?holidayid={{$val->user_holiday_id}}&id={{$val->user_id}}&start_date={{$val->user_holiday_from}}&end_date={{$val->user_holiday_to}}" method="POST">
-                             {{ csrf_field() }}
-                             <input type="hidden" name="answer" value="accept">
-                             <input type="submit" class="btn btn-primary" value="Accept">
-                         </form>
-                    </td>
-                    <td>
-                        <form action="{{url('admin/leave/reject')}}?holidayid={{$val->user_holiday_id}}&id={{$val->user_id}}&start_date={{$val->user_holiday_from}}&end_date={{$val->user_holiday_to}}" method="POST">
-                             {{ csrf_field() }}
-                             <input type="hidden" name="answer" value="reject">
-                             <input type="submit" class="btn button" class="button" value="Reject">
-                         </form>
+                        <div style="display: inline-block">
+                            <form action="{{url('admin/leave/accept')}}?holidayid={{$val->user_holiday_id}}&id={{$val->user_id}}&start_date={{$val->user_holiday_from}}&end_date={{$val->user_holiday_to}}"
+                                method="POST">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="answer" value="accept">
+                                <input type="submit" class="btn btn-primary" value="Accept">
+                            </form>
+                        </div>
+                        <div style="display: inline-block">
+                            <form action="{{url('admin/leave/reject')}}?holidayid={{$val->user_holiday_id}}&id={{$val->user_id}}&start_date={{$val->user_holiday_from}}&end_date={{$val->user_holiday_to}}"
+                                method="POST">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="answer" value="reject">
+                                <input type="submit" class="btn button" class="button" value="Reject">
+                            </form>
+                        </div>
+                        <div style="display: inline-block">
+                            <a class="btn btn-primary" href="{{url('admin/leave/view')}}?user_holiday_id={{$val->user_holiday_id}}">View</a>
+                        </div>
                     </td>
                 </tr>
                 @endforeach
