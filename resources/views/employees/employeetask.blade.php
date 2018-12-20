@@ -35,12 +35,12 @@ if(\Session::has('timer_data')){
 @section('content')
      <div class="container">
             <?php date_default_timezone_set("Asia/Kolkata"); ?>
-            <h2 style="font-family:'Digital';font-size:40px;">TIME SPENT</h2>
+            <h2 style="font-size:40px;" class="text-center">TIME SPENT</h2>
             {{-- dd-mm-yyyy h:i:s --}}
             @if(!empty($timer_task_name) && $timer_task_name != '')
             <h2 style="text-align:center;font-family:'Digital;font-size:18px;'"><b>Current Task : </b>{{ $timer_task_name }}</h2>
             @endif
-            <div id="DateCountdown" style="width: 500px; height: 125px; padding: 0px; box-sizing: border-box; background-color: #E0E8EF;line-height:125px;font-size:100px;font-family:'Digital';text-align:center;margin:0 auto;">
+            <div id="DateCountdown" style="width: 500px;border-radius: 10px; height: 125px; padding: 0px; box-sizing: border-box; background-color: #E0E8EF;line-height:125px;font-size:100px;font-family:'Digital';text-align:center;margin:0 auto;">
             </div>
         </div>
     <br>
