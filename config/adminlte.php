@@ -154,19 +154,19 @@ return [
             //     ],
             // ],
         ],
-        'ATTENDANCE MANAGEMENT',
-        [
-            'text'       => 'Important',
-            'icon_color' => 'red',
-        ],
-        [
-            'text'       => 'Warning',
-            'icon_color' => 'yellow',
-        ],
-        [
-            'text'       => 'Information',
-            'icon_color' => 'aqua',
-        ],
+        // 'ATTENDANCE MANAGEMENT',
+        // [
+        //     'text'       => 'Important',
+        //     'icon_color' => 'red',
+        // ],
+        // [
+        //     'text'       => 'Warning',
+        //     'icon_color' => 'yellow',
+        // ],
+        // [
+        //     'text'       => 'Information',
+        //     'icon_color' => 'aqua',
+        // ],
     ],
     /*
     |--------------------------------------------------------------------------

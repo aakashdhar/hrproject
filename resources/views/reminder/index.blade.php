@@ -13,7 +13,7 @@
   <div class="panel">
     <div class="panel-body">
       <h2>Reminders</h2>
-      <table class="table tab-content table-responsive">
+      <table class="table tab-content table-responsive table-hover">
         <thead>
           <th>#</th>
           <th>Name</th>

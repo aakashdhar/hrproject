@@ -11,7 +11,7 @@
           <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                  <label for="">Select User</label>
+                  <label for="user_id">Select User</label>
                   <select name="user_id" class="form-control">
                       <option disabled selected>Select user</option>
                        @foreach($user as $val)
@@ -21,16 +21,19 @@
                        @endforeach
                   </select>
                 </div>
-                <div class="form-group">
-                  <label for="">Reminder Date</label>
-                  <input type="date" name="user_remind_on" class="form-control" id="" placeholder="Select Date">
                 </div>
-                <div class="form-group">
-                  <label for="">Reminder Details</label>
-                  <textarea name="user_reminder_details" rows="6" cols="71" class="form-contol"></textarea>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="">Reminder Date</label>
+                    <input type="date" name="user_remind_on" class="form-control" id="" placeholder="Select Date">
+                  </div>
                 </div>
-
-            </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="user_reminder_details">Reminder Details</label>
+                    <textarea name="user_reminder_details"class="form-control"></textarea>
+                  </div>
+                </div>
           </div>
         </div>
         <div class="modal-footer">
