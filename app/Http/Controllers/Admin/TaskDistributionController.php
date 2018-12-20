@@ -82,7 +82,7 @@ class TaskDistributionController extends Controller
         $task = Tasks::find($task_id);
         $task_status = '';
 
-        $get_timer_data = $this->getTaskMonthYear($task,$status);
+        
         
         if($status == 'Pause'){
             $task_status = TaskStatus::PAUSED;
@@ -111,6 +111,7 @@ class TaskDistributionController extends Controller
                 $res = $new_log->save();
             }
             // echo json_encode(['status'=>true,'task_status'=>$status,'date_time'=>$j_date]);
+            $get_timer_data = $this->getTaskMonthYear($task,$status);
             return redirect()->back()->with(['timer_data'=>$get_timer_data]);
         } else {
             $new_log = new LogTask();
@@ -118,7 +119,8 @@ class TaskDistributionController extends Controller
             $new_log->log_task_started_at = $date_time;
             $new_log->log_task_status = $task_status;
             $res  = $new_log->save();
-            echo json_encode(['status'=>true,'task_status'=>$status,'date_time'=>$j_date]);
+            // echo json_encode(['status'=>true,'task_status'=>$status,'date_time'=>$j_date]);
+            $get_timer_data = $this->getTaskMonthYear($task,$status);
             return redirect()->back()->with(['timer_data'=>$get_timer_data]);
         }
         }
