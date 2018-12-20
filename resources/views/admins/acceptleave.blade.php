@@ -61,7 +61,7 @@
                             </form>
                         </div>
                         <div style="display: inline-block">
-                            <a class="btn btn-primary" href="{{url('admin/leave/view')}}?user_holiday_id={{$val->user_holiday_id}}">View</a>
+                            <a class="btn btn-primary" href="{{url('leaves/view')}}?user_holiday_id={{$val->user_holiday_id}}">View</a>
                         </div>
                     </td>
                 </tr>

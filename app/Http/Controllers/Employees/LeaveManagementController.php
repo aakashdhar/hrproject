@@ -93,7 +93,7 @@ class LeaveManagementController extends Controller
     public function view_leave(Request $request) {
         $leave = UserHoliday::with(['user'])->where('user_holiday_id', '=', $request->get('user_holiday_id'))->first();
         $this->addData('leave', $leave);
-        return $this->getView('');
+        return $this->getView('admins.view_leave');
     }
 
     // admin gives responce back to employee via email about his leave app
