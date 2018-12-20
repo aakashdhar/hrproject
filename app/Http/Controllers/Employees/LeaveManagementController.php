@@ -79,10 +79,19 @@ class LeaveManagementController extends Controller
 
     public function deleteLeave(Request $request)
     {
+        $file = UserHoliday::all()->where("user_holiday_id","=",$request->get('holidayid'))->first();
+        unlink(public_path()."/Medical-Documents/".$file->user_holiday_docname);
         DB::delete("delete from user_holiday where user_holiday_id ='".$request->get('holidayid')."'");
         return redirect()->back();
     }
 
+    public function editLeave(Request $request)
+    {
+        $leavedata = UserHoliday::all()->where("user_holiday_id","=",$request->get('holidayid'))->first();
+        $this->addData("leavedata", $leavedata);
+        return $this->getView("employees.employeeleave_edit");
+    }
+    
     //this function is just to show view to admin
     public function showPage_admin(Request $request)
     {

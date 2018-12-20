@@ -29,20 +29,26 @@ Route::post("tasks/assignTask","Admin\TaskDistributionController@assignTask");
 Route::post("tasks/statusByAdmin","Admin\TaskDistributionController@taskStatusByAdmin");
 
 Route::get("leaves","Employees\LeaveManagementController@showPage_admin");
+
 Route::get('leaves/view', 'Employees\LeaveManagementController@view_leave');
+
 Route::post("admin/leave/accept","Employees\LeaveManagementController@respond");
 Route::post("admin/leave/reject","Employees\LeaveManagementController@respond");
 
 Route::get("employees","Employees\EmployeesController@showPage");
 Route::post("employees/store","Employees\EmployeesController@store");
 Route::post("employees/sendmail","Admin\MailController@sendmail");
+
 Route::get("employees/task","Admin\TaskDistributionController@showPage_user");
 Route::post("employees/task/start","Admin\TaskDistributionController@taskStatus");
 Route::post("employees/task/pause","Admin\TaskDistributionController@taskStatus");
 Route::post("employees/task/stop","Admin\TaskDistributionController@taskStatus");
+
 Route::get("employees/leave","Employees\LeaveManagementController@showPage_user");
-Route::post("employees/leave/delete-leave","Employees\LeaveManagementController@deleteLeave");
+Route::get("employees/leave/delete-leave","Employees\LeaveManagementController@deleteLeave");
+Route::get("employees/leave/edit-leave","Employees\LeaveManagementController@editLeave");
 Route::post("employees/leave/apply","Employees\LeaveManagementController@apply");
+
 Route::post("employee/update/{id}","Employees\EmployeesController@updateEmployee");
 Route::post("employee/delete/{id}","Employees\EmployeesController@deleteEmployee");
 

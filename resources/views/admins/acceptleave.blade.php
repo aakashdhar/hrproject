@@ -44,9 +44,6 @@
                     <td>{{$val->user_holiday_to}}</td>
                     <td>{{$val->user_holiday_subject}}</td>
                     <td>{{ $val->user_holiday_reason }}</td>
-                   
-                    <td><a target="_blank" href=<?php print asset('Medical-Documents/'.$val->user_holiday_docname);?>> Click here </a></td> 
-
                     <td>{{$val->user_holiday_approval_status}}</td>
                     <td>
                         <div style="display: inline-block">
