@@ -12,6 +12,8 @@ use Toastr;
 use App\Models\User;
 use App\Models\Constants\UserType;
 use Carbon\Carbon;
+use App\Models\LogTask;
+use App\Models\Constants\TaskStatus;
 
 class TaskDistributionController extends Controller
 {
@@ -67,15 +69,34 @@ class TaskDistributionController extends Controller
     //when stop it stops with system date
     public function taskStatus(Request $request)
     {
+        // dd($request->all());
+        $res = false;
+        $task_id = $request->get('task_id');
+        $task = Tasks::find($task_id);
+        // dd($task);
+        $logs = LogTask::where('log_task_id', '=', $task_id)->get();
+        if($logs->count() == 0) {
+            $new_log = new LogTask();
+            $new_log->log_task_id = $task_id;
+            $new_log->log_task_started_at = Carbon::now();
+            $new_log->log_task_status = TaskStatus::STARTED;
+            $res  = $new_log->save();
+            return redirect()->back();
+        } else {
+            $last_log = LogTask::where('log_task_id', '=', $task_id)
+            ->where('log_task_finished_at', '=', '')
+            ->orderBy('log_task_details_id', 'desc')->first();
+            dd($last_log);
+        }
+
+        // --------------------------
+
         $taskid = $request->get("taskid");
         $userid = $request->get("userid");
         $timelineid = $request->get("timelineid");
         date_default_timezone_set("Asia/Kolkata");
         $start_date = null;
         $start_time = null;
-
-
-
 
         if($request->get("start") == ("Start"))
         {
@@ -181,7 +202,7 @@ class TaskDistributionController extends Controller
                         // ->withCookie(cookie("oldtime", $oldtime));
             }*/
         }
-        
+
         public function editTask(Request $request)
         {
 //            dd($request->all());
@@ -193,7 +214,7 @@ class TaskDistributionController extends Controller
                     ->first();
             $this->addData("taskdata", $data);
             return $this->getView("admins.taskdistributionform_edit");
-            
+
         }
         public function editTaskDetails(Request $request)
         {
@@ -202,7 +223,7 @@ class TaskDistributionController extends Controller
             $task->task_title = $request->get("taskTitle");
             $task->task_description = $request->get("task");
             $res = $task->update();
-            
+
             return redirect()->back();
         }
         //this function is just to show view to user
@@ -211,10 +232,11 @@ class TaskDistributionController extends Controller
             $tasks = Tasks::with(['timeline'])
                     ->Where('task_assigned_to', '=', Auth::id())
                     ->get();
+            // dd($tasks);
             $auth = $this->getData()['auth'];
             $this->addData('tasks', $tasks);
             $this->addData('auth', $auth);
             return $this->getView('employees.employeetask');
         }
-        
+
     }

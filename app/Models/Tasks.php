@@ -33,7 +33,7 @@ class Tasks extends Model
         return $this->hasOne(User::class, 'user_id', 'task_assigned_to');
     }
     public function timeline() {
-        return $this->hasMany(TaskTimeline::class, 'task_id', 'task_id');
+        return $this->hasMany(LogTask::class, 'log_task_id', 'task_id');
     }
     public function user()
     {
