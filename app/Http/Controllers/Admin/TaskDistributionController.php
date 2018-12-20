@@ -21,7 +21,7 @@ class TaskDistributionController extends Controller
     public function showPage_admin()
     {
         $users = User::with(['type'])->whereNotIn('user_type_id',[UserType::ADMIN])->get();
-        $tasks = Tasks::leftjoin("users", "users.user_id", "tasks.task_assigned_to")
+        $tasks = Tasks::with(['timeline'])->leftjoin("users", "users.user_id", "tasks.task_assigned_to")
             ->leftjoin("user_task_timeline", "user_task_timeline.task_id", "tasks.task_id")
             ->select("tasks.*", "users.user_id", "users.user_first_name", "users.user_last_name", "user_task_timeline.status_by_user")
             ->get();

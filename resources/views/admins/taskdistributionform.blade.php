@@ -15,9 +15,9 @@
         <div class="panel-body">
             <h2>Assign Task to User</h2>
             <form action="{{url("tasks/assignTask")}}" id="taskform" method="post">
-                
+
                 {{ csrf_field() }}
-                
+
                 <table id="usertask" class="table tab-content table-responsive">
                     <tr>
                         <td>Choose User :</td>
@@ -71,8 +71,20 @@
                     <tr>
                         <td class="text-center">{{$val->assignedTo->full_name or '-'}}</td>
                         <td class="text-center">{{$val->task_title or '-'}}</td>
-                        <td class="text-center">{{$val->start_datetime or '-'}}</td>
-                        <td class="text-center">{{$val->end_datetime or '-'}}</td>
+                        <td class="text-center">
+                            @if ($val->timeline->count() > 0)
+                                {{$val->timeline->first()->log_task_started_at}}
+                            @else
+                                -
+                            @endif
+                        </td>
+                        <td class="text-center">
+                            @if ($val->timeline->count() > 0)
+                                {{$val->timeline->last()->log_task_finished_at}}
+                            @else
+                                -
+                            @endif
+                        </td>
                         <td class="text-center">{{$val->status_by_user or '-'}}</td>
                         <td>
                             <form method="post" action="tasks/statusByAdmin?taskid={{$val->task_id}}&userid={{$val->user_id}}">
