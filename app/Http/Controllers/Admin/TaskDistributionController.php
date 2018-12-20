@@ -80,19 +80,19 @@ class TaskDistributionController extends Controller
         $j_date = $date_time;
         $date_time = date('Y/m/d H:i:s',strtotime($date_time));
         $task = Tasks::find($task_id);
-        $task_status = '';
-
-        
-        
         if($status == 'Pause'){
             $task_status = TaskStatus::PAUSED;
+            $task->task_status = TaskStatus::PAUSED;
         }
         if($status == 'Start'){
             $task_status = TaskStatus::STARTED;
+            $task->task_status = TaskStatus::STARTED;
         }
         if($status == 'Stop'){
             $task_status = TaskStatus::FINISHED;
+            $task->task_status = TaskStatus::FINISHED;
         }
+        $task->update();
         // dd($task_status);
         $logs = LogTask::where('log_task_id', '=', $task_id)->get();
         if($logs->count() > 0) {
@@ -104,11 +104,13 @@ class TaskDistributionController extends Controller
                 $last_log->log_task_finished_at = $date_time;
                 $last_log->update();
             } else {
-                $new_log = new LogTask();
-                $new_log->log_task_id = $task_id;
-                $new_log->log_task_started_at = $date_time;
-                $new_log->log_task_status = $task_status;
-                $res = $new_log->save();
+                if($status != 'Stop') {
+                    $new_log = new LogTask();
+                    $new_log->log_task_id = $task_id;
+                    $new_log->log_task_started_at = $date_time;
+                    $new_log->log_task_status = $task_status;
+                    $res = $new_log->save();
+                }
             }
             // echo json_encode(['status'=>true,'task_status'=>$status,'date_time'=>$j_date]);
             $get_timer_data = $this->getTaskMonthYear($task,$status);
@@ -154,7 +156,8 @@ class TaskDistributionController extends Controller
             $tasks = Tasks::with(['timeline'])
                     ->Where('task_assigned_to', '=', Auth::id())
                     ->get();
-            // dd($tasks);
+            $started_count = Tasks::where('task_status', '=', 'Started')->get()->count();
+            $this->addData('started_count', $started_count);
             $auth = $this->getData()['auth'];
             $this->addData('tasks', $tasks);
             $this->addData('auth', $auth);
@@ -175,11 +178,11 @@ class TaskDistributionController extends Controller
                         $started = date('H:i:s', strtotime($timeline->log_task_started_at));
                         $end = date('H:i:s', strtotime($timeline->log_task_finished_at));
                         $spent = date_diff(new \DateTime($started), new \DateTime($end));
-                
+
                         $started = new \DateTime($started);
                         $end = new \DateTime($end);
                         $diff = new \DateTime();
-    
+
                         $diff = $end->diff($started);
                         $second = $diff->s;
                         $minute = $diff->i;

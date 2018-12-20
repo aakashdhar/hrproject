@@ -8,7 +8,7 @@ $hour_timer = 0;
 $status_timer = false;
 $timer_task_name = '';
 if(\Session::has('timer_data')){
-    
+
     $data = \Session::get('timer_data');
     $timer_task_name = $data['task_name'];
     if($data['status'] != 'Stop'){
@@ -19,7 +19,7 @@ if(\Session::has('timer_data')){
             $status_timer = true;
         }
     }
-    
+
     \Session::forget('timer_data');
 }
 ?>
@@ -100,7 +100,7 @@ if(\Session::has('timer_data')){
                                 $seconds = $t_seconds - ($minute_fl * 60);
                                 $t_seconds = $seconds;
                             }
-                
+
                             if($t_minute > 60){
                                 $hour = $t_minute/60;
                                 $t_hour = $t_hour + floor($hour);
@@ -115,45 +115,61 @@ if(\Session::has('timer_data')){
                     <tr id="{{$task->task_id}}">
                         <td class="text-center"><a href="javascript:data_details('.data-list-{{ $task->task_id }}')" class="btn btn-primary" style="border-radius: 20px;"><i class="fa fa-arrow-down"></i></a></td>
                         <td class="text-center">{{ $task->task_title or "-"}}</td>
-                        <td class="text-center"> {{ $task->task_description or "No task body" }} </td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#moreDetails-{{$task->task_id}}">View more details</button>
+                        </td>
                         <td class="text-center"> {{ $t_hour.":".$t_minute.":".$t_seconds }} </td>
                         <td class="text-center">
-                            
-                            <div style="display: inline-block">
+                            @if ($task->task_status == 'Finished')
+                                Completed
+                            @else
+                                <div style="display: inline-block">
                                     <form action="/employees/task/start" method="POST" id="{{ $task->task_id }}">
                                         {{ csrf_field() }}
                                         <input type="hidden" value="Start" name="status">
                                         <input type="hidden" value="{{ $auth->user_id }}" name="user_id">
                                         <input type="hidden" value="{{ $task->task_id }}" name="task_id">
-                                        <input type="hidden" value="{{ $task->user_task_timeline_id }}" name="timeline_id">
-                                    {{--  <button type="submit" class="startTimer btn btn-primary" onclick="timerStatus('{{ $task->task_id }}','{{ $auth->user_id }}','{{ $task->user_task_timeline_id }}','Start')">Start</button>  --}}
-                                    <button type="submit" class="startTimer btn btn-success">Start</button>
+                                        <input type="hidden" value="{{ $task->user_task_timeline_id }}" name="timeline_id"> {{-- <button type="submit" class="startTimer btn btn-primary"
+                                            onclick="timerStatus('{{ $task->task_id }}','{{ $auth->user_id }}','{{ $task->user_task_timeline_id }}','Start')">Start</button>        --}}
+                                            @if ($task->task_status == 'Finished' || $task->task_status == 'Started')
+                                            <button type="submit" class="startTimer btn btn-success" disabled>Start</button>
+                                        @else
+                                        @if ($started_count == 1)
+                                        <button type="submit" class="startTimer btn btn-success" disabled>Start</button>
+                                        @elseif($task->task_status == 'Paused')
+                                        <button type="submit" class="startTimer btn btn-success">Resume</button>
+                                        @else
+                                        <button type="submit" class="startTimer btn btn-success">Start</button>
+                                        @endif
+                                        @endif
+
                                     </form>
-                            </div>
-                            <div style="display: inline-block">
-                            <form action="/employees/task/start" method="POST" id="{{ $task->task_id }}">
-                                {{ csrf_field() }}
-                                <input type="hidden" value="Pause" name="status">
-                                <input type="hidden" value="{{ $auth->user_id }}" name="user_id">
-                                <input type="hidden" value="{{ $task->task_id }}" name="task_id">
-                        
-                                    {{--  <button type="submit" class="btn btn-primary pauseTimer" onclick="timerStatus('{{ $task->task_id }}','{{ $auth->user_id }}','{{ $task->user_task_timeline_id }}','Pause')">Pause</button>  --}}
-                                    <button type="submit" class="btn btn-warning pauseTimer">Pause</button>
-                            
-                            </form>
-                        </div>
-                        <div style="display: inline-block">
-                            <form action="/employees/task/start" method="POST" id="{{ $task->task_id }}">
-                                {{ csrf_field() }}
-                                <input type="hidden" value="Stop" name="status">
-                                <input type="hidden" value="{{ $auth->user_id }}" name="user_id">
-                                <input type="hidden" value="{{ $task->task_id }}" name="task_id">
-                            
-                                    {{--  <button type="submit" class="btn btn-primary stopTimer" onclick="timerStatus('{{ $task->task_id }}','{{ $auth->user_id }}','{{ $task->user_task_timeline_id }}','Stop')">Stop</button>  --}}
-                                    <button type="submit" class="btn btn-danger stopTimer">Stop</button>
-                            
-                            </form>
-                        </div>
+                                </div>
+                                <div style="display: inline-block">
+                                    <form action="/employees/task/start" method="POST" id="{{ $task->task_id }}">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" value="Pause" name="status">
+                                        <input type="hidden" value="{{ $auth->user_id }}" name="user_id">
+                                        <input type="hidden" value="{{ $task->task_id }}" name="task_id"> {{-- <button type="submit" class="btn btn-primary pauseTimer"
+                                            onclick="timerStatus('{{ $task->task_id }}','{{ $auth->user_id }}','{{ $task->user_task_timeline_id }}','Pause')">Pause</button>        --}} @if ($task->task_status == 'Finished' || $task->task_status == 'Paused' || $task->timeline->count() == 0)
+                                        <button type="submit" class="btn btn-warning pauseTimer" disabled>Pause</button> @else
+                                        <button type="submit" class="btn btn-warning pauseTimer">Pause</button> @endif
+
+                                    </form>
+                                </div>
+                                <div style="display: inline-block">
+                                    <form action="/employees/task/start" method="POST" id="{{ $task->task_id }}">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" value="Stop" name="status">
+                                        <input type="hidden" value="{{ $auth->user_id }}" name="user_id">
+                                        <input type="hidden" value="{{ $task->task_id }}" name="task_id"> {{-- <button type="submit" class="btn btn-primary stopTimer"
+                                            onclick="timerStatus('{{ $task->task_id }}','{{ $auth->user_id }}','{{ $task->user_task_timeline_id }}','Stop')">Stop</button>        --}} @if ($task->task_status == 'Finished' || $task->task_status == 'Not Started')
+                                        <button type="submit" class="btn btn-danger stopTimer" disabled>Stop</button> @else
+                                        <button type="submit" class="btn btn-danger stopTimer">Stop</button> @endif
+
+                                    </form>
+                                </div>
+                            @endif
                         </td>
                     </tr>
                     @php
@@ -181,7 +197,28 @@ if(\Session::has('timer_data')){
                         </td>
                         <td class="text-center"> <i>{{ $timeline->log_task_status }}</i> </td>
                     </tr>
+
                     @endforeach
+                    <div id="moreDetails-{{$task->task_id}}" class="modal fade" tabindex="-1" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Task Details</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <h4><b>Title :</b> {{ $task->task_title }}</h4>
+                                    <br>
+                                    <h4><b>Description :</b> {{ $task->task_description }}</h4>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 @endforeach
             </tbody>
         </table>
@@ -198,15 +235,15 @@ if(\Session::has('timer_data')){
         var digitsofHours;
         var digitsofMinutes;
         var d = new Date();
-    
+
                var sec_timer = "{{ $seconds_timer }}";
                var min_timer = "{{ $minutes_timer }}";
                var hr_timer  = "{{ $hour_timer }}";
                var stat_timer = "{{ $status_timer }}";
 
             $('#DateCountdown').countimer({
-                enableEvents: false,                    
-                autoStart : stat_timer,                    
+                enableEvents: false,
+                autoStart : stat_timer,
                 useHours : true,
                 minuteIndicator: '',
                 secondIndicator: '',
@@ -216,12 +253,12 @@ if(\Session::has('timer_data')){
                 initMinutes : min_timer,
                 initSeconds: sec_timer
               });
-        
 
 
 
 
-    
+
+
     {{--  $("#DateCountdown").TimeCircles().stop();  --}}
         if(d.getDate()<10)
             digitsOfDate = "0"+d.getDate();
