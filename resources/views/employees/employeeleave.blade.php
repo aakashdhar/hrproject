@@ -106,7 +106,7 @@
                             <td>{{$val->user_holiday_to}}</td>
                             <td>{{$val->user_holiday_approval_status}}</td>
                             <td>
-                                <form method="post" action="/employees/leave/delete-leave">
+                                <form action="/employees/leave/delete-leave">
                                     {{csrf_field()}}
                                     <input type="hidden" name="holidayid" value="{{$val->user_holiday_id}}" />
                                     <button type="submit" name="deleteleave" class="btn"><i class="fa fa-trash"></i></button>
@@ -120,16 +120,5 @@
             </div>
         </div>
         
-    </div>
-
-    <div id="newAdminModal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                
-            </div>
-
-        </div>
     </div>
 @stop
