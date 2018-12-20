@@ -24,7 +24,7 @@ Route::get("tasks","Admin\TaskDistributionController@showPage_admin");
 Route::post("tasks/delete-task","Admin\TaskDistributionController@deleteTask");
 Route::get("tasks/edit-task","Admin\TaskDistributionController@editTask");
 Route::post("tasks/edit-task","Admin\TaskDistributionController@editTaskDetails");
-    
+
 Route::post("tasks/assignTask","Admin\TaskDistributionController@assignTask");
 Route::post("tasks/statusByAdmin","Admin\TaskDistributionController@taskStatusByAdmin");
 
@@ -46,6 +46,7 @@ Route::post("employee/delete/{id}","Employees\EmployeesController@deleteEmployee
 
 Route::middleware('auth')->group(function() {
     Route::prefix('/')->group(function() {
+        Route::resource('reminder', 'Reminder\ReminderController');
         require_once ('routes/routes_admin_users.php');
     });
 });

@@ -98,6 +98,11 @@ return [
             'url'         => 'tasks',
             'icon'        => 'tasks',
         ],
+        [
+            'text' => 'Task Reminder',
+            'url'  => 'reminder',
+            'icon' => 'calendar',
+        ],
         'USERS',
         [
             'text' => 'Admins',

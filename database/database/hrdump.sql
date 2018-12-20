@@ -100,3 +100,14 @@ CREATE TABLE `hr_project`.`user_designation` (
   `user_designation_updated_at` TIMESTAMP NULL,
   PRIMARY KEY (`user_designation_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE `user_reminder`;
+CREATE TABLE `user_reminder` (
+  `user_reminder_id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `user_reminder_details` TEXT NULL,
+  `user_remind_on` DATE NULL,
+  `user_reminder_status` ENUM('pending', 'completed') NULL DEFAULT 'pending',
+  `created_at` TIMESTAMP NULL,
+  `updated_at` TIMESTAMP NULL,
+  PRIMARY KEY (`user_reminder_id`));
