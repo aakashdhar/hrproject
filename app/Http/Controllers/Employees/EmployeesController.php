@@ -36,7 +36,7 @@ class EmployeesController extends Controller
       $user->user_hobbies = $request->get('user_hobbies');
       $user->user_emergency_name = $request->get('user_emergency_name');
       $user->user_emergency_contact = $request->get('user_emergency_contact');
-      $user->user_type_id = 3;
+      $user->user_type_id = 2;
       $res = $user->save();
       return redirect()->back();
     }
