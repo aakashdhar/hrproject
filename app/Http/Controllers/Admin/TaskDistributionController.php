@@ -77,7 +77,7 @@ class TaskDistributionController extends Controller
         $user_id = $request->input('user_id');
         $date_time = $request->input('date_time');
         $j_date = $date_time;
-        $date_time = date('Y/m/d H:s:i',strtotime($date_time));
+        $date_time = date('Y/m/d H:i:s',strtotime($date_time));
         $task = Tasks::find($task_id);
         $task_status = '';
         if($status == 'Pause'){

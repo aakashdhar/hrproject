@@ -49,21 +49,43 @@
                 {{ csrf_field() }}
                 @foreach ($tasks as $task)
                     @php
-                        $total_time_spent = new \Carbon\Carbon();
+                        $total_time_spent = '0000-00-00 00:00:00';
+                        $t_minute = 0;
+                        $t_hour = 0;
+                        $t_seconds = 0;
                     @endphp
                     @foreach ($task->timeline as $timeline)
                         @php
-                            $started = \Carbon\Carbon::parse($timeline->log_task_started_at);
-                            $end = \Carbon\Carbon::parse($timeline->log_task_finished_at);
-                            $total_time_spent = $end->diff($started);
+
+                            if($timeline->log_task_finished_at != null && $timeline->log_task_started_at != null) {
+                                $started = date('H:i:s', strtotime($timeline->log_task_started_at));
+                                $end = date('H:i:s', strtotime($timeline->log_task_finished_at));
+                                $spent = date_diff(new \DateTime($started), new \DateTime($end));
+                                // $total_time_spent = new \DateTime($total_time_spent) + $spent;
+
+                                // $date1 = new DateTime('2006-04-12T12:30:00');
+                                // $date2 = new DateTime('2006-04-14T11:30:00');
+                                $started = new \DateTime($started);
+                                $end = new \DateTime($end);
+                                $diff = new \DateTime();
+
+                                $diff = $end->diff($started);
+                                $second = $diff->s;
+                                $minute = $diff->i;
+                                $hours  = $diff->h;
+                                $t_minute += $minute;
+                                $t_hour += $hours;
+                                $t_seconds += $second;
+                            }
                         @endphp
                     @endforeach
+                    {{-- {{dd($t_minute,$t_seconds,$t_hour)}} --}}
                     {{-- {{dd($total_time_spent)}} --}}
                     <tr id="{{$task->task_id}}">
                         <td class="text-center"><a href="javascript:data_details('.data-list-{{ $task->task_id }}')" class="btn btn-primary" style="border-radius: 20px;"><i class="fa fa-arrow-down"></i></a></td>
                         <td class="text-center">{{ $task->task_title or "-"}}</td>
                         <td class="text-center"> {{ $task->task_description or "No task body" }} </td>
-                        <td class="text-center"> {{ $task->task_status }} </td>
+                        <td class="text-center"> {{ $t_hour.":".$t_minute.":".$t_seconds }} </td>
                         <td class="text-center">
                             <div style="display: inline-block">
                                     <button type="button" class="startTimer btn btn-primary" onclick="timerStatus('{{ $task->task_id }}','{{ $auth->user_id }}','{{ $task->user_task_timeline_id }}','Start')">Start</button>
@@ -90,12 +112,12 @@
                     <tr class="data-list data-list-{{ $task->task_id }}">
                         <td></td>
                         <td class="text-center"> <i>{{ ++$count }}</i> </td>
-                        <td class="text-center"> <i>{{ \Carbon\Carbon::parse($timeline->log_task_started_at)->toDayDateTimeString() }} </i></td>
+                        <td class="text-center"> <i>{{ $timeline->log_task_started_at }} </i></td>
                         <td class="text-center"><i>
                             @if ($timeline->log_task_finished_at == null)
                                 -
                             @else
-                                {{ \Carbon\Carbon::parse($timeline->log_task_finished_at)->toDayDateTimeString() }}
+                                {{ $timeline->log_task_finished_at }}
                             @endif
                             </i>
                         </td>
@@ -154,6 +176,7 @@ function timerStatus(task_id,user_id,timeline_id,status){
     var current_date = dt.getDate() + '-' + month + '-' + dt.getFullYear();
     var time = digitsofHours + ':' + digitsofMinutes + ':' + digitsOfSeconds;
     var dateTime = current_date + ' ' + time;
+    var dateTime = "{{ date('Y-m-d H:i:s') }}";
 
     $.ajax({
         url: '/employees/task/start',
@@ -170,6 +193,7 @@ function timerStatus(task_id,user_id,timeline_id,status){
                     $("#DateCountdown").TimeCircles().stop();
                 }
             }
+            location.reload();
             $("#table_id").load(window.location + " #table_id");
         }
     });
