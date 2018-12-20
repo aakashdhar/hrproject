@@ -40,11 +40,16 @@
                                                             'icon'    => 'share',
                                                         ],
                                                         'TASK',
-                                                            [
-                                                                'text'        => 'Task Management',
-                                                                'url'         => 'employees/task',
-                                                                'icon'        => 'tasks',
-                                                            ],
+                                                        [
+                                                            'text'        => 'Task Management',
+                                                            'url'         => 'employees/task',
+                                                            'icon'        => 'tasks',
+                                                        ],
+                                                        [
+                                                            'text' => 'Task Reminder',
+                                                            'url'  => 'reminder',
+                                                            'icon' => 'calendar',
+                                                        ]
                                                     ]
                                                 ])
         }}

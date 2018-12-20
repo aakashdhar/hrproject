@@ -93,24 +93,6 @@
                                                     <input type="password" name="user_password" value="{{ $admin->user_password_raw }}" id="user_password" class="form-control" placeholder="Password" required>
                                                 </div>
                                             </div>
-                                            <div class="row" style="margin-top: 2%;">
-                                                <div class="col-md-4">
-                                                    <label for="user_status"></label>
-                                                    <select name="user_status" id="user_status" class="form-control">
-                                                        @foreach ($user_types as $type)
-                                                            @if ($admin->user_type_id == $type->user_type_id)
-                                                                <option selected value="{{ $type->user_type_id }}">{{ $type->user_type }}</option>
-                                                            @else
-                                                                <option value="{{ $type->user_type_id }}">{{ $type->user_type }}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="user_address">Address</label>
-                                                    <input name="user_address" class="form-control" value="{{ $admin->user_address }}" id="user_address" placeholder="Address">
-                                                </div>
-                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
