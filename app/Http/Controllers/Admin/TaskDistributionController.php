@@ -75,11 +75,15 @@ class TaskDistributionController extends Controller
         $status = $request->input('status');
         $timeline_id = $request->input('timeline_id');
         $user_id = $request->input('user_id');
-        $date_time = $request->input('date_time');
+        // $date_time = $request->input('date_time');
+        $date_time = date('Y/m/d H:i:s');
         $j_date = $date_time;
         $date_time = date('Y/m/d H:i:s',strtotime($date_time));
         $task = Tasks::find($task_id);
         $task_status = '';
+
+        $get_timer_data = $this->getTaskMonthYear($task,$status);
+        
         if($status == 'Pause'){
             $task_status = TaskStatus::PAUSED;
         }
@@ -106,7 +110,8 @@ class TaskDistributionController extends Controller
                 $new_log->log_task_status = $task_status;
                 $res = $new_log->save();
             }
-            echo json_encode(['status'=>true,'task_status'=>$status,'date_time'=>$j_date]);
+            // echo json_encode(['status'=>true,'task_status'=>$status,'date_time'=>$j_date]);
+            return redirect()->back()->with(['timer_data'=>$get_timer_data]);
         } else {
             $new_log = new LogTask();
             $new_log->log_task_id = $task_id;
@@ -114,6 +119,7 @@ class TaskDistributionController extends Controller
             $new_log->log_task_status = $task_status;
             $res  = $new_log->save();
             echo json_encode(['status'=>true,'task_status'=>$status,'date_time'=>$j_date]);
+            return redirect()->back()->with(['timer_data'=>$get_timer_data]);
         }
         }
 
@@ -151,6 +157,58 @@ class TaskDistributionController extends Controller
             $this->addData('tasks', $tasks);
             $this->addData('auth', $auth);
             return $this->getView('employees.employeetask');
+        }
+
+
+        public function getTaskMonthYear($task,$status)
+        {
+            $total_time_spent = '0000-00-00 00:00:00';
+            $t_minute = 0;
+            $t_hour = 0;
+            $t_seconds = 0;
+            if(count($task->timeline) > 0){
+                foreach ($task->timeline as $timeline)
+                {
+                    if($timeline->log_task_finished_at != null && $timeline->log_task_started_at != null) {
+                        $started = date('H:i:s', strtotime($timeline->log_task_started_at));
+                        $end = date('H:i:s', strtotime($timeline->log_task_finished_at));
+                        $spent = date_diff(new \DateTime($started), new \DateTime($end));
+                
+                        $started = new \DateTime($started);
+                        $end = new \DateTime($end);
+                        $diff = new \DateTime();
+    
+                        $diff = $end->diff($started);
+                        $second = $diff->s;
+                        $minute = $diff->i;
+                        $hours  = $diff->h;
+                        $t_minute += $minute;
+                        $t_hour += $hours;
+                        $t_seconds += $second;
+                    }
+                }
+            }
+
+            if($t_seconds > 60){
+                $minute = $t_seconds/60;
+                $t_minute = $t_minute + floor($minute);
+                $minute_fl = floor($minute);
+                $seconds = $t_seconds - ($minute_fl * 60);
+                $t_seconds = $seconds;
+            }
+
+            if($t_minute > 60){
+                $hour = $t_minute/60;
+                $t_hour = $t_hour + floor($hour);
+                $hour_fl = floor($hour);
+                $minutes = $t_minute - ($hour_fl * 60);
+                $t_minute = floor($minutes);
+            }
+
+
+            $data = ['hour'=>$t_hour,'minute'=>$t_minute,'second'=>$t_seconds,'task_name'=>$task->task_title,'status'=>$status];
+            // dd($data);
+            return $data;
         }
 
     }

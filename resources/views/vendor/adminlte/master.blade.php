@@ -47,12 +47,24 @@
     @yield('adminlte_css')
 
     <!--[if lt IE 9]>
+        <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
     <![endif]-->
 
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <style>
+        <?php
+        $url_font = asset('fonts/digital-7.ttf');
+        ?>
+            @font-face {
+                font-family: 'Digital'; /*a name to be used later*/
+                src: url('{{ $url_font }}'); /*URL to font*/
+            }
+    </style>
+
 </head>
 <body class="hold-transition @yield('body_class')">
 @yield('body')
@@ -60,9 +72,10 @@
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <!--toast js-->
 <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+<script src="{{ asset('js/ez.countimer.js') }}"></script>
 {!! Toastr::message() !!}
 
 <?php

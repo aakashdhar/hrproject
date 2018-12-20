@@ -1,6 +1,29 @@
 @extends('adminlte::page')
 
 @section('title', 'Tasks')
+<?php
+$seconds_timer = 0;
+$minutes_timer = 0;
+$hour_timer = 0;
+$status_timer = false;
+$timer_task_name = '';
+if(\Session::has('timer_data')){
+    
+    $data = \Session::get('timer_data');
+    $timer_task_name = $data['task_name'];
+    if($data['status'] != 'Stop'){
+        $seconds_timer = $data['second'];
+        $minutes_timer = $data['minute'];
+        $hour_timer = $data['hour'];
+        if($data['status'] == 'Start'){
+            $status_timer = true;
+        }
+    }
+    
+    \Session::forget('timer_data');
+}
+?>
+
 
 @section('content_header')
 
@@ -14,23 +37,13 @@
             <?php date_default_timezone_set("Asia/Kolkata"); ?>
             <h2>Time spent</h2>
             {{-- dd-mm-yyyy h:i:s --}}
-            <div id="DateCountdown" data-date='<?php
-            if(!empty(Session::get("usertaskdata")))
-            {
-
-                $auth = Session::get("usertaskdata");
-                $task = DB::select('select start_datetime from tasks where user_id='.$auth[0]['userid'].' and task_id='.$auth[0]['taskid']);
-                $start_datetime = $task[0]->start_datetime;
-
-                print $start_datetime;
-            }
-        ?>' style="width: 500px; height: 125px; padding: 0px; box-sizing: border-box; background-color: #E0E8EF">
+            @if(!empty($timer_task_name) && $timer_task_name != '')
+            <h2 style="text-align:center;font-family:'Digital;font-size:18px;'"><b>Current Task : </b>{{ $timer_task_name }}</h2>
+            @endif
+            <div id="DateCountdown" style="width: 500px; height: 125px; padding: 0px; box-sizing: border-box; background-color: #E0E8EF;line-height:125px;font-size:100px;font-family:'Digital';text-align:center;margin:0 auto;">
             </div>
         </div>
     <br>
-
-
-
 
     <div class="panel mt-3">
         <h2>Tasks</h2>
@@ -79,6 +92,24 @@
                             }
                         @endphp
                     @endforeach
+                            <?php
+                            if($t_seconds > 60){
+                                $minute = $t_seconds/60;
+                                $t_minute = $t_minute + floor($minute);
+                                $minute_fl = floor($minute);
+                                $seconds = $t_seconds - ($minute_fl * 60);
+                                $t_seconds = $seconds;
+                            }
+                
+                            if($t_minute > 60){
+                                $hour = $t_minute/60;
+                                $t_hour = $t_hour + floor($hour);
+                                $hour_fl = floor($hour);
+                                $minutes = $t_minute - ($hour_fl * 60);
+                                $t_minute = floor($minutes);
+                            }
+                            ?>
+
                     {{-- {{dd($t_minute,$t_seconds,$t_hour)}} --}}
                     {{-- {{dd($total_time_spent)}} --}}
                     <tr id="{{$task->task_id}}">
@@ -87,15 +118,42 @@
                         <td class="text-center"> {{ $task->task_description or "No task body" }} </td>
                         <td class="text-center"> {{ $t_hour.":".$t_minute.":".$t_seconds }} </td>
                         <td class="text-center">
+                            
                             <div style="display: inline-block">
-                                    <button type="button" class="startTimer btn btn-primary" onclick="timerStatus('{{ $task->task_id }}','{{ $auth->user_id }}','{{ $task->user_task_timeline_id }}','Start')">Start</button>
+                                    <form action="/employees/task/start" method="POST" id="{{ $task->task_id }}">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" value="Start" name="status">
+                                        <input type="hidden" value="{{ $auth->user_id }}" name="user_id">
+                                        <input type="hidden" value="{{ $task->task_id }}" name="task_id">
+                                        <input type="hidden" value="{{ $task->user_task_timeline_id }}" name="timeline_id">
+                                    {{--  <button type="submit" class="startTimer btn btn-primary" onclick="timerStatus('{{ $task->task_id }}','{{ $auth->user_id }}','{{ $task->user_task_timeline_id }}','Start')">Start</button>  --}}
+                                    <button type="submit" class="startTimer btn btn-success">Start</button>
+                                    </form>
                             </div>
                             <div style="display: inline-block">
-                                    <button type="button" class="btn btn-primary pauseTimer" onclick="timerStatus('{{ $task->task_id }}','{{ $auth->user_id }}','{{ $task->user_task_timeline_id }}','Pause')">Pause</button>
-                            </div>
-                            <div style="display: inline-block">
-                                    <button type="button" class="btn btn-primary stopTimer" onclick="timerStatus('{{ $task->task_id }}','{{ $auth->user_id }}','{{ $task->user_task_timeline_id }}','Stop')">Stop</button>
-                            </div>
+                            <form action="/employees/task/start" method="POST" id="{{ $task->task_id }}">
+                                {{ csrf_field() }}
+                                <input type="hidden" value="Pause" name="status">
+                                <input type="hidden" value="{{ $auth->user_id }}" name="user_id">
+                                <input type="hidden" value="{{ $task->task_id }}" name="task_id">
+                        
+                                    {{--  <button type="submit" class="btn btn-primary pauseTimer" onclick="timerStatus('{{ $task->task_id }}','{{ $auth->user_id }}','{{ $task->user_task_timeline_id }}','Pause')">Pause</button>  --}}
+                                    <button type="submit" class="btn btn-warning pauseTimer">Pause</button>
+                            
+                            </form>
+                        </div>
+                        <div style="display: inline-block">
+                            <form action="/employees/task/start" method="POST" id="{{ $task->task_id }}">
+                                {{ csrf_field() }}
+                                <input type="hidden" value="Stop" name="status">
+                                <input type="hidden" value="{{ $auth->user_id }}" name="user_id">
+                                <input type="hidden" value="{{ $task->task_id }}" name="task_id">
+                            
+                                    {{--  <button type="submit" class="btn btn-primary stopTimer" onclick="timerStatus('{{ $task->task_id }}','{{ $auth->user_id }}','{{ $task->user_task_timeline_id }}','Stop')">Stop</button>  --}}
+                                    <button type="submit" class="btn btn-danger stopTimer">Stop</button>
+                            
+                            </form>
+                        </div>
                         </td>
                     </tr>
                     @php
@@ -140,14 +198,31 @@
         var digitsofHours;
         var digitsofMinutes;
         var d = new Date();
-        @if(!empty($data))
-        var cookieDate =  "<?=$data[0]['date']?>";
-        @endif
-        @if(!empty($data))
-        var cookieTime =  "<?=$data[0]['time']?>";
-        @endif
+    
+               var sec_timer = "{{ $seconds_timer }}";
+               var min_timer = "{{ $minutes_timer }}";
+               var hr_timer  = "{{ $hour_timer }}";
+               var stat_timer = "{{ $status_timer }}";
 
-        $("#DateCountdown").TimeCircles().stop();
+            $('#DateCountdown').countimer({
+                enableEvents: false,                    
+                autoStart : stat_timer,                    
+                useHours : true,
+                minuteIndicator: '',
+                secondIndicator: '',
+                separator : ':',
+                leadingZeros: 2,
+                initHours : hr_timer,
+                initMinutes : min_timer,
+                initSeconds: sec_timer
+              });
+        
+
+
+
+
+    
+    {{--  $("#DateCountdown").TimeCircles().stop();  --}}
         if(d.getDate()<10)
             digitsOfDate = "0"+d.getDate();
         if(d.getHours()<10)
