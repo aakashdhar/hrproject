@@ -74,138 +74,7 @@
 ?>
 <!--start of Stop watch JS-->
 <script src="{{ asset('time/TimeCircles.js')}}"></script>
- <script>
-            var date;
-            var time;
-            var datetime;
-            var digitsOfDate;
-            var digitsofHours;
-            var digitsofMinutes;
-            var d = new Date();
-            @if(!empty($data))
-            var cookieDate =  "<?=$data[0]['date']?>";
-            @endif
-            @if(!empty($data))
-            var cookieTime =  "<?=$data[0]['time']?>";
-            @endif
-
-            $("#DateCountdown").TimeCircles().stop();
-            if(d.getDate()<10)
-                digitsOfDate = "0"+d.getDate();
-            if(d.getHours()<10)
-                digitsofHours = "0"+d.getHours();
-            if(d.getMinutes()<10)
-                digitsofMinutes = "0"+d.getMinutes();
-            <!--start watch-->
-            $(".startTimer").click(function() {
-                if(cookieDate!="")
-                {
-                    date = cookieDate;
-                    time = cookieTime;
-
-                }
-                else
-                {
-                    date = d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate();
-                    time = d.getHours()+":"+d.getMinutes();
-                }
-
-
-
-                datetime = date + ' ' + time + ':00';
-
-                $("#DateCountdown").TimeCircles().start();
-
-            });
-            <!--stop or pause watch-->
-
-            $(".stopTimer,.pauseTimer").click(function() {
-                $("#DateCountdown").TimeCircles().stop();
-            });
- </script>
-
-        <script>
-
-    $(document).ready(function(){
-                var sysdate = new Date();
-                day = sysdate.getDate();
-                month = sysdate.getMonth() + 1;
-                year = sysdate.getFullYear();
-                var regrex = new RegExp("[^A-z.]","g");
-                var regrex2 = new RegExp("[^A-z.,@%&]","gm");
-                var startdate;
-                var enddate;
-                var subject;
-                var reason;
-                var result;
-
-                $('.button').click(function(){
-                    startdate = new Date($('#startdate').val());
-                    enddate = new Date($('#enddate').val());
-                    subject = $("#subject").val();
-                    reason = $("#reason").val();
-                    if(startdate < sysdate)
-                    {
-                        $(".startdate").html("Date should be tomorrow or after it");
-                    }
-                    if(enddate<=startdate)
-                    {
-                        $(".enddate").html("Date must be of future");
-                    }
-
-                    while((result = regrex.exec(subject)) !=null)
-                    {
-                        $(".subject").html("Only alphabtes and .");
-                    }
-
-                    while((result = regrex2.exec(reason)) !=null)
-                    {
-                        $(".reason").html("Only alphabtes, numbers and .,@%&");
-                    }
-//                      setTimeout(location.reload.bind(location), 5000);
-                });
-                $("#startdate").blur(function (){
-
-                    startdate = new Date($('#startdate').val());
-                    if(startdate => sysdate)
-                    {
-                        $(".startdate").html("");
-                    }
-                    });
-                $("#enddate").blur(function (){
-                       enddate = new Date($('#enddate').val());
-                       if(enddate>startdate)
-                        {
-                            $(".enddate").html("");
-                        }
-                    });
-                $("#subject").blur(function (){
-                        while((result = regrex.exec(subject)) !=null)
-                        {
-                            $(".subject").html("");
-                        }
-                    });
-                $("#reason").blur(function (){
-                        while((result = regrex2.exec(reason)) !=null)
-                        {
-                            $(".reason").html("");
-                        }
-                    });
-
-
-                $("#startbu").blur(function (){
-                        while((result = regrex2.exec(reason)) !=null)
-                        {
-                            $(".reason").html("");
-                        }
-                    });
-                $("#starttask").click()
-                {
-                    $("#stopbutton").attr("style","");
-                }
-    });
-
-        </script>
+ 
 
 <!--end of Stop watch JS-->
  <!--start message box
@@ -260,5 +129,91 @@
 
 @yield('adminlte_js')
 
+@stack('body_script')
+
+<script>
+
+        $(document).ready(function(){
+                    var sysdate = new Date();
+                    day = sysdate.getDate();
+                    month = sysdate.getMonth() + 1;
+                    year = sysdate.getFullYear();
+                    var regrex = new RegExp("[^A-z.]","g");
+                    var regrex2 = new RegExp("[^A-z.,@%&]","gm");
+                    var startdate;
+                    var enddate;
+                    var subject;
+                    var reason;
+                    var result;
+        
+                    $('.button').click(function(){
+                        startdate = new Date($('#startdate').val());
+                        enddate = new Date($('#enddate').val());
+                        subject = $("#subject").val();
+                        reason = $("#reason").val();
+                        if(startdate < sysdate)
+                        {
+                            $(".startdate").html("Date should be tomorrow or after it");
+                        }
+                        if(enddate<=startdate)
+                        {
+                            $(".enddate").html("Date must be of future");
+                        }
+        
+                        while((result = regrex.exec(subject)) !=null)
+                        {
+                            $(".subject").html("Only alphabtes and .");
+                        }
+        
+                        while((result = regrex2.exec(reason)) !=null)
+                        {
+                            $(".reason").html("Only alphabtes, numbers and .,@%&");
+                        }
+        //                      setTimeout(location.reload.bind(location), 5000);
+                    });
+                    $("#startdate").blur(function (){
+        
+                        startdate = new Date($('#startdate').val());
+                        if(startdate => sysdate)
+                        {
+                            $(".startdate").html("");
+                        }
+                        });
+                    $("#enddate").blur(function (){
+                           enddate = new Date($('#enddate').val());
+                           if(enddate>startdate)
+                            {
+                                $(".enddate").html("");
+                            }
+                        });
+                    $("#subject").blur(function (){
+                            while((result = regrex.exec(subject)) !=null)
+                            {
+                                $(".subject").html("");
+                            }
+                        });
+                    $("#reason").blur(function (){
+                            while((result = regrex2.exec(reason)) !=null)
+                            {
+                                $(".reason").html("");
+                            }
+                        });
+        
+        
+                    $("#startbu").blur(function (){
+                            while((result = regrex2.exec(reason)) !=null)
+                            {
+                                $(".reason").html("");
+                            }
+                        });
+                    $("#starttask").click()
+                    {
+                        $("#stopbutton").attr("style","");
+                    }
+        });
+        
+            </script>
+        
+        
 </body>
 </html>
