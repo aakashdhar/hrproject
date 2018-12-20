@@ -103,14 +103,38 @@
                             </div>
                         </div>
 
+{{--  --}}
+                    <div id="deleteAdminModal_{{ $admin->user_id }}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="/admin/{{ $admin->user_id }}" method="post" id="deleteAdmin_{{ $admin->user_id }}">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    {{ csrf_field() }}
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Delete admin : {{ $admin->user_first_name }}</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="lead">Are you sure?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+{{--  --}}
+
+
                         <!-- Delete model  -->
-                        <div id="deleteAdminModal_{{ $admin->user_id }}" class="modal fade" role="dialog">
+                        {{-- <div id="deleteAdminModal_{{ $admin->user_id }}" class="modal fade" role="dialog">
                             <div class="modal-dialog">
 
                                 <!-- Modal content-->
                                 <div class="modal-content">
                                     <form action="{{ route('admin.destroy', $admin->user_id) }}" id="deleteAdmin_{{ $admin->user_id }}">
-                                        <input name="_method" type="hidden" value="DELETE">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                             <h4 class="modal-title">Delete admin : {{ $admin->user_first_name }}</h4>
@@ -126,7 +150,7 @@
                                 </div>
 
                             </div>
-                        </div>
+                        </div> --}}
 
                     @endforeach
                 </tbody>

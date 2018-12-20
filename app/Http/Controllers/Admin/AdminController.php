@@ -60,7 +60,10 @@ class AdminController extends Controller
 
     public function destroy($id)
     {
-        dd($id);
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->back();
+
     }
     public function UpdateAdmin($id, Request $request)
     {
