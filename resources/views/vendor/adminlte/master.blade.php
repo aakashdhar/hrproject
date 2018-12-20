@@ -123,7 +123,8 @@
                 $("#DateCountdown").TimeCircles().stop();
             });
  </script>
-
+<!--end of Stop watch JS-->
+<!--start of validate leave app form-->
         <script>
 
     $(document).ready(function(){
@@ -131,8 +132,8 @@
                 day = sysdate.getDate();
                 month = sysdate.getMonth() + 1;
                 year = sysdate.getFullYear();
-                var regrex = new RegExp("[^A-z.]","g");
-                var regrex2 = new RegExp("[^A-z.,@%&]","gm");
+                var regrex = new RegExp("[^A-z.\\s]","g");
+                var regrex2 = new RegExp("[^A-z\\s.,@%&]","gm");
                 var startdate;
                 var enddate;
                 var subject;
@@ -162,52 +163,77 @@
                     {
                         $(".reason").html("Only alphabtes, numbers and .,@%&");
                     }
-//                      setTimeout(location.reload.bind(location), 5000);
                 });
                 $("#startdate").blur(function (){
-
+                    
                     startdate = new Date($('#startdate').val());
-                    if(startdate => sysdate)
+                    if(startdate < sysdate)
                     {
+                        $(".startdate").html("Start date can not be less than today");
+                    }
+                    else{
                         $(".startdate").html("");
                     }
                     });
                 $("#enddate").blur(function (){
                        enddate = new Date($('#enddate').val());
-                       if(enddate>startdate)
+                       
+                       if(enddate <= startdate)
+                        {
+                            $(".enddate").html("End date can not less than Start date");
+                        }
+                        else
                         {
                             $(".enddate").html("");
                         }
-                    });
+                });
+                $('#doc').blur(function() {
+			if(this.files[0].size/1024/1024 >= 1)
+                        {
+                            $(".doc").html("File should be less than or equal to 1MB");
+                        }
+                        else
+                        {
+                            $(".doc").html("");
+                        }
+                });
                 $("#subject").blur(function (){
+                    subject = $("#subject").val();
+                    var flag = 0;
                         while((result = regrex.exec(subject)) !=null)
+                        { 
+                            flag = 1;
+                        }
+                        if(flag==1)
+                        {
+                            $(".subject").html("Only alphabates & . are allowed");
+                        }
+                        else
                         {
                             $(".subject").html("");
                         }
-                    });
+                        
+                });
                 $("#reason").blur(function (){
+                    reason = $("#reason").val();
+                    var flag = 0;
                         while((result = regrex2.exec(reason)) !=null)
+                        { 
+                            flag = 1;
+                        }
+                        if(flag==1)
+                        {
+                            $(".reason").html("Only alphabates and .,@%& are allowed");
+                        }
+                        else
                         {
                             $(".reason").html("");
                         }
-                    });
-
-
-                $("#startbu").blur(function (){
-                        while((result = regrex2.exec(reason)) !=null)
-                        {
-                            $(".reason").html("");
-                        }
-                    });
-                $("#starttask").click()
-                {
-                    $("#stopbutton").attr("style","");
-                }
+                });
     });
-
         </script>
+<!--start of validate leave app form-->
 
-<!--end of Stop watch JS-->
  <!--start message box
  {{-- <script src="{{ asset("massage_box/jquery.bs.msgbox.js") }}"></script> --}}
  <script>

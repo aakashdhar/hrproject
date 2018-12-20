@@ -47,8 +47,8 @@
                             Upload Medical Certificate :
                         </td>
                         <td>
-                            <input type="file" name="file"/>
-                            <p></p>
+                            <input type="file" name="file" id="doc"/>
+                            <p class="doc"></p>
                         </td>
                     </tr>
                     <tr>

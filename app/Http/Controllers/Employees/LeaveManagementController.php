@@ -33,8 +33,14 @@ class LeaveManagementController extends Controller
             $request->file("file")->store("upload");
             $name = $request->file("file")->hashName();
         }
-        $data = User::all()->where("user_id",'=',\Auth::user()->user_id)->first();
         
+        if(preg_match("/[A-z.\\s]/g", $subject))
+        {
+            dd("here");
+        }
+        
+        $data = User::all()->where("user_id",'=',\Auth::user()->user_id)->first();
+    
         $from_content="User";
         $to_content="User";
         $body="Please consider my Leave :<br>"
