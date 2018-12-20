@@ -75,7 +75,10 @@ class ReminderController extends Controller
      */
     public function edit($id)
     {
-        //
+      $reminder = Reminder::find($id);
+      $reminder->user_reminder_status = 'completed';
+      $reminder->save();
+      return redirect()->back();
     }
 
     /**
@@ -87,7 +90,10 @@ class ReminderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $reminder = Reminder::find($id);
+        $reminder = $reminder->fill($request->all());
+        $reminder->save();
+        return redirect()->back();
     }
 
     /**
@@ -98,6 +104,7 @@ class ReminderController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $res = Reminder::destroy($id);
+      return redirect()->back();
     }
 }
