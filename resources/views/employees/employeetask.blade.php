@@ -29,15 +29,17 @@
         </div>
     <br>
 
-        
-    
+
+
 
     <div class="panel mt-3">
         <h2>Tasks</h2>
         <table class="table">
             <thead>
-                <th class="text-center">Toggle</th>
+                <th class="text-center">Details</th>
                 <th class="text-center">Task title</th>
+                <th class="text-center">Task Description</th>
+                <th class="text-center">Task Status</th>
                 <th class="text-center">Action</th>
             </thead>
             <tbody>
@@ -47,8 +49,10 @@
                 {{ csrf_field() }}
                 @foreach ($tasks as $task)
                     <tr id="{{$task->task_id}}">
-                        <td class="text-center"><button class="btn btn-primary" style="border-radius: 20px;"><i class="fa fa-arrow-circle-down"></i></button></td>
-                        <td class="text-center">{{ $task->task_title }}</td>
+                        <td class="text-center"><a href="javascript:data_details('.data-list-{{ $task->task_id }}')" class="btn btn-primary" style="border-radius: 20px;"><i class="fa fa-arrow-down"></i></a></td>
+                        <td class="text-center">{{ $task->task_title or "-"}}</td>
+                        <td class="text-center"> {{ $task->task_description or "No task body" }} </td>
+                        <td class="text-center"> {{ $task->task_status }} </td>
                         <td class="text-center">
                             <div style="display: inline-block">
                                     <button type="button" class="startTimer btn btn-primary" onclick="timerStatus('{{ $task->task_id }}','{{ $auth->user_id }}','{{ $task->user_task_timeline_id }}','Start')">Start</button>
@@ -61,6 +65,32 @@
                             </div>
                         </td>
                     </tr>
+                    @php
+                        $count = 0;
+                    @endphp
+                    <tr class="data-list data-list-{{ $task->task_id }}">
+                        <th></th>
+                        <th class="text-center">Sr no.</th>
+                        <th class="text-center">Started at</th>
+                        <th class="text-center">Finished at</th>
+                        <th class="text-center">Status</th>
+                    </tr>
+                    @foreach($task->timeline as $timeline)
+                    <tr class="data-list data-list-{{ $task->task_id }}">
+                        <td></td>
+                        <td class="text-center"> <i>{{ ++$count }}</i> </td>
+                        <td class="text-center"> <i>{{ \Carbon\Carbon::parse($timeline->log_task_started_at)->toDayDateTimeString() }} </i></td>
+                        <td class="text-center"><i>
+                            @if ($timeline->log_task_finished_at == null)
+                                -
+                            @else
+                                {{ \Carbon\Carbon::parse($timeline->log_task_finished_at)->toDayDateTimeString() }}
+                            @endif
+                            </i>
+                        </td>
+                        <td class="text-center"> <i>{{ $timeline->log_task_status }}</i> </td>
+                    </tr>
+                    @endforeach
                 @endforeach
             </tbody>
         </table>
