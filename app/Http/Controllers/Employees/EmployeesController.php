@@ -37,6 +37,8 @@ class EmployeesController extends Controller
       $user->user_leave = $request->get('user_leave');
       $user->user_emergency_name = $request->get('user_emergency_name');
       $user->user_emergency_contact = $request->get('user_emergency_contact');
+      $user->user_city = $request->get('user_city');
+      $user->user_state = $request->get('user_state');
       $user->user_type_id = 2;
       $res = $user->save();
       return redirect()->back();
@@ -57,6 +59,8 @@ class EmployeesController extends Controller
         $user->user_hobbies = $request->get('user_hobbies');
         $user->user_emergency_name = $request->get('user_emergency_name');
         $user->user_emergency_contact = $request->get('user_emergency_contact');
+        $user->user_city = $request->get('user_city');
+        $user->user_state = $request->get('user_state');
         $res = $user->save();
         return redirect()->back();
     }

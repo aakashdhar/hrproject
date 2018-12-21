@@ -42,18 +42,28 @@
                         </div>
                     </div>
                     <div class="row" style="margin-top: 2%;">
-                        <div class="col-md-4">
-                            <label for="user_address">Address</label>
-                            <input name="user_address" class="form-control" value="{{ $val->user_address }}" id="user_address" placeholder="Address">
-                        </div>
-                        <div class="col-md-4">
-                          <label for="user_address">Date of joining</label>
-                          <input type="date" name="joining_date" class="form-control" value="{{ $val->joining_date }}" id="joining_date" placeholder="Date of Joining">
-                        </div>
-                        <div class="col-md-4">
-                          <label for="user_address">Date of birth</label>
-                          <input type="date" name="user_dob" class="form-control" value="{{ $val->user_dob }}" id="user_dob" placeholder="Date of birth">
-                        </div>
+                      <div class="col-md-4">
+                        <label for="user_address">Address line 1</label>
+                        <input name="user_address" class="form-control" value="{{ $val->user_address }}"  id="user_address" placeholder="Address">
+                      </div>
+                      <div class="col-md-4">
+                        <label for="user_city">City</label>
+                        <input name="user_city" class="form-control" value="{{ $val->user_city }}"  id="user_city" placeholder="City">
+                      </div>
+                      <div class="col-md-4">
+                        <label for="user_state">State</label>
+                        <input name="user_state" class="form-control" value="{{ $val->user_state }}"  id="user_state" placeholder="State">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="user_address">Date of joining</label>
+                        <input type="date" name="joining_date" class="form-control" value="{{$val->joining_date}}" id="joining_date" placeholder="Date of Joining">
+                      </div>
+                      <div class="col-md-4">
+                        <label for="user_address">Date of birth</label>
+                        <input type="date" name="user_dob" class="form-control" value="{{$val->user_dob}}"  id="user_dob" placeholder="Date of birth">
+                      </div>
                     </div>
                     <div class="row" style="margin-top: 2%;">
                       <div class="col-md-4">

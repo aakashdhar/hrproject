@@ -80,7 +80,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="user_name">User name</label>
-                                <input type="text" name="user_name" id="user_name" class="form-control" placeholder="User name" required>
+                                <input type="text" name="user_name" id="user_name" class="form-control" placeholder="User name" required autocomplete="new-password">
                             </div>
                             <div class="col-md-4">
                                 <label for="user_first_name">First name</label>
@@ -102,28 +102,38 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="user_password">Password</label>
-                                <input type="password" name="user_password" id="user_password" class="form-control" placeholder="Password" required>
+                                <input type="password" name="user_password" id="user_password" class="form-control" placeholder="Password" required autocomplete="new-password">
                             </div>
 
                         </div>
                         <div class="row" style="margin-top: 2%;">
-                            <div class="col-md-4">
-                                <label for="user_address">Address</label>
-                                <input name="user_address" class="form-control"  id="user_address" placeholder="Address">
-                            </div>
-                            <div class="col-md-4">
-                              <label for="user_address">Date of joining</label>
-                              <input type="date" name="joining_date" class="form-control" id="joining_date" placeholder="Date of Joining">
-                            </div>
-                            <div class="col-md-4">
-                              <label for="user_address">Date of birth</label>
-                              <input type="date" name="user_dob" class="form-control"  id="user_dob" placeholder="Date of birth">
-                            </div>
+                          <div class="col-md-4">
+                            <label for="user_address">Address line 1</label>
+                            <input name="user_address" class="form-control"  id="user_address" placeholder="Address">
+                          </div>
+                          <div class="col-md-4">
+                            <label for="user_city">City</label>
+                            <input name="user_city" class="form-control"  id="user_city" placeholder="City">
+                          </div>
+                          <div class="col-md-4">
+                            <label for="user_state">State</label>
+                            <input name="user_state" class="form-control"  id="user_state" placeholder="State">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <label for="user_address">Date of joining</label>
+                            <input type="date" name="joining_date" class="form-control" id="joining_date" placeholder="Date of Joining">
+                          </div>
+                          <div class="col-md-4">
+                            <label for="user_address">Date of birth</label>
+                            <input type="date" name="user_dob" class="form-control"  id="user_dob" placeholder="Date of birth">
+                          </div>
                         </div>
                         <div class="row" style="margin-top: 2%;">
-                            <div class="col-md-4">
-                                <label for="user_leave">Number of Leaves</label>
-                                <input name="user_leave" class="form-control" value="{{ $val->user_leave }}" id="user_leave" placeholder="Number of Leaves">
+                          <div class="col-md-4">
+                              <label for="user_leave">Number of Leaves</label>
+                              <input name="user_leave" class="form-control" value="{{ $val->user_leave }}" id="user_leave" placeholder="Number of Leaves">
                           </div>
                           <div class="col-md-4">
                             <label for="user_address">Emergency Contact</label>
