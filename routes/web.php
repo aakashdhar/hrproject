@@ -74,4 +74,7 @@ Route::group(['as' => 'leaves|',/* 'prefix' => 'leaves'*/], function () {
     Route::resource('employees/leave', 'LeaveController');
 });
 
+Route::resource('attendace','AttendanceController');
+Route::post('undo-attendance', 'AttendanceController@undoAttendance')->name('undoAttendance');
+
 Route::get('/home', 'HomeController@index')->name('home');

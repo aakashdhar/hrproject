@@ -64,6 +64,7 @@
                 src: url('{{ $url_font }}'); /*URL to font*/
             }
     </style>
+    @stack('style')
 
 </head>
 <body class="hold-transition @yield('body_class')">
