@@ -1,15 +1,7 @@
-@extends('admin_diamond._layout.layout_sidebar')
 
 @push('head_links')
-<link type="text/css" rel="stylesheet" href="{{ URL::asset('assets/global/plugins/select2/css/select2.min.css') }}">
-<link type="text/css" rel="stylesheet" href="{{ URL::asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}">
-<link type="text/css" rel="stylesheet" href="{{ URL::asset('assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css') }}">
 <link type="text/css" rel="stylesheet" href="{{ URL::asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" />
-{{-- <link type="text/css" rel="stylesheet" href="{{ URL::asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" />
-<link type="text/css" rel="stylesheet" href="{{ URL::asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" /> --}}
 <link type="text/css" rel="stylesheet" href="{{ URL::asset('assets/global/plugins/jquery-ui/jquery-ui.min.css') }}" />
-<link type="text/css" rel="stylesheet" href="{{ URL::asset('assets/apps/css/quote.css') }}" />
-<link rel="stylesheet" href="{{URL::asset('assets\layouts\global\css\responsive_inventory.css')}}">
 <style type="text/css">
     .or-label{margin-top: 18px;}
     .company-sel{margin-top: 4px;}
@@ -25,10 +17,6 @@
 <script type="text/javascript" src="{{ URL::asset('assets/global/plugins/select2/js/select2.full.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('assets/global/plugins/moment.min.js') }}"></script>
-{{-- <script type="text/javascript" src="{{ URL::asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}"></script>--}}
-
-{{--<script type="text/javascript" src="{{ URL::asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script> --}}
-
 <script type="text/javascript" src="{{ URL::asset('assets/global/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 
 <script type="text/javascript">
@@ -41,7 +29,6 @@ $(document).ready(function () {
 var delete_url = "{{ URL::to('admin/diamond/leaves/delete-bulk') }}";
 var approve_url = "{{ URL::to('admin/diamond/leaves/approve-bulk') }}";
 </script>
-<script type="text/javascript" src="{{ noc_asset('js/admin-diamond-login-logs.js') }}"></script>
 <script type="text/javascript" src="{{ noc_asset('js/admin-diamond-leaves-application.js') }}"></script>
 <script type="text/javascript">
     var fnToggle = function(id,bt) {
