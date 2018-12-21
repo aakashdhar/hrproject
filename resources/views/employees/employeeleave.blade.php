@@ -93,7 +93,7 @@
                         <th>From Date</th>
                         <th>To Date</th>
                         <th>Status</th>
-                        <th>Action</th>
+                        <th style="text-align: center">Action</th>
                     </thead>
                     <tbody>
                         @foreach($data as $val)
@@ -101,7 +101,13 @@
                             <td>{{$val->user_holiday_id}}</td>
                             <td>{{$val->user_holiday_subject}}</td>
                             <td>{{$val->user_holiday_reason}}</td>
-                            <td><a href={{asset('Medical-Documents/'.$val->user_holiday_docname)}} target="_blank">Click here</a></td>
+                            <td>
+                                @if(empty($val->user_holiday_docname))
+                                <a href=#>No document uploaded</a>
+                                @else
+                                <a href={{asset('Medical-Documents/'.$val->user_holiday_docname)}} target="_blank">Click here</a>
+                                @endif
+                            </td>
                             <td>{{$val->user_holiday_from}}</td>
                             <td>{{$val->user_holiday_to}}</td>
                             <td>{{$val->user_holiday_approval_status}}</td>

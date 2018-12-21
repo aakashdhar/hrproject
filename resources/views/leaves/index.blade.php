@@ -1,15 +1,17 @@
+@extends('adminlte::page')
 
+@section('title', 'Leaves')
 @push('body_scripts')
-<script type="text/javascript" src="{{ URL::asset('assets/global/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/global/plugins/select2/js/select2.full.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/global/plugins/moment.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/bootstrap-tabdrop.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/select2.full.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/bootstrap-select.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/moment.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/daterangepicker.min.js') }}"></script>
 
-<script type="text/javascript" src="{{ URL::asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/bootstrap-datepicker.min.js') }}"></script>
 
 
-<script type="text/javascript" src="{{ noc_asset('js/admin-diamond-leaves-list.js') }}"></script>
+<script type="text/javascript" src="{{-- noc_asset('js/admin-diamond-leaves-list.js') --}}"></script>
 
 
 
@@ -22,24 +24,38 @@ $(document).ready(function () {
 </script>
 @endpush
 
-@section('content-breadcrumb')
+<!--@section('content-breadcrumb')
 <ul class="page-breadcrumb">
    <li>Leave Management<i class="fa fa-angle-double-right"></i></li>
    <li><span>Statistics</span></li>
 
 </ul>
-@endsection
+@endsection-->
 
 @section('content-header')
+
+@endsection
+
+@section('content-bar')
+{{--  --}}
+@endsection
+
+@section('content')
+
 <div class="row">
-   {{ Form::open(['id' => 'frm_sales_sel', 'name' => 'frm_sales_sel', 'class' => 'form-horizontal','url' => url()->current(), 'method' => 'GET']) }}
-      {{ Form::hidden('date_start', '', ['id'=>'date-start']) }}
-      {{ Form::hidden('date_end', '', ['id'=>'date-end']) }}
+    <form method="get" action="{{url()->current()}}"  class="form-horizontal" name="frm_sales_sel" id="frm_sales_sel">
+        <input type="hidden" name="date_start" id="date-start" />
+        <input type="hidden" name="date_end" id="date-end" />      
+    </form>
+    {{-- Form::open(['id' => 'frm_sales_sel', 'name' => 'frm_sales_sel', 'class' => 'form-horizontal','url' => , 'method' => 'GET']) --}}
+    {{-- Form::hidden('date_start', '', ['id'=>'date-start']) --}}
+    {{-- Form::hidden('date_end', '', ['id'=>'date-end']) --}}
    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
       <h3 class="page-title">Leave <small>Statistics</small></h3>
    </div>
    <div class="col-lg-4 col-md-4 col-sm-8 col-xs-12">
-      @include('admin_diamond.leaves.incl_statistics')
+<!--      include('admin_diamond.leaves.incl_statistics')-->
+      @include('leaves.incl_statistics')
    </div>
    <div class="col-lg-4 col-md-4 col-sm-8 col-xs-12">
     <div class="pull-right">
@@ -50,21 +66,15 @@ $(document).ready(function () {
             </a>
         @endif
 
-        <a class="btn blue-soft" href="{{ URL::to("admin/diamond/leaves/apply") }}">
+        <a class="btn blue-soft" href="{{ URL::to("leaves/apply") }}">
             Apply For Leave
         </a>
     </div>
    </div>
    <div class="clearfix"></div>
-   {{ Form::close() }}
+   {{-- Form::close() --}}
 </div>
-@endsection
 
-@section('content-bar')
-{{--  --}}
-@endsection
-
-@section('content')
 
 <div class="clearfix"></div>
 <div class="row">
@@ -149,68 +159,40 @@ $(document).ready(function () {
 
                              <div class="row">
                                <div class="col-md-12">
-
-                               {!! Form::open(['url'=>"", 'method' => 'POST', 'files' => true, 'class'=>'form-horizontal', 'id'=>'approve_form']) !!}
-                               <div class="form-group">
-                                 {!!
-                                  Form::label('from_date', 'From Date', [
-
-                                    'class'=>'control-label col-md-3 col-sm-3 col-xs-12 nowrap'
-                                  ])
-                                !!}
-                                <div class="col-md-9 col-sm-9 col-xs-12 nowrap">
-                                  {!! Form::text('from_date',null,['class'=>'form-control', "disabled" => true, "id" => 'from_date']) !!}
-                                </div>
-                               </div>
-
-                               <div class="form-group">
-                                 {!!
-                                  Form::label('to_date', 'To Date', [
-
-                                    'class'=>'control-label col-md-3 col-sm-3 col-xs-12 nowrap'
-                                  ])
-                                !!}
-                                <div class="col-md-9 col-sm-9 col-xs-12 nowrap">
-                                  {!! Form::text('to_date',null,['class'=>'form-control', "disabled" => true, "id" => 'to_date']) !!}
-                                </div>
-                               </div>
-
-                               <div class="form-group">
-                                 {!!
-                                  Form::label('total_days', 'Total Days', [
-
-                                    'class'=>'control-label col-md-3 col-sm-3 col-xs-12 nowrap'
-                                  ])
-                                !!}
-                                <div class="col-md-9 col-sm-9 col-xs-12 nowrap">
-                                  {!! Form::text('total_days',null,['class'=>'form-control', "disabled" => true, "id" => 'total_days']) !!}
-                                </div>
-                               </div>
-
-                               <div class="form-group">
-                                 {!!
-                                  Form::label('cancel_reason', 'Cancel Reason', [
-
-                                    'class'=>'control-label col-md-3 col-sm-3 col-xs-12 nowrap'
-                                  ])
-                                !!}
-                                <div class="col-md-9 col-sm-9 col-xs-12 nowrap">
-                                  {!! Form::textarea('cancel_reason',null,['class'=>'form-control','rows' => 2, 'cols' => 40, "placeholder" => "Cancel Reason."]) !!}
-                                </div>
-                               </div>
-
-                               <div class="clearfix"></div>
-
-                               <div class="form-actions">
-                                <div class="row margin-top-10">
-                                  <div class="col-md-12 text-center">
-                                    {!! Form::submit("Cancel Leave",['class'=> 'btn green', "id" => "submit_btn"]) !!}
-                                  </div>
-                                </div>
-                               </div>
-
-
-                               {!! Form::close() !!}
+                                   <form method="post" action="" enctype="multipart/form-data" id="approve_form" class="form-horizontal">
+                                        <div class="form-group">
+                                           <label class="control-label col-md-3 col-sm-3 col-xs-12 nowrap">From Date</label>
+                                           <div class="col-md-9 col-sm-9 col-xs-12 nowrap">
+                                               <input type="text" name="from_date" class="form-control" id="from_date" disabled>
+                                           </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12 nowrap">To Date</label>
+                                            <div class="col-md-9 col-sm-9 col-xs-12 nowrap">
+                                               <input type="text" name="to_date" class="form-control" id="to_date" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12 nowrap">Total Days</label>
+                                            <div class="col-md-9 col-sm-9 col-xs-12 nowrap">
+                                               <input type="text" name="total_days" class="form-control" id="total_days" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12 nowrap">Cancel Reason</label>
+                                            <div class="col-md-9 col-sm-9 col-xs-12 nowrap">
+                                                <textarea placeholder="Cancel Reason." rows="2" cols="40" name="cancel_reason" class="form-control" id="total_days" disabled></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions">
+                                            
+                                            <div class="col-md-9 col-sm-9 col-xs-12 nowrap">
+                                                <input type="submit" value="Cancel Leave" class="btn green" id="submit_btn" />
+                                            </div>
+                                        </div>
+                                 
+                                   </form>    
+                               
                                </div>
 
                              </div>

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Managers\LeaveManager;
+use App\Managers\LeaveManager;
 use Auth, Session, Carbon\Carbon, Carbon\CarbonInterval;
 use App\Models\LeaveApplication;
 use Illuminate\Support\Facades\DB;
 
-class LeavesController extends Controller
+class LeaveController extends Controller
 {
     private $leave_manager;
 
@@ -78,9 +78,9 @@ class LeavesController extends Controller
             $this->addData('total_pending_leaves', $total_pending_leaves);
         }
 
-        $attendace_detail = self::getAttendanceDetails($user);
+        //$attendace_detail = self::getAttendanceDetails($user);
 
-        $this->addData('attendace_detail', $attendace_detail);
+        //$this->addData('attendace_detail', $attendace_detail);
         $this->addData('pending_applications', $pending_applications);
 
         $this->addData('approved_leaves', $approved_leaves);
@@ -91,7 +91,7 @@ class LeavesController extends Controller
 
         $this->addArray(compact('taken_leaves', 'total_allocated_leaves', 'leave_balance', 'pending_approval'));
 
-        return $this->getView('admin_diamond/leaves/index');
+        return $this->getView('leaves.index');
     }
 
     public function applications(Request $request)
@@ -118,7 +118,7 @@ class LeavesController extends Controller
 
         $user = \Auth::user();
 
-        $attendace_detail = self::getAttendanceDetails($user);
+        //$attendace_detail = self::getAttendanceDetails($user);
 
         $this->addData('attendace_detail', $attendace_detail);
 

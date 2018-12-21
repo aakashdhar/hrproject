@@ -60,18 +60,18 @@ Route::middleware('auth')->group(function() {
     });
 });
 
-Route::group(['as' => 'leaves|', 'prefix' => 'leaves'], function () {
+Route::group(['as' => 'leaves|'/*, 'prefix' => 'leaves'*/], function () {
 
-    Route::get('/applications', 'LeavesController@applications');
-    Route::post('/{leave_application}/approve', 'LeavesController@approveLeave');
-    Route::post('/{leave_application}/reject', 'LeavesController@rejectLeave');
-    Route::post('/{leave_application}/cancel', 'LeavesController@cancelLeave');
-    Route::get('/apply', 'LeavesController@create');
-    Route::patch('/store', 'LeavesController@store');
-    Route::post("/delete-bulk", "LeavesController@deleteBulk");
-    Route::post("/approve-bulk", "LeavesController@approveBulk");
+    Route::get('/applications', 'LeaveController@applications');
+    Route::post('/{leave_application}/approve', 'LeaveController@approveLeave');
+    Route::post('/{leave_application}/reject', 'LeaveController@rejectLeave');
+    Route::post('/{leave_application}/cancel', 'LeaveController@cancelLeave');
+    Route::get('leaves/apply', 'LeaveController@create');
+    Route::patch('/store', 'LeaveController@store');
+    Route::post("/delete-bulk", "LeaveController@deleteBulk");
+    Route::post("/approve-bulk", "LeaveController@approveBulk");
 
-    Route::resource('/list', 'LeavesController');
+    Route::resource('employees/leave', 'LeaveController');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

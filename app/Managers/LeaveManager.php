@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Managers;
+namespace App\Managers;
 
 use App\Models\User;
 
@@ -193,24 +193,21 @@ class LeaveManager
 
     public function getLeaveApprovers()
     {
-        return User::where("user_type", "SuperAdmin")
-
-            ->where("user_status", "Active")
-
-            ->get()
-
-            ->pluck('user_first_name', 'user_id');
+        
+        return User::where("user_type", "Admin")
+                    ->join("user_types","user_types.user_type_id","users.user_type_id")
+                    ->where("user_type_status", "Active")
+                    ->get()
+                    ->pluck('user_first_name', 'user_id');
     }
 
     public function getLeaveApplicants()
     {
-        return User::whereIn("user_type", ["Admin", "SuperAdmin", "AccountAdmin", "IndiaAdmin", "Staff"])
-
-            ->where("user_status", "Active")
-
-            ->get()
-
-            ->pluck('user_first_name', 'user_id');
+        return User::whereIn("user_type", ["Admin", "Employee", "Intern"])
+                    ->join("user_types","user_types.user_type_id","users.user_type_id")
+                    ->where("user_type_status", "Active")
+                    ->get()
+                    ->pluck('user_first_name', 'user_id');
     }
 
     public function getCurrentYearsHolidays()
@@ -243,9 +240,6 @@ class LeaveManager
 
     public function approveLeaves(array $input = [])
     {
-
-
-
         return DB::transaction(function () use ($input) {
             $leaves = LeaveApplication::whereIn('leave_id', $input)->get()->keyBy('leave_id');
             foreach ($leaves as $k => $v) {
