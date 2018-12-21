@@ -45,7 +45,7 @@
     @endif
 
     @yield('adminlte_css')
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
     <!--[if lt IE 9]>
         <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -131,7 +131,7 @@
                     }
                 });
                 $("#startdate").blur(function (){
-                    
+
                     startdate = new Date($('#startdate').val());
                     if(startdate < sysdate)
                     {
@@ -171,7 +171,7 @@
                     subject = $("#subject").val();
                     var flag = 0;
                         while((result = regrex.exec(subject)) !=null)
-                        { 
+                        {
                             flag = 1;
                         }
                         if(flag==1)
@@ -182,13 +182,13 @@
                         {
                             $(".subject").html("");
                         }
-                        
+
                 });
                 $("#reason").blur(function (){
                     reason = $("#reason").val();
                     var flag = 0;
                         while((result = regrex2.exec(reason)) !=null)
-                        { 
+                        {
                             flag = 1;
                         }
                         if(flag==1)
@@ -233,6 +233,13 @@
 <script>
 
         $(document).ready(function(){
+
+                    $('#from_date').datepicker({
+                        dateFormat: "dd-mm-yy"
+                    });
+                    $('#to_date').datepicker({
+                        dateFormat: "dd-mm-yy"
+                    });
                     var sysdate = new Date();
                     day = sysdate.getDate();
                     month = sysdate.getMonth() + 1;
@@ -244,7 +251,7 @@
                     var subject;
                     var reason;
                     var result;
-        
+
                     $('.button').click(function(){
                         startdate = new Date($('#startdate').val());
                         enddate = new Date($('#enddate').val());
@@ -258,12 +265,12 @@
                         {
                             $(".enddate").html("Date must be of future");
                         }
-        
+
                         while((result = regrex.exec(subject)) !=null)
                         {
                             $(".subject").html("Only alphabtes and .");
                         }
-        
+
                         while((result = regrex2.exec(reason)) !=null)
                         {
                             $(".reason").html("Only alphabtes, numbers and .,@%&");
@@ -271,7 +278,7 @@
         //                      setTimeout(location.reload.bind(location), 5000);
                     });
                     $("#startdate").blur(function (){
-        
+
                         startdate = new Date($('#startdate').val());
                         if(startdate => sysdate)
                         {
@@ -297,8 +304,8 @@
                                 $(".reason").html("");
                             }
                         });
-        
-        
+
+
                     $("#startbu").blur(function (){
                             while((result = regrex2.exec(reason)) !=null)
                             {
@@ -310,7 +317,7 @@
                         $("#stopbutton").attr("style","");
                     }
         });
-        
+
             </script>
 </body>
 </html>

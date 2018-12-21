@@ -1,34 +1,19 @@
 @extends('adminlte::page')
 
 @section('title', 'Leaves')
-@push('head_links')
-<link type="text/css" rel="stylesheet" href="{{ URL::asset('assets/global/plugins/jquery-ui/jquery-ui.min.css') }}" />
-<link type="text/css" rel="stylesheet" href="{{ URL::asset('assets/global/plugins/select2/css/select2.min.css') }}">
-<link type="text/css" rel="stylesheet" href="{{ URL::asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}">
-<link type="text/css" rel="stylesheet" href="{{ URL::asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
-<link rel="stylesheet" href="{{URL::asset('assets\layouts\global\css\responsive_inventory.css')}}">
-@endpush
-
-@push('body_scripts')
-<script type="text/javascript" src="{{ URL::asset('assets/global/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/global/plugins/select2/js/select2.full.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/global/plugins/moment.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}"></script>
-
+@push('body_script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 
     var holidays = {!! $holidays->toJson() !!};
 
-    var leave_balance = {{ $leave_balance or '0' }};
+    var leave_balance = "{{ $leave_balance or 0 }}";
 
 </script>
 
-<script type="text/javascript" src="{{-- noc_asset('js/admin-diamond-leave-apply.js') --}}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/admin-diamond-leave-apply.js') }}"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script type="text/javascript">
-
 </script>
 @endpush
 
@@ -66,7 +51,6 @@
 			'id'=>'leave_form'
 		])
 	}}
-		<div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button> You have some form errors. Please check below. </div>
 
 		<div class="col-md-6 col-sm-6 col-xs-12">
 
@@ -118,9 +102,7 @@
 
 								'class'=>'form-control input-sm',
 
-								"id" => "from_date",
-
-								"readonly" => true
+								"id" => "from_date"
 							])
 						!!}
 					</div>
@@ -147,9 +129,7 @@
 
 								'class'=>'form-control input-sm',
 
-								"id" => "to_date",
-
-								"readonly" => true
+								"id" => "to_date"
 							])
 						!!}
 					</div>
@@ -177,7 +157,7 @@
 							"id" => "total_days"
 						])
 					!!}
-				
+
 				</div>
 			</div>
 
@@ -204,7 +184,7 @@
 							"id" => "reason"
 						])
 					!!}
-				
+
 				</div>
 			</div>
 
@@ -229,7 +209,7 @@
 							"id" => "approver_id"
 						])
 					!!}
-				
+
 				</div>
 			</div>
 

@@ -14,12 +14,12 @@ var LeaveApplication = ({
         fromElement.datepicker({
 
             // format : "yyyy-mm-dd",
-            dateFormat: "yy-mm-dd",
+            dateFormat: "dd-mm-yy",
 
             autoclose: true
 
         }).on("changeDate", function (e) {
-
+            console.log(e);
             var toDate;
 
             toDate = toElement.datepicker("getDate")
