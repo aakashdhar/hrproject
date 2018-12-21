@@ -35,4 +35,9 @@ class User extends Authenticatable
     public function getFullNameAttribute() {
         return ucwords($this->attributes['user_first_name']) . " " . ucwords($this->attributes['user_last_name']);
     }
+
+    public function isSuperAdmin()
+    {
+        return $this->user_type == "Admin";
+    }
 }

@@ -60,4 +60,18 @@ Route::middleware('auth')->group(function() {
     });
 });
 
+Route::group(['as' => 'leaves|', 'prefix' => 'leaves'], function () {
+
+    Route::get('/applications', 'LeavesController@applications');
+    Route::post('/{leave_application}/approve', 'LeavesController@approveLeave');
+    Route::post('/{leave_application}/reject', 'LeavesController@rejectLeave');
+    Route::post('/{leave_application}/cancel', 'LeavesController@cancelLeave');
+    Route::get('/apply', 'LeavesController@create');
+    Route::patch('/store', 'LeavesController@store');
+    Route::post("/delete-bulk", "LeavesController@deleteBulk");
+    Route::post("/approve-bulk", "LeavesController@approveBulk");
+
+    Route::resource('/list', 'LeavesController');
+});
+
 Route::get('/home', 'HomeController@index')->name('home');
