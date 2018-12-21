@@ -9,6 +9,6 @@ class PasswordResetController extends Controller
 {
     public function sendLink(Request $request)
     {
-        dd($request);
+        
     }
 }

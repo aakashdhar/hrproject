@@ -37,7 +37,7 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->all());
+        
         UserManager::validateAdmin($request->all());
         $this->manager->postNewAdmin($request);
         return redirect()->back();
@@ -55,7 +55,7 @@ class AdminController extends Controller
 
     public function update($id, Request $request)
     {
-        dd($request->all(), $id);
+        
     }
 
     public function destroy($id)

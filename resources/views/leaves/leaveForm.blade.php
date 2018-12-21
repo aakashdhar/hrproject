@@ -25,7 +25,7 @@
 
 </script>
 
-<script type="text/javascript" src="{{ noc_asset('js/admin-diamond-leave-apply.js') }}"></script>
+<script type="text/javascript" src="{{-- noc_asset('js/admin-diamond-leave-apply.js') --}}"></script>
 <script type="text/javascript">
 
 </script>
@@ -44,7 +44,7 @@
 @section('content-breadcrumb')
 <ul class="page-breadcrumb">
 	<li>Leaves <i class="fa fa-angle-double-right"></i></li>
-	<li><a href="{{route('leaves|admin.diamond.leaves.list.index')}}">Leave Application</a> <i class="fa fa-angle-double-right"></i></li>
+	<li><a href="{{route('leaves|leave.index')}}">Leave Application</a> <i class="fa fa-angle-double-right"></i></li>
 	<li><span>Apply</span></li>
 </ul>
 @endsection

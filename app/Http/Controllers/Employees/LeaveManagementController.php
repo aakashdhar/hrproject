@@ -47,7 +47,6 @@ class LeaveManagementController extends Controller
 //        }
 //        else
 //        {
-//            dd("here");
 //            //$msg = ["subject"=>""];
 //        }
         $data = User::all()->where("user_id",'=',\Auth::user()->user_id)->first();
@@ -92,7 +91,7 @@ class LeaveManagementController extends Controller
     public function editLeave(Request $request)
     {
         $leavedata = UserHoliday::all()->where("user_holiday_id","=",$request->get('holidayid'))->first();
-//        dd($leavedata);
+
         $this->addData("leavedata", $leavedata);
         return $this->getView("employees.employeeleave_edit");
     }

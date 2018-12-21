@@ -57,6 +57,10 @@
                     </div>
                     <div class="row" style="margin-top: 2%;">
                       <div class="col-md-4">
+                        <label for="user_leave">Number of Leaves</label>
+                        <input name="user_leave" class="form-control" value="{{ $val->user_leave }}" id="user_leave" placeholder="Number of Leaves">
+                      </div>
+                      <div class="col-md-4">
                         <label for="user_address">Emergency Contact</label>
                         <input name="user_emergency_name" class="form-control" value="{{ $val->user_emergency_name }}" id="user_emergency_name" placeholder="Emergency Contact">
                       </div>

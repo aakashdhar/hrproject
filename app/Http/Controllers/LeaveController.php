@@ -139,12 +139,12 @@ class LeaveController extends Controller
     public function create(Request $request, LeaveApplication $leave_application)
     {
         $user = \Auth::user();
-
+        
         $leave_balance = $this->leave_manager->getUsersLeaveBalance($user->user_id);
-
+        
         if (!$leave_balance) {
-
-            return redirect("admin/diamond/leaves/list");
+            
+            return redirect()->back();
         }
 
         $approvers = $this->leave_manager->getLeaveApprovers();
@@ -159,7 +159,7 @@ class LeaveController extends Controller
 
         $this->addData('leave_balance', $leave_balance);
 
-        return $this->getView('admin_diamond/leaves/leaveForm');
+        return $this->getView('leaves.leaveForm');
     }
 
     /**

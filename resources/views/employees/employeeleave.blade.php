@@ -82,7 +82,6 @@
                 <?php
                     $user = Auth::user();
                     $data = DB::select('select * from user_holiday where user_id ='.$user->user_id);
-                    //dd($data);
                     ?>
                 <table class="table table-bordered table-active">
                     <thead>
