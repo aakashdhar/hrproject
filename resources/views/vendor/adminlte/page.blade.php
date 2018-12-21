@@ -18,9 +18,9 @@
 
 <?php
         $loggeduser = Auth::user();
-        
+
         $usertypes = Illuminate\Support\Facades\DB::select("select user_type_id from user_types where user_type!='Admin'");
-       
+
         ?>
 <!--changing adminlte.php for users to restrict them-->
 @foreach($usertypes as $usertype)
@@ -102,18 +102,66 @@
             @endif
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
-
+                  <?php
+                    $currentUserName = Auth::user()->user_first_name ." ".Auth::user()->user_last_name;
+                    $currentUserJoiningDate = date('M. y',strtotime(Auth::user()->joining_date))
+                   ?>
                     <ul class="nav navbar-nav">
+                      <!-- User Account: style can be found in dropdown.less -->
+                      <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                          <img src="{{asset('img/user2-160x160.jpg')}}" class="user-image" alt="User Image">
+                          <span class="hidden-xs">{{$currentUserName}}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <!-- User image -->
+                          <li class="user-header">
+                            <img src="{{asset('img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
+
+                            <p>
+                              {{$currentUserName}} - Web Developer
+                              <small>Member since {{$currentUserJoiningDate}}</small>
+                            </p>
+                          </li>
+                          <!-- Menu Body -->
+                          <li class="user-body">
+                            <div class="row">
+                              <div class="col-xs-4 text-center">
+                                <a href="#">Followers</a>
+                              </div>
+                              <div class="col-xs-4 text-center">
+                                <a href="#">Sales</a>
+                              </div>
+                              <div class="col-xs-4 text-center">
+                                <a href="#">Friends</a>
+                              </div>
+                            </div>
+                            <!-- /.row -->
+                          </li>
+                          <!-- Menu Footer-->
+                          <li class="user-footer">
+                            <div class="pull-left">
+                              <a href="#" class="btn btn-default btn-flat">Profile</a>
+                            </div>
+                            <div class="pull-right">
+                              <a href="#" class="btn btn-default btn-flat" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                  {{ trans('adminlte::adminlte.log_out') }}
+                              </a>
+                              <form id="logout-form" action="{{ url(config('adminlte.logout_url', 'auth/logout')) }}" method="POST" style="display: none;">
+                                  @if(config('adminlte.logout_method'))
+                                      {{ method_field(config('adminlte.logout_method')) }}
+                                  @endif
+                                  {{ csrf_field() }}
+                              </form>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
                         <li>
-                          <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                              <i class="fa fa-fw fa-power-off"></i> {{ trans('adminlte::adminlte.log_out') }}
-                          </a>
-                          <form id="logout-form" action="{{ url(config('adminlte.logout_url', 'auth/logout')) }}" method="POST" style="display: none;">
-                              @if(config('adminlte.logout_method'))
-                                  {{ method_field(config('adminlte.logout_method')) }}
-                              @endif
-                              {{ csrf_field() }}
-                          </form>
+
+                        </li>
+                        <li>
+                          <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                         </li>
                     </ul>
                 </div>
