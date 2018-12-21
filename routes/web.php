@@ -60,4 +60,7 @@ Route::middleware('auth')->group(function() {
     });
 });
 
+Route::resource('attendace','AttendanceController');
+Route::post('undo-attendance', 'AttendanceController@undoAttendance')->name('undoAttendance');
+
 Route::get('/home', 'HomeController@index')->name('home');

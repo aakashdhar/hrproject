@@ -98,6 +98,12 @@ return [
             'url'         => 'tasks',
             'icon'        => 'tasks',
         ],
+        'ATTENDANCE MANAGEMENT',
+        [
+            'text'        => 'Attendance',
+            'url'         => 'attendace',
+            'icon'        => 'user',
+        ],
         [
             'text' => 'Task Reminder',
             'url'  => 'reminder',
