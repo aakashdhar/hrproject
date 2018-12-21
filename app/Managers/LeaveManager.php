@@ -182,17 +182,15 @@ class LeaveManager
         if (isset(self::$userLeavesBalance[$user_id])) {
             return self::$userLeavesBalance[$user_id];
         }
-        $applied_count = User::where("user_id","=",$user_id)
-                            ->select("user_leave")
-                            ->first();
         
-//        $applied_count = LeaveApplication::where("applicant_id", $user_id)
-//
-//            ->whereIn("status", ["Approved", "Pending"])
-//
-//            ->sum('total_days');
         
-        return self::$userLeavesBalance[$user_id] = (\Auth::user()->total_leaves - $applied_count->user_leave);
+        $applied_count = LeaveApplication::where("applicant_id", $user_id)
+
+            ->whereIn("status", ["Approved", "Pending"])
+
+            ->sum('total_days');
+        
+        return self::$userLeavesBalance[$user_id] = (\Auth::user()->user_leave - $applied_count);
     }
 
     public function getLeaveApprovers()

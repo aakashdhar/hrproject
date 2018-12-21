@@ -148,6 +148,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Brian2694\Toastr\ToastrServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -213,6 +214,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];

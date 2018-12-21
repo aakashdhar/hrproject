@@ -1,5 +1,6 @@
-@extends('admin_diamond._layout.layout_sidebar')
+@extends('adminlte::page')
 
+@section('title', 'Leaves')
 @push('head_links')
 <link type="text/css" rel="stylesheet" href="{{ URL::asset('assets/global/plugins/jquery-ui/jquery-ui.min.css') }}" />
 <link type="text/css" rel="stylesheet" href="{{ URL::asset('assets/global/plugins/select2/css/select2.min.css') }}">
@@ -54,7 +55,7 @@
 	{{
 		Form::model($leave_application, [
 
-			'url' => URL::to('admin/diamond/leaves/store'),
+			'url' => URL::to('leaves|leaves.store'),
 
 			'method' => 'PATCH',
 
