@@ -111,3 +111,21 @@ CREATE TABLE `user_reminder` (
   `created_at` TIMESTAMP NULL,
   `updated_at` TIMESTAMP NULL,
   PRIMARY KEY (`user_reminder_id`));
+
+CREATE TABLE `leave_applications` (
+ `leave_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+ `applicant_id` int(11) unsigned NOT NULL,
+ `approver_id` int(11) unsigned NOT NULL,
+ `from_date` date NOT NULL, `to_date` date NOT NULL, `total_days` tinyint(1) unsigned NOT NULL,
+ `status` enum('Pending','Approved','Rejected','Cancelled') NOT NULL DEFAULT 'Pending',
+ `reason` varchar(512) DEFAULT NULL, `approval_comment` varchar(512) DEFAULT NULL,
+ `is_read` enum('Yes','No') NOT NULL DEFAULT 'No', `cancel_reason` varchar(512) DEFAULT NULL,
+ `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`leave_id`) 
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `holiday` 
+( `holiday_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ `holiday_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+ `holiday_date` date NOT NULL, `office_location_id` int(10) NOT NULL,
+ `holiday_status` enum('Active','Inactive') COLLATE utf8_unicode_ci NOT NULL, PRIMARY KEY (`holiday_id`) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;

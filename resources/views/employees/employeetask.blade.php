@@ -110,8 +110,8 @@ if(\Session::has('timer_data')){
                             }
                             ?>
 
-                    {{-- {{dd($t_minute,$t_seconds,$t_hour)}} --}}
-                    {{-- {{dd($total_time_spent)}} --}}
+                    {{-- {{ dd( }}$t_minute,$t_seconds,$t_hour)}} --}}
+                    {{-- {{ dd( }}$total_time_spent)}} --}}
                     <tr id="{{$task->task_id}}">
                         <td class="text-center"><a href="javascript:data_details('.data-list-{{ $task->task_id }}')" class="btn btn-primary" style="border-radius: 20px;"><i class="fa fa-arrow-down"></i></a></td>
                         <td class="text-center">{{ $task->task_title or "-"}}</td>

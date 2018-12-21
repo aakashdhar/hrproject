@@ -34,6 +34,7 @@ class EmployeesController extends Controller
       $user->joining_date = $request->get('joining_date');
       $user->user_dob = $request->get('user_dob');
       $user->user_hobbies = $request->get('user_hobbies');
+      $user->user_leave = $request->get('user_leave');
       $user->user_emergency_name = $request->get('user_emergency_name');
       $user->user_emergency_contact = $request->get('user_emergency_contact');
       $user->user_type_id = 2;

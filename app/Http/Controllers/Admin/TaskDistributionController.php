@@ -17,6 +17,11 @@ use App\Models\Constants\TaskStatus;
 
 class TaskDistributionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     //this function is just to show view to admin
     public function showPage_admin()
     {
@@ -69,7 +74,7 @@ class TaskDistributionController extends Controller
     //when stop it stops with system date
     public function taskStatus(Request $request)
     {
-        // dd($request->all());
+        
         $res = false;
         $task_id = $request->input('task_id');
         $status = $request->input('status');
@@ -93,7 +98,7 @@ class TaskDistributionController extends Controller
             $task->task_status = TaskStatus::FINISHED;
         }
         $task->update();
-        // dd($task_status);
+        
         $logs = LogTask::where('log_task_id', '=', $task_id)->get();
         if($logs->count() > 0) {
             $last_log = LogTask::where('log_task_id', '=', $task_id)
@@ -129,7 +134,6 @@ class TaskDistributionController extends Controller
 
         public function editTask(Request $request)
         {
-//            dd($request->all());
             $taskid = $request->get("taskid");
             $data = DB::table("tasks")
                     ->where("task_id","=",$taskid)
@@ -212,7 +216,7 @@ class TaskDistributionController extends Controller
 
 
             $data = ['hour'=>$t_hour,'minute'=>$t_minute,'second'=>$t_seconds,'task_name'=>$task->task_title,'status'=>$status];
-            // dd($data);
+            
             return $data;
         }
 

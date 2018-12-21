@@ -214,7 +214,7 @@ return [
         'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Form' => Collective\Html\FormFacade::class,
-        'HTML' => Collective\Html\HtmlFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];
