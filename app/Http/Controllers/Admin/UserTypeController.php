@@ -9,6 +9,10 @@ use App\Models\User;
 
 class UserTypeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     //this function is for adding type of user
     public function addUserType(Request $request)
     {
@@ -16,7 +20,7 @@ class UserTypeController extends Controller
             'usertype' => 'required',
             'userstatus' => 'required'
         ]);
-               
+
 
         $usertype = new UserType([
             'user_type' => $request->get('usertype'),
@@ -25,13 +29,13 @@ class UserTypeController extends Controller
         $usertype->save();
         return redirect()->back();
     }
-    
+
     //this function is for assigning type to user
     public function assignUserType(Request $request)
     {
-       $usertype = $request->get("usertype");   
+       $usertype = $request->get("usertype");
        $usertypes = UserType::select("user_type_id")->where("user_type","=","$usertype")->first();
-       $user = \Auth::user();                                  
+       $user = \Auth::user();
        $user_update = User::find($request->get("userid"));
        $user_update->user_type_id = $usertypes->user_type_id;
        $user_update->save();

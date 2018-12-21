@@ -17,7 +17,7 @@ class LeaveController extends Controller
     public function __construct(LeaveManager $leave_manager)
     {
         parent::__construct();
-
+        $this->middleware('auth');
         $this->leave_manager = $leave_manager;
     }
     public function index(Request $request)

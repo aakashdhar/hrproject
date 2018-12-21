@@ -17,6 +17,11 @@ use App\Models\Constants\TaskStatus;
 
 class TaskDistributionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     //this function is just to show view to admin
     public function showPage_admin()
     {

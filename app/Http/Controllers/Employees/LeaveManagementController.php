@@ -13,6 +13,10 @@ use Toastr;
 
 class LeaveManagementController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     // this function is just to show view to user
     public function showPage_user(Request $request)
     {
@@ -107,10 +111,10 @@ class LeaveManagementController extends Controller
         $holiday->save();
         return view('employees.employeeleave');
 //        return redirect()->back();
-        
-        
+
+
     }
-    
+
     //this function is just to show view to admin
     public function showPage_admin(Request $request)
     {
