@@ -55,7 +55,7 @@
                         <input name="user_state" class="form-control" value="{{ $val->user_state }}"  id="user_state" placeholder="State">
                       </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top: 2%;">
                       <div class="col-md-4">
                         <label for="user_address">Date of joining</label>
                         <input type="date" name="joining_date" class="form-control" value="{{$val->joining_date}}" id="joining_date" placeholder="Date of Joining">
@@ -64,6 +64,15 @@
                         <label for="user_address">Date of birth</label>
                         <input type="date" name="user_dob" class="form-control" value="{{$val->user_dob}}"  id="user_dob" placeholder="Date of birth">
                       </div>
+                      <div class="col-md-4">
+                        <label for="user_address">Designation</label>
+                        <select name="user_designation" class="form-control">
+                            <option disabled selected>Select designation</option>
+                             @foreach($designation as $val)
+                               <option value="{{$val->user_designation_title}}">{{ucwords($val->user_designation_title)}}</option>
+                             @endforeach
+                        </select>
+                      </div>
                     </div>
                     <div class="row" style="margin-top: 2%;">
                       <div class="col-md-4">
@@ -71,7 +80,7 @@
                         <input name="user_leave" class="form-control" value="{{ $val->user_leave }}" id="user_leave" placeholder="Number of Leaves">
                       </div>
                       <div class="col-md-4">
-                        <label for="user_address">Emergency Contact</label>
+                        <label for="user_address">Emergency Contact Person</label>
                         <input name="user_emergency_name" class="form-control" value="{{ $val->user_emergency_name }}" id="user_emergency_name" placeholder="Emergency Contact">
                       </div>
                       <div class="col-md-4">
@@ -128,28 +137,38 @@
                </div>
            </div>
            <div class="row" style="margin-top: 2%;">
-               <div class="col-md-4">
-                   <label for="user_address">Address</label>
-                   <input name="user_address" class="form-control" value="{{ $val->user_address }}" id="user_address" placeholder="Address" readonly>
-               </div>
-               <div class="col-md-4">
-                 <label for="user_address">Date of joining</label>
-                 <input type="text" name="joining_date" class="form-control" value="{{ date('d-M-Y',strtotime($val->joining_date)) }}" id="joining_date" placeholder="Date of Joining" readonly>
-               </div>
-               <div class="col-md-4">
-                 <label for="user_address">Date of birth</label>
-                 <input type="text" name="user_dob" class="form-control" value="{{ date('d-M-Y',strtotime($val->user_dob))}}" id="user_dob" placeholder="Date of birth" readonly>
-               </div>
+             <div class="col-md-4">
+               <label for="user_address">Address line 1</label>
+               <input name="user_address" class="form-control" value="{{ $val->user_address }}"  id="user_address" placeholder="Address">
+             </div>
+             <div class="col-md-4">
+               <label for="user_city">City</label>
+               <input name="user_city" class="form-control" value="{{ $val->user_city }}"  id="user_city" placeholder="City">
+             </div>
+             <div class="col-md-4">
+               <label for="user_state">State</label>
+               <input name="user_state" class="form-control" value="{{ $val->user_state }}"  id="user_state" placeholder="State">
+             </div>
            </div>
            <div class="row" style="margin-top: 2%;">
              <div class="col-md-4">
-               <label for="user_address">Emergency Contact</label>
-               <input name="user_emergency_name" class="form-control" value="{{ $val->user_emergency_name }}" id="user_emergency_name" placeholder="Emergency Contact" readonly>
+               <label for="user_address">Date of joining</label>
+               <input type="date" name="joining_date" class="form-control" value="{{$val->joining_date}}" id="joining_date" placeholder="Date of Joining">
              </div>
              <div class="col-md-4">
-               <label for="user_address">Emergency Contact number</label>
-               <input name="user_emergency_contact" class="form-control" value="{{ $val->user_emergency_contact }}" id="user_emergency_contact" placeholder="Emergency Contact Number" readonly>
+               <label for="user_address">Date of birth</label>
+               <input type="date" name="user_dob" class="form-control" value="{{$val->user_dob}}"  id="user_dob" placeholder="Date of birth">
              </div>
+             <div class="col-md-4">
+               <label for="user_address">Designation</label>
+               <select name="user_designation" class="form-control">
+                   <option disabled selected>Select designation</option>
+                    @foreach($designation as $val)
+                      <option value="{{$val->user_designation_title}}">{{ucwords($val->user_designation_title)}}</option>
+                    @endforeach
+               </select>
+             </div>
+           </div>>
            </div>
           <div class="row" style="margin-top: 2%;">
             <div class="col-md-12">
