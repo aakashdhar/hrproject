@@ -34,7 +34,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="user_contact_no">Contact</label>
-                            <input type="text" name="user_contact_no" value="{{ $val->user_contact_no }}" id="user_contact_no" class="form-control" placeholder="Contact no" maxlength="10">
+                            <input type="text" name="user_contact_no" value="{{ $val->user_contact_no }}" id="user_contact_no" class="form-control" placeholder="Contact no">
                         </div>
                         <div class="col-md-4"  style="display:none">
                             <label for="user_password">Password</label>
