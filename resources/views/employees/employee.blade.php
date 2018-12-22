@@ -129,11 +129,20 @@
                             <label for="user_address">Date of birth</label>
                             <input type="date" name="user_dob" class="form-control"  id="user_dob" placeholder="Date of birth">
                           </div>
+                          <div class="col-md-4">
+                            <label for="user_address">Designation</label>
+                            <select name="user_designation" class="form-control">
+                                <option disabled selected>Select designation</option>
+                                 @foreach($designation as $val)
+                                   <option value="{{$val->user_designation_title}}">{{ucwords($val->user_designation_title)}}</option>
+                                 @endforeach
+                            </select>
+                          </div>
                         </div>
                         <div class="row" style="margin-top: 2%;">
                           <div class="col-md-4">
                               <label for="user_leave">Number of Leaves</label>
-                              <input name="user_leave" class="form-control" value="{{ $val->user_leave }}" id="user_leave" placeholder="Number of Leaves">
+                              <input name="user_leave" class="form-control" value="user_leave" id="user_leave" placeholder="Number of Leaves">
                           </div>
                           <div class="col-md-4">
                             <label for="user_address">Emergency Contact</label>

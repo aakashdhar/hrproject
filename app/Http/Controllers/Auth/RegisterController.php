@@ -23,11 +23,11 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
-    protected $redirectTo = '/admin/dashboard';
+    protected $redirectTo = '/home';
 
     public function __construct()
     {
-        
+
         $this->middleware('guest');
     }
 

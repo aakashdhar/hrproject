@@ -27,6 +27,7 @@
             $i = 1;
           @endphp
           @foreach ($reminder as $key => $value)
+            @if($value->user_reminder_status != 'converted')
             <tr>
               <td>{{$i++}}</td>
               <td>{{ucfirst($value->user->user_first_name)}}</td>
@@ -40,7 +41,7 @@
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><button type="button" class="btn btn-link" data-toggle="modal" data-target="#updatereminderModal_{{$value->user_reminder_id}}">Add new</button></li>
+                    <li><button type="button" class="btn btn-link" data-toggle="modal" data-target="#updatereminderModal_{{$value->user_reminder_id}}">Update Reminder</button></li>
                     <li>
                       <form action="{{ route('reminder.destroy', $value->user_reminder_id) }}" method="POST">
                           @method('DELETE')
@@ -54,10 +55,21 @@
                           <button class="btn btn-link">Mark Complete</button>
                       </form>
                     </li>
+                    @if (isset($value->user->type) && $value->user->type->user_type != 'Admin' && $value->user_reminder_status != 'converted')
+                      <li>
+                        {!! Form::open(['route'=>'convertToTask', 'method'=>'POST']) !!}
+                          {{ Form::hidden('user_reminder_id', $value->user_reminder_id) }}
+                          <button class="btn btn-link">Convert to task</button>
+                        {!! Form::close() !!}
+                      </li>
+                    @endif
                   </ul>
                 </div>
               </td>
             </tr>
+            @else
+            <tr></tr>
+            @endif
             @include('reminder.updateReminder_modal')
           @endforeach
         </tbody>

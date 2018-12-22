@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Admins\UserType;
+use App\Models\Constants\UserType as Type;
 
 class User extends Authenticatable
 {
@@ -36,8 +37,8 @@ class User extends Authenticatable
         return ucwords($this->attributes['user_first_name']) . " " . ucwords($this->attributes['user_last_name']);
     }
 
-    public function isSuperAdmin()
+    public function isAdmin()
     {
-        return $this->user_type == "Admin";
+        return $this->user_type_id == Type::ADMIN;
     }
 }

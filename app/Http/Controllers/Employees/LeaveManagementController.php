@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use App\Models\UserHoliday;
 use Illuminate\Support\Facades\Storage;
+use App\Models\LeaveApplication;
 use Toastr;
 
 class LeaveManagementController extends Controller
@@ -117,7 +118,8 @@ class LeaveManagementController extends Controller
     //this function is just to show view to admin
     public function showPage_admin(Request $request)
     {
-        $data = UserHoliday::with(['user'])->get();
+        $data = LeaveApplication::with(['applicant'])->get();
+        
         $this->addData('leaves', $data);
         return $this->getView('admins.acceptleave');
     }
@@ -131,6 +133,7 @@ class LeaveManagementController extends Controller
     // admin gives responce back to employee via email about his leave app
     public function respond(Request $request)
     {
+        
         $check = $request->get("answer");
         $id = $request->get("id");
         $hid = $request->get("holidayid");

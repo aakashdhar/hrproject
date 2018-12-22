@@ -71,8 +71,7 @@ class LeaveController extends Controller
         $total_allocated_leaves = $user->user_leave;
 
         $leave_balance = $total_allocated_leaves - ($taken_leaves + $pending_approval);
-
-        if ($user->user_type_id == 1) {
+        if ($user->isAdmin()) {
             $total_pending_leaves = $this->leave_manager->getLeaveApplications([
 
                 "status" => "Pending"
@@ -100,8 +99,8 @@ class LeaveController extends Controller
 
     public function applications(Request $request)
     {
-        if (\Auth::user()->user_type_id != 1) {
-            return redirect("leaves/list");
+        if (!\Auth::user()->isAdmin()) {
+            return redirect()->back();
         }
 
         $user_id = $request->user_id;
@@ -124,7 +123,7 @@ class LeaveController extends Controller
 
         $attendace_detail = self::getAttendanceDetails($user);
 
-        $this->addData('attendace_detail', $attendace_detail);
+        //$this->addData('attendace_detail', $attendace_detail);
 
         $this->addData('leave_applications', $leave_applications);
 
@@ -145,7 +144,6 @@ class LeaveController extends Controller
         $user = \Auth::user();
 
         $leave_balance = $this->leave_manager->getUsersLeaveBalance($user->user_id);
-
 
         if (!$leave_balance) {
 
@@ -277,7 +275,7 @@ class LeaveController extends Controller
     public function approveBulk(Request $request)
     {
 
-        if (\Auth::user()->user_type_id != 1) {
+        if (!\Auth::user()->isAdmin()) {
             return response()->json([
 
                 "success" => false,
@@ -312,8 +310,7 @@ class LeaveController extends Controller
 
     public function deleteBulk(Request $request)
     {
-        if (\Auth::user()->user_type_id != 1) {
-
+        if (!\Auth::user()->isAdmin()) {
             return response()->json([
 
                 "success" => false,

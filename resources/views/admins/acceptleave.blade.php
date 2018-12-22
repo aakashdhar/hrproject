@@ -20,6 +20,7 @@
             <!--start pgfetching user's holiday details with personal details-->
                 <?php
                     $count = 1;
+                    
                 ?>
             <!--end-->
                 <tr>
@@ -36,22 +37,29 @@
                 @else
                 <!--start of loop retrieving the data -->
                 @foreach($leaves as $val)
+                
                 <tr>
                     <td>{{$count++}}</td>
 
-                    <td>{{$val->user_id}}</td>
-                    <td>{{$val->user_holiday_from}}</td>
-                    <td>{{$val->user_holiday_to}}</td>
-                    <td>{{$val->user_holiday_subject}}</td>
-                    <td>{{ $val->user_holiday_reason }}</td>
-                    <td>{{$val->user_holiday_approval_status}}</td>
+                    <td>{{$val->applicant->user_first_name}} {{$val->applicant->user_last_name}}</td>
+                    <td>{{$val->from_date}}</td>
+                    <td>{{$val->to_date}}</td>
+                    <td>
+                                @if(empty($val->applicant->user_holiday_docname))
+                                <a href=#>No document Uploaded</a>
+                                @else
+                                <a href={{asset('Medical-Documents/'.$val->applicant->user_holiday_docname)}} target="_blank">Click here</a>
+                                @endif
+                    </td>
+                    <td>{{$val->status}}</td>
+                    
                     <td>
                         <div style="display: inline-block">
                             <form action="{{url('admin/leave/accept')}}?holidayid={{$val->user_holiday_id}}&id={{$val->user_id}}&start_date={{$val->user_holiday_from}}&end_date={{$val->user_holiday_to}}"
                                 method="POST">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="answer" value="accept">
-                                <input type="submit" class="btn btn-primary" value="Accept">
+                                <input type="submit" class="btn btn-primary" value="Approve">
                             </form>
                         </div>
                         <div style="display: inline-block">
