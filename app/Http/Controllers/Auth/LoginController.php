@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = 'home';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -81,7 +81,7 @@ class LoginController extends Controller
 
     protected function attemptLogin(Request $request)
     {
-        
+
         return Auth::attempt($this->credentials($request), $request->filled('remember'));
     }
 
