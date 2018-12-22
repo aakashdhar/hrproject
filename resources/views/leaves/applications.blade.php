@@ -159,11 +159,34 @@ $icons = array('Active' => 'success', 'Inactive' => 'default');
                                                     <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#approve_modal"><span class="fa fa-check" aria-hidden="true" title="Approve Leave"></span></button>
                                                 </div>
                                                 <div style="display: inline-block">
-                                                    <form action="{{ URL::to("leaves/reject") }}" method="POST">
+                                                    {{-- <form action="{{ URL::to("leaves/reject") }}" method="POST">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{$application->leave_id}}">
+                                                    </form> --}}
+                                                    <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#rejectModal_{{$application->leave_id}}"><span class="fa fa-remove" aria-hidden="true" title="Reject Leave"></span></button>
+                                                </div>
+                                                <div class="modal fade" id="rejectModal_{{$application->leave_id}}" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                                                  <div class="modal-dialog">
+                                                    <form class="" action="{{ URL::to("leaves/reject") }}" method="post">
+                                                      @csrf
+                                                      <div class="modal-content">
+                                                        <div class="modal-header">
+                                                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                          <div class="form-group">
+                                                            <label for="">Rejection Reason</label>
+                                                            <textarea name="cancel_reason" rows="8" cols="80" class="form-control" required></textarea>
+                                                          </div>
+                                                        </div>
+                                                        <input type="hidden" name="id" value="{{$application->leave_id}}">
+                                                        <div class="modal-footer">
+                                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                          <button type="submit" class="btn btn-primary">Save</button>
+                                                        </div>
+                                                      </div>
                                                     </form>
-                                                    <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#rejectModal"><span class="fa fa-remove" aria-hidden="true" title="Reject Leave"></span></button>
+                                                  </div>
                                                 </div>
                                                 @else
                                                 {{ $application->status }}
