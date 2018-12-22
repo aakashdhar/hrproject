@@ -32,29 +32,29 @@ class LeaveController extends Controller
 
             'user_id' => $user->user_id,
         ]);
-        
+
 		/* Get User's all Leave Applications Ends Here */
 
 		/* Collect Pending Leaves */
 
         $pending_applications = $users_leaves->where("status", "Pending");
-        
+
 		/* Collect Pending Leaves Ends Here */
 
 		/* Collect approved */
 
         $approved_leaves = $users_leaves->where("status", 'Approved');
-        
+
         $taken_leaves = $approved_leaves->sum(function ($item) {
-            
+
             return $item->total_days;
         });
 
         $pending_approval = $pending_applications->sum(function ($item) {
-            
+
             return $item->total_days;
         });
-        
+
 		/* Collect approved Ends Here*/
 
 		/* History */
@@ -64,11 +64,11 @@ class LeaveController extends Controller
 		/* History */
 
 		/* Total Allocated Leaves */
-        
+
         $total_allocated_leaves = $user->user_leave;
-        
+
         $leave_balance = $total_allocated_leaves - ($taken_leaves + $pending_approval);
-        
+
         if ($user->isSuperAdmin()) {
             $total_pending_leaves = $this->leave_manager->getLeaveApplications([
 
@@ -98,8 +98,8 @@ class LeaveController extends Controller
 
     public function applications(Request $request)
     {
-        if (!\Auth::user()->isSuperAdmin()) {
-            return redirect("admin/diamond/leaves/list");
+        if (!\Auth::user()->isAdmin()) {
+            return redirect()->back();
         }
 
         $user_id = $request->user_id;
@@ -130,7 +130,7 @@ class LeaveController extends Controller
 
         $this->addArray($params);
 
-        return $this->getView('admin_diamond/leaves/applications');
+        return $this->getView('leaves.applications');
     }
 
     /**
@@ -141,11 +141,11 @@ class LeaveController extends Controller
     public function create(Request $request, LeaveApplication $leave_application)
     {
         $user = \Auth::user();
-        
+
         $leave_balance = $this->leave_manager->getUsersLeaveBalance($user->user_id);
-        
+
         if (!$leave_balance) {
-            
+
             return redirect()->back();
         }
 
