@@ -87,11 +87,42 @@
                         </td>
                         <td class="text-center">{{$val->status_by_user or '-'}}</td>
                         <td>
-                            <form method="post" action="tasks/statusByAdmin?taskid={{$val->task_id}}&userid={{$val->user_id}}">
+
+                            <input type="button" name="adminanswer" value="Reassign" data-toggle="modal" data-target="#reassignTaskModal_{{$val->task_id}}"  class="btn btn-sm"/>
+                            <div class="modal fade" id="reassignTaskModal_{{$val->task_id}}" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                              <form class="" action="tasks/statusByAdmin?taskid={{$val->task_id}}&userid={{$val->user_id}}" method="post">
                                 {{csrf_field()}}
-                                <input type="hidden" name="status" value="reassign" />
-                                <input type="submit" name="adminanswer" value="Reassign"  class="btn button"/>
-                            </form>
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="">Reassign Task to user</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="form-group">
+                                      <label for="user_id">Select User</label>
+                                      <select name="user_id" class="form-control">
+                                          <option disabled selected>Select user</option>
+                                           @foreach($users as $vals)
+                                          <option value="{{$vals->user_id}}" {{(($vals->user_id == $val->user_id)? 'selected' :'')}}>{{ucwords($vals->user_first_name)}} {{ucwords($vals->user_last_name)}} [{{ $vals->user_name }}]
+                                           </option>
+                                           @endforeach
+                                      </select>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="">Reassign Task reason</label>
+                                      <textarea name="reason_message" rows="8" cols="80" class="form-control"></textarea>
+                                    </div>
+                                    <input type="hidden" name="status" value="reassign" />
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Reassign</button>
+                                  </div>
+                                </div>
+                              </div>
+                              </form>
+                            </div>
                         </td>
                         <td class="text-center">
                             <form method="post" action="tasks/statusByAdmin?taskid={{$val->task_id}}&userid={{$val->user_id}}">

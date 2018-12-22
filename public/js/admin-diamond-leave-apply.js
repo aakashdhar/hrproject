@@ -1,7 +1,7 @@
 var LeaveApply = (function () {
 
     var init = function () {
-        console.log('here');
+
         initCustomDateRange($("#from_date"), $("#to_date"));
 
         $(".selectpicker").select2()
@@ -9,7 +9,7 @@ var LeaveApply = (function () {
         validateForm();
     }
 
-    var weekends = ["Sat", "Sun"];
+    var weekends = ["Sun"];
 
     var calculateTotalDays = function (from_date, to_date) {
 
@@ -128,7 +128,7 @@ var LeaveApply = (function () {
 
         fromElement.datepicker({
 
-            format: "dd-mm-yy",
+            format: "dd-mm-yyyy",
 
             autoclose: true,
 
@@ -137,6 +137,7 @@ var LeaveApply = (function () {
         }).on("changeDate", function (e) {
 
             var toDate;
+
             toDate = toElement.datepicker("getDate")
 
             if (!toDate || (toDate.valueOf() < e.date.valueOf())) {
@@ -154,7 +155,7 @@ var LeaveApply = (function () {
 
         toElement.datepicker({
 
-            format: "dd-mm-yy",
+            format: "dd-mm-yyyy",
 
             autoclose: true,
 
@@ -163,6 +164,7 @@ var LeaveApply = (function () {
         }).on("changeDate", function (e) {
 
             var fromDate;
+
             fromDate = fromElement.datepicker("getDate")
 
             if (!fromDate || (fromDate.valueOf() > e.date.valueOf())) {
@@ -183,9 +185,9 @@ var LeaveApply = (function () {
 
         init: init,
     }
-})();
+})()
 
 $(function () {
 
     LeaveApply.init();
-});
+})
