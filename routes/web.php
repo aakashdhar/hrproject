@@ -28,7 +28,7 @@ Route::post("tasks/edit-task","Admin\TaskDistributionController@editTaskDetails"
 Route::post("tasks/assignTask","Admin\TaskDistributionController@assignTask");
 Route::post("tasks/statusByAdmin","Admin\TaskDistributionController@taskStatusByAdmin");
 
-Route::get("leaves","Employees\LeaveManagementController@showPage_admin");
+//Route::get("leaves","Employees\LeaveManagementController@showPage_admin");
 
 Route::get('leaves/view', 'Employees\LeaveManagementController@view_leave');
 
@@ -62,10 +62,10 @@ Route::middleware('auth')->group(function() {
 
 Route::group(['as' => 'leaves|',/* 'prefix' => 'leaves'*/], function () {
 
-    Route::get('/applications', 'LeaveController@applications');
-    Route::post('/{leave_application}/approve', 'LeaveController@approveLeave');
-    Route::post('/{leave_application}/reject', 'LeaveController@rejectLeave');
-    Route::post('/{leave_application}/cancel', 'LeaveController@cancelLeave');
+    Route::get('leaves', 'LeaveController@applications');
+    Route::get('leaves/{leave_application}/approve', 'LeaveController@approveLeave');
+    Route::get('leaves/{leave_application}/reject', 'LeaveController@rejectLeave');
+    Route::get('leaves/{leave_application}/cancel', 'LeaveController@cancelLeave');
     Route::get('leaves/apply', 'LeaveController@create');
     Route::patch('/store', 'LeaveController@store');
     Route::post("/delete-bulk", "LeaveController@deleteBulk");

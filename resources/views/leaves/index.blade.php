@@ -117,7 +117,7 @@ $(document).ready(function () {
                                 @foreach($pending_applications as $application)
                                     <tr>
                                         <td class="nowrap"><strong>{{ ++$i }}</strong></td>
-                                        {{--<td class="nowrap">{{ $application->approver->user_first_name }}</td>--}}
+                                        
                                         <td class="nowrap from-date">{{ $application->from_date }}</td>
                                         <td class="nowrap to-date">{{ $application->to_date }}</td>
                                         <td class="nowrap total-days">{{ $application->total_days }}</td>

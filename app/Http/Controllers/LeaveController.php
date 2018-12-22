@@ -32,29 +32,29 @@ class LeaveController extends Controller
 
             'user_id' => $user->user_id,
         ]);
-
+        
 		/* Get User's all Leave Applications Ends Here */
 
 		/* Collect Pending Leaves */
 
         $pending_applications = $users_leaves->where("status", "Pending");
-
+        
 		/* Collect Pending Leaves Ends Here */
 
 		/* Collect approved */
 
         $approved_leaves = $users_leaves->where("status", 'Approved');
-
+        
         $taken_leaves = $approved_leaves->sum(function ($item) {
-
+            
             return $item->total_days;
         });
 
         $pending_approval = $pending_applications->sum(function ($item) {
-
+            
             return $item->total_days;
         });
-
+        
 		/* Collect approved Ends Here*/
 
 		/* History */
@@ -64,10 +64,11 @@ class LeaveController extends Controller
 		/* History */
 
 		/* Total Allocated Leaves */
-        $total_allocated_leaves = $user->total_leaves;
-
+        
+        $total_allocated_leaves = $user->user_leave;
+        
         $leave_balance = $total_allocated_leaves - ($taken_leaves + $pending_approval);
-
+        
         if ($user->isSuperAdmin()) {
             $total_pending_leaves = $this->leave_manager->getLeaveApplications([
 
@@ -81,6 +82,7 @@ class LeaveController extends Controller
         //$attendace_detail = self::getAttendanceDetails($user);
 
         //$this->addData('attendace_detail', $attendace_detail);
+        //dd($pending_applications);
         $this->addData('pending_applications', $pending_applications);
 
         $this->addData('approved_leaves', $approved_leaves);
