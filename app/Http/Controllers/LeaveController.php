@@ -123,7 +123,7 @@ class LeaveController extends Controller
 
         $attendace_detail = self::getAttendanceDetails($user);
 
-        //$this->addData('attendace_detail', $attendace_detail);
+        $this->addData('attendace_detail', $attendace_detail);
 
         $this->addData('leave_applications', $leave_applications);
 

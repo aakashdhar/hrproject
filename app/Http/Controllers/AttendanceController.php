@@ -52,7 +52,7 @@ class AttendanceController extends Controller
         //     ->where('office_id',$office_id)
         //     ->get();
         // $user_name = $user->pluck('user_first_name','user_id');
-        $user = User::whereIn('user_type_id',[3,4])->get();
+        $user = User::whereNotIn('user_type_id',[UserType::ADMIN])->get();
         $user_name = $user->pluck('user_first_name','user_id');
         $month = array(1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April', 5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August', 9 => 'September', 10 => 'Octomber', 11 => 'November', 12 => 'December');
         $year = range(2018,2030);
@@ -65,7 +65,7 @@ class AttendanceController extends Controller
         $this->addData('user',$user);
 
         // $view = $this->getView('Attendance/'.strtolower($this->getSystemType()));
-        
+
         $view = $this->getView('Attendance.index');
 
         return $view;
