@@ -150,7 +150,7 @@
                           </div>
                           <div class="col-md-4">
                             <label for="user_address">Emergency Contact number</label>
-                            <input name="user_emergency_contact" class="form-control"  id="user_emergency_contact" placeholder="Emergency Contact Number">
+                            <input type="text" name="user_emergency_contact" class="form-control"  id="user_emergency_contact" placeholder="Emergency Contact Number">
                           </div>
                         </div>
                        <div class="row" style="margin-top: 2%;">

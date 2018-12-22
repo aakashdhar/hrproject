@@ -171,7 +171,7 @@
              </div>
              <div class="col-md-4">
                <label for="user_address">Emergency Contact Person</label>
-               <input name="user_emergency_name" class="form-control" value="{{ $val->user_emergency_name }}" id="user_emergency_name" placeholder="Emergency Contact" readonly>
+               <input type="text" name="user_emergency_name" class="form-control" value="{{ $val->user_emergency_name }}" id="user_emergency_name" placeholder="Emergency Contact" readonly>
              </div>
              <div class="col-md-4">
                <label for="user_address">Emergency Contact number</label>
