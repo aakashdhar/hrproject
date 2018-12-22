@@ -152,7 +152,7 @@ class TaskDistributionController extends Controller
             $task->task_description = $request->get("task");
             $res = $task->update();
 
-            return redirect()->back();
+            return redirect()->to("tasks");
         }
         //this function is just to show view to user
         public function showPage_user()
