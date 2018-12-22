@@ -59,7 +59,7 @@ $(document).ready(function () {
    </div>
    <div class="col-lg-4 col-md-4 col-sm-8 col-xs-12">
     <div class="pull-right">
-        @if($user->isSuperAdmin())
+        @if($user->isAdmin())
             <a class="btn blue-soft" href="{{ URL::to("admin/diamond/leaves/applications") }}">
                 Pending Applications
                 <span class="badge badge-success">{{ $total_pending_leaves }}</span>
@@ -128,7 +128,7 @@ $(document).ready(function () {
                                         <td class="nowrap">{{ $application->cancel_reason }}</td>
                                         <td class="nowrap">
                                           @if($application->status == "Pending")
-                                          <a href="{{ URL::to("admin/diamond/leaves/$application->leave_id/cancel") }}" class="btn btn-danger btn-xs cancel-link" target="_blank"><span class="fa fa-remove" aria-hidden="true" title="Cancel Leave"></span></a>
+                                          <a href="{{ URL::to("leaves/$application->leave_id/cancel") }}" class="btn btn-danger btn-xs cancel-link" target="_blank"><span class="fa fa-remove" aria-hidden="true" title="Cancel Leave"></span></a>
                                           @else
                                           {{ $application->status }}
                                           @endif
@@ -229,7 +229,11 @@ $(document).ready(function () {
                                 @foreach($leave_history as $application)
                                     <tr>
                                         <td class="nowrap"><strong>{{ ++$i }}</strong></td>
+                                        @if(empty($application->approver->user_first_name))
+                                        <td class="nowrap"></td>
+                                        @else
                                         <td class="nowrap">{{ $application->approver->user_first_name }}</td>
+                                        @endif
                                         <td class="nowrap from-date">{{ $application->from_date }}</td>
                                         <td class="nowrap to-date">{{ $application->to_date }}</td>
                                         <td class="nowrap total-days">{{ $application->total_days }}</td>

@@ -29,7 +29,7 @@ $(document).ready(function () {
 var delete_url = "{{ URL::to('admin/diamond/leaves/delete-bulk') }}";
 var approve_url = "{{ URL::to('admin/diamond/leaves/approve-bulk') }}";
 </script>
-<script type="text/javascript" src="{{ noc_asset('js/admin-diamond-leaves-application.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/admin-diamond-leaves-application.js') }}"></script>
 <script type="text/javascript">
     var fnToggle = function(id,bt) {
         $("."+bt).toggleClass('fa-chevron-right').toggleClass('fa-chevron-down');
@@ -53,7 +53,7 @@ var approve_url = "{{ URL::to('admin/diamond/leaves/approve-bulk') }}";
       <h3 class="page-title">Leave Applications <small>Listing</small></h3>
    </div>
    <div class="col-lg-4 col-md-4 col-sm-8 col-xs-12">
-      @include('admin_diamond/leaves/incl_search')
+      @include('leaves.incl_search')
    </div>
    <div class="col-lg-4 col-md-4 col-sm-8 col-xs-12 margin-top-10">
     <div class="pull-right">

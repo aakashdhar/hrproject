@@ -69,7 +69,7 @@ class LeaveController extends Controller
 
         $leave_balance = $total_allocated_leaves - ($taken_leaves + $pending_approval);
 
-        if ($user->isSuperAdmin()) {
+        if ($user->isAdmin()) {
             $total_pending_leaves = $this->leave_manager->getLeaveApplications([
 
                 "status" => "Pending"
@@ -122,7 +122,7 @@ class LeaveController extends Controller
 
         //$attendace_detail = self::getAttendanceDetails($user);
 
-        $this->addData('attendace_detail', $attendace_detail);
+        //$this->addData('attendace_detail', $attendace_detail);
 
         $this->addData('leave_applications', $leave_applications);
 
@@ -275,7 +275,7 @@ class LeaveController extends Controller
     public function approveBulk(Request $request)
     {
 
-        if (!\Auth::user()->isSuperAdmin()) {
+        if (!\Auth::user()->isAdmin()) {
             return response()->json([
 
                 "success" => false,
@@ -310,7 +310,7 @@ class LeaveController extends Controller
 
     public function deleteBulk(Request $request)
     {
-        if (!\Auth::user()->isSuperAdmin()) {
+        if (!\Auth::user()->isAdmin()) {
 
             return response()->json([
 

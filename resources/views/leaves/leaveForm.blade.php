@@ -11,7 +11,7 @@
 
 </script>
 
-<script type="text/javascript" src="{{ URL::asset('js/admin-diamond-leave-apply.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/admin-diamond-leave-apply.js') }}"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script type="text/javascript">
 </script>
@@ -217,7 +217,7 @@
 				<div class="row">
 					<div class="col-md-7 col-md-offset-5 text-center">
 						<button type="submit" class="btn green">Submit</button>
-						<a href="{{ URL::to('admin/diamond/leaves/list') }}" class="btn default">Cancel</a>
+						<a href="{{ URL::to('employees/leave') }}" class="btn default">Cancel</a>
 					</div>
 				</div>
 			</div>

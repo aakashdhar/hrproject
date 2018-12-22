@@ -27,6 +27,7 @@
             $i = 1;
           @endphp
           @foreach ($reminder as $key => $value)
+            @if($value->user_reminder_status != 'converted')
             <tr>
               <td>{{$i++}}</td>
               <td>{{ucfirst($value->user->user_first_name)}}</td>
@@ -40,7 +41,7 @@
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><button type="button" class="btn btn-link" data-toggle="modal" data-target="#updatereminderModal_{{$value->user_reminder_id}}">Add new</button></li>
+                    <li><button type="button" class="btn btn-link" data-toggle="modal" data-target="#updatereminderModal_{{$value->user_reminder_id}}">Update Reminder</button></li>
                     <li>
                       <form action="{{ route('reminder.destroy', $value->user_reminder_id) }}" method="POST">
                           @method('DELETE')
@@ -66,6 +67,9 @@
                 </div>
               </td>
             </tr>
+            @else
+            <tr></tr>
+            @endif
             @include('reminder.updateReminder_modal')
           @endforeach
         </tbody>

@@ -23,7 +23,8 @@ class ReminderController extends Controller
       $currentUser = Auth::user();
 
       if ($currentUser->user_type_id != '1') {
-        $user = User::where('user_id',$currentUser->user_id)->get();
+        $user = User::where('user_id',$currentUser->user_id)->first();
+        
         $reminder = Reminder::where('user_id',$currentUser->user_id)->get();
       }else {
         $user = User::all();
