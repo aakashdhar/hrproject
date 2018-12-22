@@ -104,7 +104,9 @@
                 <div class="navbar-custom-menu">
                   <?php
                     $currentUserName = Auth::user()->user_first_name ." ".Auth::user()->user_last_name;
-                    $currentUserJoiningDate = date('M. y',strtotime(Auth::user()->joining_date))
+                    $currentUserJoiningDate = date('M. y',strtotime(Auth::user()->joining_date));
+                    $userDesignation = (!is_null(Auth::user()->user_designation))? Auth::user()->user_designation : 'Admin';
+
                    ?>
                     <ul class="nav navbar-nav">
                       <!-- User Account: style can be found in dropdown.less -->
@@ -119,13 +121,13 @@
                             <img src="{{asset('img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
 
                             <p>
-                              {{$currentUserName}} - Web Developer
+                              {{ucfirst($currentUserName)}} - {{$userDesignation}}
                               <small>Member since {{$currentUserJoiningDate}}</small>
                             </p>
                           </li>
                           <!-- Menu Body -->
                           <li class="user-body">
-                            <div class="row">
+                            {{-- <div class="row">
                               <div class="col-xs-4 text-center">
                                 <a href="#">Followers</a>
                               </div>
@@ -135,7 +137,7 @@
                               <div class="col-xs-4 text-center">
                                 <a href="#">Friends</a>
                               </div>
-                            </div>
+                            </div> --}}
                             <!-- /.row -->
                           </li>
                           <!-- Menu Footer-->
