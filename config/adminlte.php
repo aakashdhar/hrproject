@@ -121,44 +121,49 @@ return [
             'icon' => 'user',
         ],
         'LEAVE MANAGEMENT',
+        // [
+        //     'text'    => 'Leave Applications',
+        //     'icon'    => 'sign-out',//'share',
+        //     'url'     =>  'leaves'
+        //     // 'submenu' => [
+        //     //     [
+        //     //         'text' => 'Level One',
+        //     //         'url'  => '#',
+        //     //     ],
+        //     //     [
+        //     //         'text'    => 'Level One',
+        //     //         'url'     => '#',
+        //     //         'submenu' => [
+        //     //             [
+        //     //                 'text' => 'Level Two',
+        //     //                 'url'  => '#',
+        //     //             ],
+        //     //             [
+        //     //                 'text'    => 'Level Two',
+        //     //                 'url'     => '#',
+        //     //                 'submenu' => [
+        //     //                     [
+        //     //                         'text' => 'Level Three',
+        //     //                         'url'  => '#',
+        //     //                     ],
+        //     //                     [
+        //     //                         'text' => 'Level Three',
+        //     //                         'url'  => '#',
+        //     //                     ],
+        //     //                 ],
+        //     //             ],
+        //     //         ],
+        //     //     ],
+        //     //     [
+        //     //         'text' => 'Level One',
+        //     //         'url'  => '#',
+        //     //     ],
+        //     // ],
+        // ],
         [
-            'text'    => 'Leave Applications',
-            'icon'    => 'sign-out',//'share',
-            'url'     =>  'leaves'
-            // 'submenu' => [
-            //     [
-            //         'text' => 'Level One',
-            //         'url'  => '#',
-            //     ],
-            //     [
-            //         'text'    => 'Level One',
-            //         'url'     => '#',
-            //         'submenu' => [
-            //             [
-            //                 'text' => 'Level Two',
-            //                 'url'  => '#',
-            //             ],
-            //             [
-            //                 'text'    => 'Level Two',
-            //                 'url'     => '#',
-            //                 'submenu' => [
-            //                     [
-            //                         'text' => 'Level Three',
-            //                         'url'  => '#',
-            //                     ],
-            //                     [
-            //                         'text' => 'Level Three',
-            //                         'url'  => '#',
-            //                     ],
-            //                 ],
-            //             ],
-            //         ],
-            //     ],
-            //     [
-            //         'text' => 'Level One',
-            //         'url'  => '#',
-            //     ],
-            // ],
+            'text' => 'Leave Applications',
+            'url'  => 'leaves/list',
+            'icon' => 'user',
         ],
         // 'ATTENDANCE MANAGEMENT',
         // [

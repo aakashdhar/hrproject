@@ -5,7 +5,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 
-    var holidays = {!! $holidays->toJson() !!};
+    var holidays = [];
 
     var leave_balance = "{{ $leave_balance or 0 }}";
 
@@ -30,7 +30,7 @@
 @section('content-breadcrumb')
 <ul class="page-breadcrumb">
 	<li>Leaves <i class="fa fa-angle-double-right"></i></li>
-	<li><a href="{{route('leaves|leave.index')}}">Leave Application</a> <i class="fa fa-angle-double-right"></i></li>
+	<li><a href="/leaves/list">Leave Application</a> <i class="fa fa-angle-double-right"></i></li>
 	<li><span>Apply</span></li>
 </ul>
 @endsection

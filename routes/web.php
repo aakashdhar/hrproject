@@ -60,21 +60,35 @@ Route::middleware('auth')->group(function() {
     });
 });
 
-Route::group(['as' => 'leaves|',/* 'prefix' => 'leaves'*/], function () {
+// Route::group(['as' => 'leaves|',/* 'prefix' => 'leaves'*/], function () {
 
-    Route::get('/applications', 'LeaveController@applications');
-    Route::post('/{leave_application}/approve', 'LeaveController@approveLeave');
-    Route::post('/{leave_application}/reject', 'LeaveController@rejectLeave');
-    Route::post('/{leave_application}/cancel', 'LeaveController@cancelLeave');
-    Route::get('leaves/apply', 'LeaveController@create');
-    Route::patch('/store', 'LeaveController@store');
-    Route::post("/delete-bulk", "LeaveController@deleteBulk");
-    Route::post("/approve-bulk", "LeaveController@approveBulk");
+//     Route::get('/applications', 'LeaveController@applications');
+//     Route::post('/{leave_application}/approve', 'LeaveController@approveLeave');
+//     Route::post('/{leave_application}/reject', 'LeaveController@rejectLeave');
+//     Route::post('/{leave_application}/cancel', 'LeaveController@cancelLeave');
+//     Route::get('leaves/apply', 'LeaveController@create');
+//     Route::patch('/store', 'LeaveController@store');
+//     Route::post("/delete-bulk", "LeaveController@deleteBulk");
+//     Route::post("/approve-bulk", "LeaveController@approveBulk");
 
-    Route::resource('employees/leave', 'LeaveController');
-});
+//     Route::resource('employees/leave', 'LeaveController');
+// });
 
 Route::resource('attendace','AttendanceController');
 Route::post('undo-attendance', 'AttendanceController@undoAttendance')->name('undoAttendance');
+
+Route::group(['as' => 'leaves|', 'prefix' => 'leaves'], function () {
+
+  Route::get('/applications', 'LeaveController@applications');
+  Route::post('/{leave_application}/approve', 'LeaveController@approveLeave');
+  Route::post('/{leave_application}/reject', 'LeaveController@rejectLeave');
+  Route::post('/{leave_application}/cancel', 'LeaveController@cancelLeave');
+  Route::get('/apply', 'LeaveController@create');
+  Route::patch('/store', 'LeaveController@store');
+  Route::post("/delete-bulk", "LeaveController@deleteBulk");
+  Route::post("/approve-bulk","LeaveController@approveBulk");
+  
+  Route::resource('/list', 'LeaveController');
+});
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -1,4 +1,6 @@
+@extends('adminlte::page')
 
+@section('title', 'Leaves')
 @push('head_links')
 <link type="text/css" rel="stylesheet" href="{{ URL::asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" />
 <link type="text/css" rel="stylesheet" href="{{ URL::asset('assets/global/plugins/jquery-ui/jquery-ui.min.css') }}" />
@@ -29,7 +31,7 @@ $(document).ready(function () {
 var delete_url = "{{ URL::to('admin/diamond/leaves/delete-bulk') }}";
 var approve_url = "{{ URL::to('admin/diamond/leaves/approve-bulk') }}";
 </script>
-<script type="text/javascript" src="{{ noc_asset('js/admin-diamond-leaves-application.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/admin-diamond-leaves-application.js') }}"></script>
 <script type="text/javascript">
     var fnToggle = function(id,bt) {
         $("."+bt).toggleClass('fa-chevron-right').toggleClass('fa-chevron-down');
@@ -53,11 +55,11 @@ var approve_url = "{{ URL::to('admin/diamond/leaves/approve-bulk') }}";
       <h3 class="page-title">Leave Applications <small>Listing</small></h3>
    </div>
    <div class="col-lg-4 col-md-4 col-sm-8 col-xs-12">
-      @include('admin_diamond/leaves/incl_search')
+      @include('leaves.incl_search')
    </div>
    <div class="col-lg-4 col-md-4 col-sm-8 col-xs-12 margin-top-10">
     <div class="pull-right">
-        <a class="btn blue-soft" href="{{ URL::to("admin/diamond/leaves/list") }}">
+        <a class="btn blue-soft" href="{{ URL::to("leaves/list") }}">
             My Leaves
         </a>
     </div>
@@ -72,6 +74,29 @@ var approve_url = "{{ URL::to('admin/diamond/leaves/approve-bulk') }}";
 @endsection
 
 @section('content')
+<ul class="page-breadcrumb">
+    <li>Leave Management<i class="fa fa-angle-double-right"></i></li>
+    <li><span>Listing</span></li>
+ </ul>
+ <div class="row">
+    {{ Form::open(['id' => 'frm_sales_sel', 'name' => 'frm_sales_sel', 'class' => 'form-horizontal','url' => url()->current(), 'method' => 'GET']) }}
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+       <h3 class="page-title">Leave Applications <small>Listing</small></h3>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-8 col-xs-12">
+       @include('leaves.incl_search')
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-8 col-xs-12 margin-top-10">
+     <div class="pull-right">
+         <a class="btn blue-soft" href="{{ URL::to("leaves/list") }}">
+             My Leaves
+         </a>
+     </div>
+    </div>
+    <div class="clearfix"></div>
+    {{ Form::close() }}
+ </div>
+
 <?php
 $icons = array('Active' => 'success', 'Inactive' => 'default');
 ?>

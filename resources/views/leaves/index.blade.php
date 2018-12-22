@@ -59,8 +59,8 @@ $(document).ready(function () {
    </div>
    <div class="col-lg-4 col-md-4 col-sm-8 col-xs-12">
     <div class="pull-right">
-        @if($user->isSuperAdmin())
-            <a class="btn blue-soft" href="{{ URL::to("admin/diamond/leaves/applications") }}">
+        @if($user->user_type_id == 1)
+            <a class="btn blue-soft" href="{{ URL::to("leaves/applications") }}">
                 Pending Applications
                 <span class="badge badge-success">{{ $total_pending_leaves }}</span>
             </a>
