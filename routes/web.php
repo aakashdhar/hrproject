@@ -56,6 +56,8 @@ Route::post("employee/delete/{id}","Employees\EmployeesController@deleteEmployee
 Route::middleware('auth')->group(function() {
     Route::prefix('/')->group(function() {
         Route::resource('reminder', 'Reminder\ReminderController');
+        Route::resource('holidays', 'Settings\HolidayController');
+        Route::resource('designation', 'Settings\DesignationController');
         Route::post('reminder/convert-to-task', 'Reminder\ReminderController@convertToTask')->name('convertToTask');
         require_once ('routes/routes_admin_users.php');
     });

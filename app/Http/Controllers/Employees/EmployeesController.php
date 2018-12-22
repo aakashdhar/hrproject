@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Employees;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Settings\Designation;
 use App\Models\Admins\UserType;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,9 +14,11 @@ class EmployeesController extends Controller
     //this function is just to show view
     public function showPage()
     {
+        $designation = Designation::all();
         $userdata = User::with(['type'])
                     ->where('user_type_id','<>','1')
                     ->get();
+        $this->addData('designation',$designation);
         $this->addData('userdata',$userdata);
         return $this->getView("employees.employee");
     }
@@ -39,6 +42,7 @@ class EmployeesController extends Controller
       $user->user_emergency_contact = $request->get('user_emergency_contact');
       $user->user_city = $request->get('user_city');
       $user->user_state = $request->get('user_state');
+      $user->user_designation = $request->get('user_designation');
       $user->user_type_id = 2;
       $res = $user->save();
       return redirect()->back();
@@ -61,6 +65,7 @@ class EmployeesController extends Controller
         $user->user_emergency_contact = $request->get('user_emergency_contact');
         $user->user_city = $request->get('user_city');
         $user->user_state = $request->get('user_state');
+        $user->user_designation = $request->get('user_designation');
         $res = $user->save();
         return redirect()->back();
     }

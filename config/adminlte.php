@@ -160,19 +160,18 @@ return [
             //     ],
             // ],
         ],
-        // 'ATTENDANCE MANAGEMENT',
-        // [
-        //     'text'       => 'Important',
-        //     'icon_color' => 'red',
-        // ],
-        // [
-        //     'text'       => 'Warning',
-        //     'icon_color' => 'yellow',
-        // ],
-        // [
-        //     'text'       => 'Information',
-        //     'icon_color' => 'aqua',
-        // ],
+        'SETTINGS',
+        [
+          'text'    => 'Designation',
+          'icon'    => 'id-card',
+          'url'     =>  'designation'
+        ],
+        [
+          'text'    => 'Holidays',
+          'icon'    => 'hand-peace-o',
+          'url'     =>  'holidays'
+        ],
+
     ],
     /*
     |--------------------------------------------------------------------------

@@ -129,6 +129,15 @@
                             <label for="user_address">Date of birth</label>
                             <input type="date" name="user_dob" class="form-control"  id="user_dob" placeholder="Date of birth">
                           </div>
+                          <div class="col-md-4">
+                            <label for="user_address">Designation</label>
+                            <select name="user_designation" class="form-control">
+                                <option disabled selected>Select designation</option>
+                                 @foreach($designation as $val)
+                                   <option value="{{$val->user_designation_title}}">{{ucwords($val->user_designation_title)}}</option>
+                                 @endforeach
+                            </select>
+                          </div>
                         </div>
                         <div class="row" style="margin-top: 2%;">
                           <div class="col-md-4">
