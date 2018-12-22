@@ -54,6 +54,14 @@
                           <button class="btn btn-link">Mark Complete</button>
                       </form>
                     </li>
+                    @if (isset($value->user->type) && $value->user->type->user_type != 'Admin' && $value->user_reminder_status != 'converted')
+                      <li>
+                        {!! Form::open(['route'=>'convertToTask', 'method'=>'POST']) !!}
+                          {{ Form::hidden('user_reminder_id', $value->user_reminder_id) }}
+                          <button class="btn btn-link">Convert to task</button>
+                        {!! Form::close() !!}
+                      </li>
+                    @endif
                   </ul>
                 </div>
               </td>

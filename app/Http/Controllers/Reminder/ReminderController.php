@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Reminder;
 use Auth;
+use App\Models\Tasks;
+use Carbon\Carbon;
+use Toastr;
 
 class ReminderController extends Controller
 {
@@ -26,7 +29,8 @@ class ReminderController extends Controller
         $user = User::all();
         $reminder = Reminder::all();
       }
-
+      $auth = auth()->user();
+      $this->addData('auth', $auth);
       $this->addData('reminder',$reminder);
       $this->addData('user',$user);
       return $this->getView("reminder.index");
@@ -107,4 +111,26 @@ class ReminderController extends Controller
       $res = Reminder::destroy($id);
       return redirect()->back();
     }
+
+    public function convertToTask(Request $request) {
+      $user_reminder_id = $request->get('user_reminder_id');
+      $reminder = Reminder::find($user_reminder_id);
+      $new_task = new Tasks();
+      $new_task->task_assigned_by = Auth::id();
+      $new_task->task_title = "Converted this task from reminder by " . auth()->user()->full_name . ".";
+      $new_task->task_description = $reminder->user_reminder_details;
+      $new_task->task_created_by = Auth::id();
+      $new_task->task_assigned_to = $reminder->user_id;
+      $new_task->created_at = Carbon::now();
+      $res = $new_task->save();
+      $reminder->user_reminder_status = 'converted';
+      $reminder->update();
+      if($res) {
+        Toastr::success('Reminder converted to task successfully');
+      } else {
+        Toastr::error('Could not convert. Something went wrong.');
+      }
+      return redirect()->back();
+    }
+
 }

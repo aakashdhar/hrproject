@@ -16,6 +16,11 @@ class Reminder extends Model
       'user_reminder_id', 'user_id', 'user_reminder_details', 'user_remind_on', 'user_reminder_status'
   ];
 
+  protected $casts = [
+      'created_at' => 'datetime:d-m-Y H:i:s',
+      'updated_at' => 'datetime:d-m-Y H:i:s'
+  ];
+
   public function user() {
       return $this->hasOne(User::class, 'user_id', 'user_id');
   }
