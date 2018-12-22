@@ -80,14 +80,14 @@ Route::post('undo-attendance', 'AttendanceController@undoAttendance')->name('und
 Route::group(['as' => 'leaves|', 'prefix' => 'leaves'], function () {
 
   Route::get('/applications', 'LeaveController@applications');
-  Route::post('/{leave_application}/approve', 'LeaveController@approveLeave');
-  Route::post('/{leave_application}/reject', 'LeaveController@rejectLeave');
-  Route::post('/{leave_application}/cancel', 'LeaveController@cancelLeave');
+  Route::post('/approve', 'LeaveController@approveLeave');
+  Route::post('/reject', 'LeaveController@rejectLeave');
+  Route::post('/cancel', 'LeaveController@cancelLeave');
   Route::get('/apply', 'LeaveController@create');
-  Route::patch('/store', 'LeaveController@store');
+  Route::post('/store', 'LeaveController@store');
   Route::post("/delete-bulk", "LeaveController@deleteBulk");
   Route::post("/approve-bulk","LeaveController@approveBulk");
-  
+
   Route::resource('/list', 'LeaveController');
 });
 

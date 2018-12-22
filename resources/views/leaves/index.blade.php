@@ -45,16 +45,12 @@ $(document).ready(function () {
 <div class="row">
     <form method="get" action="{{url()->current()}}"  class="form-horizontal" name="frm_sales_sel" id="frm_sales_sel">
         <input type="hidden" name="date_start" id="date-start" />
-        <input type="hidden" name="date_end" id="date-end" />      
+        <input type="hidden" name="date_end" id="date-end" />
     </form>
-    {{-- Form::open(['id' => 'frm_sales_sel', 'name' => 'frm_sales_sel', 'class' => 'form-horizontal','url' => , 'method' => 'GET']) --}}
-    {{-- Form::hidden('date_start', '', ['id'=>'date-start']) --}}
-    {{-- Form::hidden('date_end', '', ['id'=>'date-end']) --}}
    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-      <h3 class="page-title">Leave <small>Statistics</small></h3>
+      <h3 class="page-title">Leaves</h3>
    </div>
    <div class="col-lg-4 col-md-4 col-sm-8 col-xs-12">
-<!--      include('admin_diamond.leaves.incl_statistics')-->
       @include('leaves.incl_statistics')
    </div>
    <div class="col-lg-4 col-md-4 col-sm-8 col-xs-12">
@@ -66,7 +62,7 @@ $(document).ready(function () {
             </a>
         @endif
 
-        <a class="btn blue-soft" href="{{ URL::to("leaves/apply") }}">
+        <a class="btn btn-primary" href="{{ URL::to("leaves/apply") }}">
             Apply For Leave
         </a>
     </div>
@@ -82,42 +78,45 @@ $(document).ready(function () {
         <div class="tabbable">
             <ul class="nav nav-tabs bar_tabs">
                 <li class="active">
-                   <a href="#leave_tab_pending" data-toggle="tab"> Pending Leaves ({{ $pending_applications->count() }})</a>
+                   <a href="#leave_tab_pending" data-toggle="tab"> <b>Pending Leaves ({{ $pending_applications->count() }})</b></a>
                 </li>
                 <li class="">
-                   <a href="#leave_tab_history" data-toggle="tab"> Leave Transactions ({{ $leave_history->count() }})</a>
+                   <a href="#leave_tab_history" data-toggle="tab"><b> Leave Transactions ({{ $leave_history->count() }})</b></a>
                 </li>
 
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active fade in table-responsive" id="leave_tab_pending">
-                    <table class="table table-condensed table-condensed-stats">
-                        <thead>
-                            <tr>
-                                <th class="nowrap" width="5%">#</th>
-                                {{--<th class="nowrap">Approver</th>--}}
-                                <th class="nowrap">From Date</th>
-                                <th class="nowrap">To date</th>
-                                <th class="nowrap">Total Days</th>
-                                <th class="nowrap">Applied On</th>
-                                <th class="nowrap">status</th>
-                                <th class="nowrap">Reason</th>
-                                <th class="nowrap">Approval Comment</th>
-                                <th class="nowrap">Reject Reason</th>
-                                <th class="nowrap">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div class="panel">
+                        <div class="panel-body">
+                            <table class="table table-condensed table-condensed-stats">
+                                <thead>
+                                    <tr>
+                                        <th class="nowrap" width="5%">#</th>
+                                        {{--
+                                        <th class="nowrap">Approver</th>--}}
+                                        <th class="nowrap">From Date</th>
+                                        <th class="nowrap">To date</th>
+                                        <th class="nowrap">Total Days</th>
+                                        <th class="nowrap">Applied On</th>
+                                        <th class="nowrap">status</th>
+                                        <th class="nowrap">Reason</th>
+                                        <th class="nowrap">Approval Comment</th>
+                                        <th class="nowrap">Reject Reason</th>
+                                        <th class="nowrap">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                            @php
-                            $i = 0;
-                            @endphp
-
-                            @if($pending_applications->count())
-                                @foreach($pending_applications as $application)
+                                    @php
+                                        $i = 0;
+                                    @endphp
+                                    @if($pending_applications->count())
+                                    @foreach($pending_applications as $application)
                                     <tr>
                                         <td class="nowrap"><strong>{{ ++$i }}</strong></td>
-                                        {{--<td class="nowrap">{{ $application->approver->user_first_name }}</td>--}}
+                                        {{--
+                                        <td class="nowrap">{{ $application->approver->user_first_name }}</td>--}}
                                         <td class="nowrap from-date">{{ $application->from_date }}</td>
                                         <td class="nowrap to-date">{{ $application->to_date }}</td>
                                         <td class="nowrap total-days">{{ $application->total_days }}</td>
@@ -127,23 +126,30 @@ $(document).ready(function () {
                                         <td class="nowrap">{{ $application->approval_comment }}</td>
                                         <td class="nowrap">{{ $application->cancel_reason }}</td>
                                         <td class="nowrap">
-                                          @if($application->status == "Pending")
-                                          <a href="{{ URL::to("admin/diamond/leaves/$application->leave_id/cancel") }}" class="btn btn-danger btn-xs cancel-link" target="_blank"><span class="fa fa-remove" aria-hidden="true" title="Cancel Leave"></span></a>
-                                          @else
-                                          {{ $application->status }}
-                                          @endif
+                                            @if($application->status == "Pending")
+                                                <form action="{{ URL::to("leaves/cancel") }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{$application->leave_id}}">
+                                                    <button class="btn btn-danger btn-xs" type="submit">Cancel</button>
+                                                </form>
+                                                {{-- <a href="{{ URL::to("leaves/$application->leave_id/cancel") }}" class="btn btn-danger btn-xs cancel-link" target="_blank"><span class="fa fa-remove" aria-hidden="true" title="Cancel Leave"></span></a> --}}
+                                            @else
+                                            {{ $application->status }}
+                                            @endif
                                         </td>
                                     </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="12" class="text-center">
-                                        <h3>No Pending Applications</h3>
-                                    </td>
-                                </tr>
-                            @endif
-                        </tbody>
-                    </table>
+                                    @endforeach @else
+                                    <tr>
+                                        <td colspan="12" class="text-center">
+                                            <h3>No Pending Applications</h3>
+                                        </td>
+                                    </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
 
                     <div id="cancel_modal" class="modal fade modal-md" role="dialog">
                        <div class="modal-dialog">
@@ -185,14 +191,14 @@ $(document).ready(function () {
                                             </div>
                                         </div>
                                         <div class="form-actions">
-                                            
+
                                             <div class="col-md-9 col-sm-9 col-xs-12 nowrap">
                                                 <input type="submit" value="Cancel Leave" class="btn green" id="submit_btn" />
                                             </div>
                                         </div>
-                                 
-                                   </form>    
-                               
+
+                                   </form>
+
                                </div>
 
                              </div>
@@ -204,29 +210,30 @@ $(document).ready(function () {
                 </div>
 
                 <div class="tab-pane fade in table-responsive" id="leave_tab_history">
-                    <table class="table table-condensed table-condensed-stats">
-                        <thead>
-                            <tr>
-                                <th class="nowrap" width="5%">#</th>
-                                <th class="nowrap">Approver</th>
-                                <th class="nowrap">From Date</th>
-                                <th class="nowrap">To date</th>
-                                <th class="nowrap">Total Days</th>
-                                <th class="nowrap">Applied On</th>
-                                <th class="nowrap">status</th>
-                                <th class="nowrap">Reason</th>
-                                <th class="nowrap">Approval Comment</th>
-                                <th class="nowrap">Reject Reason</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div class="panel">
+                        <div class="panel-body">
+                            <table class="table table-condensed table-condensed-stats">
+                                <thead>
+                                    <tr>
+                                        <th class="nowrap" width="5%">#</th>
+                                        <th class="nowrap">Approver</th>
+                                        <th class="nowrap">From Date</th>
+                                        <th class="nowrap">To date</th>
+                                        <th class="nowrap">Total Days</th>
+                                        <th class="nowrap">Applied On</th>
+                                        <th class="nowrap">status</th>
+                                        <th class="nowrap">Reason</th>
+                                        <th class="nowrap">Approval Comment</th>
+                                        <th class="nowrap">Reject Reason</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                            @php
-                            $i = 0;
-                            @endphp
+                                    @php $i = 0;
+                                    @endphp
+                                    @if($leave_history->count())
 
-                            @if($leave_history->count())
-                                @foreach($leave_history as $application)
+                                    @foreach($leave_history as $application)
                                     <tr>
                                         <td class="nowrap"><strong>{{ ++$i }}</strong></td>
                                         <td class="nowrap">{{ $application->approver->user_first_name }}</td>
@@ -239,16 +246,18 @@ $(document).ready(function () {
                                         <td class="nowrap">{{ $application->approval_comment }}</td>
                                         <td class="nowrap">{{ $application->cancel_reason }}</td>
                                     </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="11" class="text-center">
-                                        <h3>No Leave Transactions Found</h3>
-                                    </td>
-                                </tr>
-                            @endif
-                        </tbody>
-                    </table>
+                                    @endforeach @else
+                                    <tr>
+                                        <td colspan="11" class="text-center">
+                                            <h3>No Leave Transactions Found</h3>
+                                        </td>
+                                    </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>

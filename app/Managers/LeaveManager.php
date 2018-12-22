@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 // use App\Models\Holiday;
 
 use DB;
+use App\Models\Holiday;
 
 class LeaveManager
 {
@@ -64,7 +65,7 @@ class LeaveManager
 						->orWhere("to_date", "<=", date("{$year}-12-31"));
 				});
 
-				
+
 			})
 
 			->with($this->getFiledsRelationShips())
@@ -147,34 +148,31 @@ class LeaveManager
 		});
 	}
 
-	public function doLeaveApproval(LeaveApplication $leave_application, $approval_comment=null)
+	public function doLeaveApproval(LeaveApplication $leave_application, $request)
 	{
-		return $this->updateLeaveApplication($leave_application, [
-
-			'approval_comment' => $approval_comment,
-
-			'status' => "Approved"
-		]);
+		$leave = LeaveApplication::find($request->id);
+		$leave->approval_comment = $request->approval_comment;
+		$leave->status = "Approved";
+		$res = $leave->update();
+		return $res;
 	}
 
-	public function doLeaveRejection(LeaveApplication $leave_application, $cancel_reason=null)
+	public function doLeaveRejection(LeaveApplication $leave_application, $request)
 	{
-		return $this->updateLeaveApplication($leave_application, [
-
-			'cancel_reason' => $cancel_reason,
-
-			'status' => "Rejected"
-		]);
+		$leave = LeaveApplication::find($request->id);
+		$leave->cancel_reason = $request->cancel_reason;
+		$leave->status = "Rejected";
+		$res = $leave->update();
+		return $res;
 	}
 
-	public function doLeaveCancellation(LeaveApplication $leave_application, $cancel_reason=null)
+	public function doLeaveCancellation(LeaveApplication $leave_application, $request)
 	{
-		return $this->updateLeaveApplication($leave_application, [
-
-			'cancel_reason' => $cancel_reason,
-
-			'status' => "Cancelled"
-		]);
+		$leave = LeaveApplication::find($request->id);
+		$leave->cancel_reason = $request->cancel_reason;
+		$leave->status = "Cancelled";
+		$res = $leave->update();
+		return $res;
 	}
 
 	public function getUsersLeaveBalance($user_id=null)
@@ -195,7 +193,7 @@ class LeaveManager
 
 			->sum('total_days');
 
-		return self::$userLeavesBalance[$user_id] = ( \Auth::user()->total_leaves - $applied_count );
+		return self::$userLeavesBalance[$user_id] = ( \Auth::user()->user_leave - $applied_count );
 	}
 
 	public function getLeaveApprovers()
@@ -223,13 +221,13 @@ class LeaveManager
 
 	public function getCurrentYearsHolidays()
 	{
-		// return Holiday::where("holiday_date", ">=", date("Y-01-01"))
+		return Holiday::where("holiday_date", ">=", date("Y-01-01"))
 
-		// 	->where("holiday_date", "<=", date("Y-12-31"))
+			->where("holiday_date", "<=", date("Y-12-31"))
 
-		// 	->get()
+			->get()
 
-        // 	->pluck('holiday_date');
+        	->pluck('holiday_date');
         return [];
 	}
 

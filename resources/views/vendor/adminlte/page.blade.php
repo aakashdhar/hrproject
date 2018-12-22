@@ -38,7 +38,7 @@
                                                         'LEAVE MANAGEMENT',
                                                         [
                                                             'text'    => 'Leave Management',
-                                                            'url'    => 'employees/leave',
+                                                            'url'    => 'leaves/list',
                                                             'icon'    => 'share',
                                                         ],
                                                         'TASK',

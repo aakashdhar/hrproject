@@ -16,7 +16,7 @@ class LeaveController extends Controller
 {
     private $leave_manager;
 
-    private static $weekends = ["Saturday", "Sunday"];
+    private static $weekends = ["Sunday"];
 
     public function __construct(LeaveManager $leave_manager)
     {
@@ -68,7 +68,7 @@ class LeaveController extends Controller
 		/* History */
 
 		/* Total Allocated Leaves */
-        $total_allocated_leaves = $user->total_leaves;
+        $total_allocated_leaves = $user->user_leave;
 
         $leave_balance = $total_allocated_leaves - ($taken_leaves + $pending_approval);
 
@@ -143,14 +143,14 @@ class LeaveController extends Controller
     public function create(Request $request, LeaveApplication $leave_application)
     {
         $user = \Auth::user();
-        
+
         $leave_balance = $this->leave_manager->getUsersLeaveBalance($user->user_id);
-        
-        
-        // if (!$leave_balance) {
-            
-        //     return redirect()->back();
-        // }
+
+
+        if (!$leave_balance) {
+
+            return redirect()->back();
+        }
 
         $approvers = $this->leave_manager->getLeaveApprovers();
 
@@ -182,10 +182,9 @@ class LeaveController extends Controller
         if (!$leave_balance) {
             return redirect("leaves/list");
         }
+        $from = Carbon::createFromFormat("d-m-Y", $request->from_date);
 
-        $from = Carbon::createFromFormat("Y-m-d", $request->from_date);
-
-        $to = Carbon::createFromFormat("Y-m-d H:i:s", $request->to_date . " 23:59:59");
+        $to = Carbon::createFromFormat("d-m-Y H:i:s", $request->to_date . " 23:59:59");
 
         $total_days = $from->diffInDays($to) + 1;
 
@@ -214,9 +213,9 @@ class LeaveController extends Controller
 
         $result = $this->leave_manager->doApplyForLeave($leave_application, [
 
-            'from_date' => $request->from_date,
+            'from_date' => Carbon::parse($request->from_date)->format('Y-m-d'),
 
-            'to_date' => $request->to_date,
+            'to_date' => Carbon::parse($request->to_date)->format('Y-m-d'),
 
             'approver_id' => $request->approver_id,
 
@@ -358,25 +357,15 @@ class LeaveController extends Controller
 
     public function approveLeave(LeaveApplication $leave_application, Request $request)
     {
-        if ($leave_application->approver_id != \Auth::user()->user_id) {
 
-            return redirect('leaves/applications');
-        }
-
-        $result = $this->leave_manager->doLeaveApproval($leave_application, $request->approval_comment);
-
+        $result = $this->leave_manager->doLeaveApproval($leave_application, $request);
 
         return redirect('leaves/applications');
     }
 
     public function rejectLeave(LeaveApplication $leave_application, Request $request)
     {
-        if ($leave_application->approver_id != \Auth::user()->user_id) {
-
-            return redirect('leaves/applications');
-        }
-
-        $result = $this->leave_manager->doLeaveRejection($leave_application, $request->approval_comment);
+        $result = $this->leave_manager->doLeaveRejection($leave_application, $request);
 
 
         return redirect('leaves/applications');
@@ -384,12 +373,8 @@ class LeaveController extends Controller
 
     public function cancelLeave(LeaveApplication $leave_application, Request $request)
     {
-        if ($leave_application->applicant_id != \Auth::user()->user_id) {
 
-            return redirect('leaves/list');
-        }
-
-        $result = $this->leave_manager->doLeaveCancellation($leave_application, $request->cancel_reason);
+        $result = $this->leave_manager->doLeaveCancellation($leave_application, $request);
 
 
         return redirect('leaves/list');
@@ -455,7 +440,7 @@ class LeaveController extends Controller
                             }
                         }
                         $user_attendance_absent = $user_attendance_absent->sortBy('month');
-                        
+
         $user_attendance_half_day = UserAttendance::where('user_id','=',$user_id)->whereYear('attendance_date','=',$year);
         $user_attendance_half_day = $user_attendance_half_day->select(DB::raw("MONTH(attendance_date) as month"),DB::raw("COUNT(*) as count"))->where('attendance_status','=','1/2 Day')->groupBy(DB::raw("MONTH(attendance_date)"));
         $user_attendance_half_day = $user_attendance_half_day->get();
