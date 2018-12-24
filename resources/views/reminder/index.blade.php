@@ -43,13 +43,6 @@
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                     <li><button type="button" class="btn btn-link" data-toggle="modal" data-target="#updatereminderModal_{{$value->user_reminder_id}}">Update Reminder</button></li>
                     <li>
-                      <form action="{{ route('reminder.destroy', $value->user_reminder_id) }}" method="POST">
-                          @method('DELETE')
-                          @csrf
-                          <button class="btn btn-link">Delete Reminder</button>
-                      </form>
-                    </li>
-                    <li>
                       <form action="{{ route('reminder.edit', $value->user_reminder_id) }}" method="GET">
                           @csrf
                           <button class="btn btn-link">Mark Complete</button>

@@ -63,14 +63,56 @@ $(document).ready(function () {
         @endif
 
         <a class="btn btn-primary" href="{{ URL::to("leaves/apply") }}">
-            Apply For Leave
+            Apply Leave
+        </a>
+        <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#userStatsModal">
+            User stats
         </a>
     </div>
    </div>
    <div class="clearfix"></div>
    {{-- Form::close() --}}
 </div>
-
+<div class="modal fade" id="userStatsModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="">Leave Statistics</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <thead>
+            <th>#</th>
+            <th>User</th>
+            <th>Pending Approval</th>
+            <th>Approved</th>
+            <th>Total Leaves</th>
+            <th>Current Balance</th>
+          </thead>
+          <tbody>
+            @php
+              $i = 1;
+            @endphp
+            @foreach ($allUserStats as $key => $value)
+              <tr>
+                <td>{{$i++}}</td>
+                <td><strong>{{ucwords($key)}}</strong></td>
+                <td>{{$value['pending']}}</td>
+                <td>{{$value['approved']}}</td>
+                <td>{{$value['total']}}</td>
+                <td>{{$value['balance']}}</td>
+              </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="clearfix"></div>
 <div class="row">

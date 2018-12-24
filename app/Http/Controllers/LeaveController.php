@@ -11,6 +11,7 @@ use Carbon\CarbonInterval;
 use App\UserAttendance;
 use App\Models\LeaveApplication;
 use DB;
+use App\Models\User;
 
 class LeaveController extends Controller
 {
@@ -29,6 +30,31 @@ class LeaveController extends Controller
         $user = \Auth::user();
 
         $this->addArray($this->standardData());
+
+        $allUsers = User::where('user_type_id','<>','1')->get();
+        $allUserArray = array();
+
+
+        foreach ($allUsers as $key => $value) {
+          $users_leaves = $this->leave_manager->getLeaveApplications([
+              'user_id' => $value->user_id,
+          ]);
+
+          $pending_applications = $users_leaves->where("status", "Pending");
+          $approved_leaves = $users_leaves->where("status", 'Approved');
+
+          $total_allocated_leaves = $value->user_leave;
+          $taken_leaves = $approved_leaves->sum(function ($item) {return $item->total_days;});
+          $pending_approval = $pending_applications->sum(function ($item) {return $item->total_days;});
+          $leave_balance = $total_allocated_leaves - ($taken_leaves + $pending_approval);
+
+          $allUserArray[$value->user_first_name] = [
+            'pending' => $pending_approval,
+            'approved' => $taken_leaves,
+            'balance' => $leave_balance,
+            'total' => $total_allocated_leaves,
+          ];
+        }
 
 		/* Get User's all Leave Applications */
 
@@ -83,6 +109,7 @@ class LeaveController extends Controller
 
         $attendace_detail = self::getAttendanceDetails($user);
 
+        $this->addData('allUserStats',$allUserArray);
         $this->addData('attendace_detail', $attendace_detail);
         $this->addData('pending_applications', $pending_applications);
 
