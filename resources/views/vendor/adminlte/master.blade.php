@@ -78,7 +78,11 @@
 <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 <script src="{{ asset('js/ez.countimer.js') }}"></script>
 {!! Toastr::message() !!}
-
+<script type="text/javascript">
+$(document).ready(function () {
+    $('#homeclick').click();  //$('#about').get(0).click();
+});
+</script>
 <?php
     $data = null;
     if(!empty(Session::get("usertaskdata")))
@@ -323,7 +327,7 @@
           <aside class="control-sidebar control-sidebar-dark">
             <!-- Create the tabs -->
             <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-              <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+              <li><a href="#control-sidebar-home-tab" data-toggle="tab" id="homeclick"><i class="fa fa-home"></i></a></li>
               {{-- <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li> --}}
             </ul>
             <!-- Tab panes -->
