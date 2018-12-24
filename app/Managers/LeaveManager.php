@@ -221,14 +221,7 @@ class LeaveManager
 
 	public function getCurrentYearsHolidays()
 	{
-		return Holiday::where("holiday_date", ">=", date("Y-01-01"))
-
-			->where("holiday_date", "<=", date("Y-12-31"))
-
-			->get()
-
-        	->pluck('holiday_date');
-        return [];
+		return Holiday::all()->pluck('holiday_date');
 	}
 
 	public function doApplyForLeave(LeaveApplication $leave_application, array $input = [])
