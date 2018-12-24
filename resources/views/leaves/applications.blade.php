@@ -447,7 +447,7 @@ $icons = array('Active' => 'success', 'Inactive' => 'default');
                                             {{--
                                             <td class="nowrap"><a href="javascript:LoginLogs.getAttendanceDetail('{{$attendance['user_id']}}','{{$attendance['year']}}')">View History</a></td>--}}
                                             <?php
-                                                    $att_det = \App\Http\Controllers\Diamond\Leaves\LeavesController::getAttendance($attendance['user_id'],$attendance['year']);
+                                                    $att_det = \App\Http\Controllers\LeaveController::getAttendance($attendance['user_id'],$attendance['year']);
                                             ?>
                                                 <tr>
                                                     <?php
@@ -455,14 +455,14 @@ $icons = array('Active' => 'success', 'Inactive' => 'default');
 
                                                     ?>
                                                 </tr>
-                                                <tr class='ld-{{ $attendance[' user_id ']."-".$attendance['year '] }}' style="display: none;">
+                                                <tr class='ld-{{ $attendance['user_id']."-".$attendance['year'] }}' style="display: none;">
                                                     <td><strong>Month</strong></td>
                                                     @foreach($att_det as $key => $value)
                                                     <td><strong> {{ucfirst($key)}} </strong></td>
                                                     @endforeach
                                                 </tr>
                                                 @foreach($month as $m)
-                                                <tr class='ld-{{ $attendance[' user_id ']."-".$attendance['year '] }}' style="display: none;">
+                                                <tr class='ld-{{ $attendance['user_id']."-".$attendance['year'] }}' style="display: none;">
                                                     <td>{{$m}}</td>
 
                                                     @foreach($att_det as $key => $value) @foreach($value as $k => $v) @if($month[$v['month']] == $m)

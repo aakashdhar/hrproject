@@ -74,7 +74,7 @@ class TaskDistributionController extends Controller
     //when stop it stops with system date
     public function taskStatus(Request $request)
     {
-        
+
         $res = false;
         $task_id = $request->input('task_id');
         $status = $request->input('status');
@@ -98,7 +98,7 @@ class TaskDistributionController extends Controller
             $task->task_status = TaskStatus::FINISHED;
         }
         $task->update();
-        
+
         $logs = LogTask::where('log_task_id', '=', $task_id)->get();
         if($logs->count() > 0) {
             $last_log = LogTask::where('log_task_id', '=', $task_id)
@@ -168,6 +168,32 @@ class TaskDistributionController extends Controller
             return $this->getView('employees.employeetask');
         }
 
+        public function taskStatusByAdmin (Request $request) {
+            $task = Tasks::find($request->get('taskid'));
+            $user = User::find($request->get('userid'));
+            $ans = $request->get('adminanswer');
+            if($ans == 'Reassign') {
+                if($task->task_assigned_to != $request->get('user_id')) {
+                    $task->task_status = 'Finished';
+                    $task->update();
+                    $new_task = $task->replicate();
+                    $new_task->task_assigned_to = $request->get('user_id');
+                    $new_task->task_description = $task->task_description." - Ressigned from : ". $task->assignedTo->full_name;
+                    $new_task->task_status = 'Not Started';
+                    $new_task->push();
+                } else {
+                    $task->task_status = 'Not Started';
+                    $task->task_description = $task->task_description . " - Ressigned for : " . $request->get('reason_message');
+                    $task->update();
+                }
+            }
+            if($ans == 'Complete') {
+                $task->task_status = 'Finished';
+                $task->update();
+            }
+
+            return redirect()->back();
+        }
 
         public function getTaskMonthYear($task,$status)
         {
@@ -216,7 +242,7 @@ class TaskDistributionController extends Controller
 
 
             $data = ['hour'=>$t_hour,'minute'=>$t_minute,'second'=>$t_seconds,'task_name'=>$task->task_title,'status'=>$status];
-            
+
             return $data;
         }
 

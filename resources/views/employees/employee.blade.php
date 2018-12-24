@@ -142,7 +142,7 @@
                         <div class="row" style="margin-top: 2%;">
                           <div class="col-md-4">
                               <label for="user_leave">Number of Leaves</label>
-                              <input name="user_leave" class="form-control" value="user_leave" id="user_leave" placeholder="Number of Leaves">
+                              <input name="user_leave" class="form-control" id="user_leave" placeholder="Number of Leaves">
                           </div>
                           <div class="col-md-4">
                             <label for="user_address">Emergency Contact</label>
@@ -150,7 +150,7 @@
                           </div>
                           <div class="col-md-4">
                             <label for="user_address">Emergency Contact number</label>
-                            <input name="user_emergency_contact" class="form-control"  id="user_emergency_contact" placeholder="Emergency Contact Number">
+                            <input type="text" name="user_emergency_contact" class="form-control"  id="user_emergency_contact" placeholder="Emergency Contact Number">
                           </div>
                         </div>
                        <div class="row" style="margin-top: 2%;">

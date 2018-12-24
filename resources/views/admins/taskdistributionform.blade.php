@@ -113,11 +113,11 @@
                                       <label for="">Reassign Task reason</label>
                                       <textarea name="reason_message" rows="8" cols="80" class="form-control"></textarea>
                                     </div>
-                                    <input type="hidden" name="status" value="reassign" />
+                                    <input type="hidden" name="adminanswer" value="Reassign" />
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Reassign</button>
+                                    <button type="submit" class="btn btn-primary">Reassign</button>
                                   </div>
                                 </div>
                               </div>

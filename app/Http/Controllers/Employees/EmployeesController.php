@@ -66,6 +66,7 @@ class EmployeesController extends Controller
         $user->user_city = $request->get('user_city');
         $user->user_state = $request->get('user_state');
         $user->user_designation = $request->get('user_designation');
+        $user->user_leave = $request->get('user_leave');
         $res = $user->save();
         return redirect()->back();
     }
