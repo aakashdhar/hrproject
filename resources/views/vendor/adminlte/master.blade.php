@@ -3,13 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title> .: Siimteq HR |
         @yield('title_prefix', config('adminlte.title_prefix', ''))
         @yield('title', config('adminlte.title', 'AdminLTE 2'))
         @yield('title_postfix', config('adminlte.title_postfix', '')):.
     </title>
-
-
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -28,7 +27,7 @@
     <!-- stop watch ends here -->
 
     <!--start of validateTaskBeforeAssignment.js-->
-        <script src="{{ asset("task/validateTaskBeforeAssignment.js") }}"></script>
+        {{-- <script src="{{ asset("task/validateTaskBeforeAssignment.js") }}"></script> --}}
     <!--end of validateTaskBeforeAssignment.js-->
 
     @if(config('adminlte.plugins.select2'))
@@ -377,61 +376,6 @@
                     </a>
                   </li>
                 </ul>
-                <!-- /.control-sidebar-menu -->
-{{--
-                <h3 class="control-sidebar-heading">Tasks Progress</h3>
-                <ul class="control-sidebar-menu">
-                  <li>
-                    <a href="javascript:void(0)">
-                      <h4 class="control-sidebar-subheading">
-                        Custom Template Design
-                        <span class="label label-danger pull-right">70%</span>
-                      </h4>
-
-                      <div class="progress progress-xxs">
-                        <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">
-                      <h4 class="control-sidebar-subheading">
-                        Update Resume
-                        <span class="label label-success pull-right">95%</span>
-                      </h4>
-
-                      <div class="progress progress-xxs">
-                        <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">
-                      <h4 class="control-sidebar-subheading">
-                        Laravel Integration
-                        <span class="label label-warning pull-right">50%</span>
-                      </h4>
-
-                      <div class="progress progress-xxs">
-                        <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">
-                      <h4 class="control-sidebar-subheading">
-                        Back End Framework
-                        <span class="label label-primary pull-right">68%</span>
-                      </h4>
-
-                      <div class="progress progress-xxs">
-                        <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-                      </div>
-                    </a>
-                  </li>
-                </ul> --}}
-                <!-- /.control-sidebar-menu -->
-
               </div>
               <!-- /.tab-pane -->
 

@@ -15,50 +15,39 @@
 ][config('adminlte.layout')] : '') . (config('adminlte.collapse_sidebar') ? ' sidebar-collapse ' : ''))
 
 @section('body')
-
-<?php
-        $loggeduser = Auth::user();
-
-        $usertypes = Illuminate\Support\Facades\DB::select("select user_type_id from user_types where user_type!='Admin'");
-
-        ?>
 <!--changing adminlte.php for users to restrict them-->
-@foreach($usertypes as $usertype)
-    @if($usertype->user_type_id == $loggeduser->user_type_id)
-
-        {{
-            Illuminate\Support\Facades\Config::set([
-                                                    'adminlte.menu' => [
-                                                        'GENERAL',
-                                                        [
-                                                            'text'        => 'Dashboard',
-                                                            'url'         => 'home',
-                                                            'icon'        => 'home',
-                                                        ],
-                                                        'LEAVE MANAGEMENT',
-                                                        [
-                                                            'text'    => 'Leave Management',
-                                                            'url'    => 'leaves/list',
-                                                            'icon'    => 'share',
-                                                        ],
-                                                        'TASK',
-                                                        [
-                                                            'text'        => 'Task Management',
-                                                            'url'         => 'employees/task',
-                                                            'icon'        => 'tasks',
-                                                        ],
-                                                        [
-                                                            'text' => 'Task Reminder',
-                                                            'url'  => 'reminder',
-                                                            'icon' => 'calendar',
-                                                        ]
-                                                    ]
-                                                ])
-        }}
-    @endif
-@endforeach
-
-
+@if(Auth::user()->user_type_id != 1)
+    {{
+        Illuminate\Support\Facades\Config::set
+        ([
+          'adminlte.menu' => [
+              'GENERAL',
+              [
+                  'text'        => 'Dashboard',
+                  'url'         => 'home',
+                  'icon'        => 'home',
+              ],
+              'LEAVE MANAGEMENT',
+              [
+                  'text'    => 'Leave Management',
+                  'url'    => 'leaves/list',
+                  'icon'    => 'share',
+              ],
+              'TASK',
+              [
+                  'text'        => 'Task Management',
+                  'url'         => 'employees/task',
+                  'icon'        => 'tasks',
+              ],
+              [
+                  'text' => 'Task Reminder',
+                  'url'  => 'reminder',
+                  'icon' => 'calendar',
+              ]
+          ]
+      ])
+    }}
+@endif
 
     <div class="wrapper">
 
@@ -109,6 +98,12 @@
 
                    ?>
                     <ul class="nav navbar-nav">
+                      <li class="dropdown tasks-menu" data-toggle="tooltip" title="Quick Task">
+                        <a href="#" class="dropdown-toggle" data-toggle="modal" data-target="#quickTaskModal">
+                          <i class="fa fa-plus"></i>
+                          <span class="label label-danger"></span>
+                        </a>
+                      </li>
                       <!-- User Account: style can be found in dropdown.less -->
                       <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -172,7 +167,52 @@
                 @endif
             </nav>
         </header>
-
+        <div class="modal fade" id="quickTaskModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-body">
+                <!-- TO DO List -->
+                <div class="box box-primary">
+                  <div class="box-header">
+                    <i class="ion ion-clipboard"></i>
+                    <h3 class="box-title">To Do List</h3>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                    <ul class="todo-list">
+                      @foreach ($quickTask as $key => $value)
+                        <li>
+                          <!-- checkbox -->
+                          <input type="checkbox" value="">
+                          <!-- todo text -->
+                          <span class="text">{{$value->user_quicktask_content}}</span>
+                          <!-- Emphasis label -->
+                          <small class="label label-danger"><i class="fa fa-clock-o"></i> {{date('D M,Y',strtotime($value->created_at))}}</small>
+                          <!-- General tools such as edit or delete-->
+                          <div class="tools">
+                            <i class="fa fa-edit"></i>
+                            <i class="fa fa-trash-o"></i>
+                          </div>
+                        </li>
+                      @endforeach
+                    </ul>
+                  </div>
+                  <!-- /.box-body -->
+                  <div class="box-footer clearfix no-border">
+                    <div class="form-group add-quickTask" style="display:none">
+                      <label for="">Add Quick Taks</label>
+                      <input type="text" name="user_quicktask_content" class="form-control" id="add-quickTaskText" placeholder="Add Quick Taks">
+                    </div>
+                      <input type="hidden" id="add-quickTaskUser"  name="user_quicktask_userid" value="{{Auth::user()->user_id}}">
+                    <button type="button" id="add-todo" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
+                  </div>
+                </div>
+                <!-- /.box -->
+              </div>
+            </div>
+          </div>
+        </div>
         @if(config('adminlte.layout') != 'top-nav')
         <!-- Left side column. contains the logo and sidebar -->
         <aside class="main-sidebar">
@@ -220,7 +260,10 @@
 @stop
 
 @section('adminlte_js')
-    <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
+    <script src="https://adminlte.io/themes/AdminLTE/bower_components/jquery-ui/jquery-ui.min.js" charset="utf-8"></script>
+    <script src="{{ asset('js/TodoList.js') }}" charset="utf-8"></script>
+    <script src="{{ asset('vendor/adminlte/dist/js/adminlte.js') }}"></script>
+    <script src="{{ asset('js/dashboard.js')}}" charset="utf-8"></script>
     @stack('js')
     @yield('js')
 @stop

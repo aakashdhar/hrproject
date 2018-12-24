@@ -55,6 +55,7 @@ Route::post("employee/delete/{id}","Employees\EmployeesController@deleteEmployee
 
 Route::middleware('auth')->group(function() {
     Route::prefix('/')->group(function() {
+        Route::post("savequicktask/savetask","QuickTaskController@store");
         Route::resource('reminder', 'Reminder\ReminderController');
         Route::resource('holidays', 'Settings\HolidayController');
         Route::resource('designation', 'Settings\DesignationController');
