@@ -160,7 +160,7 @@ class TaskDistributionController extends Controller
             $tasks = Tasks::with(['timeline'])
                     ->Where('task_assigned_to', '=', Auth::id())
                     ->get();
-            $started_count = Tasks::where('task_status', '=', 'Started')->get()->count();
+            $started_count = Tasks::where('task_status', '=', 'Started')->where('task_assigned_to', '=', Auth::id())->get()->count();
             $this->addData('started_count', $started_count);
             $auth = $this->getData()['auth'];
             $this->addData('tasks', $tasks);
